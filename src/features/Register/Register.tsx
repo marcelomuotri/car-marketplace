@@ -18,7 +18,7 @@ interface RegisterFormFieldsProps {
 }
 
 const Register = () => {
-  const { user, loading, error } = useSelector((state: RootState) => state.auth)
+  const { loading, error } = useSelector((state: RootState) => state.auth)
   const { t } = useTranslation()
   const navigation = useNavigate()
   const { classes: styles } = useStyles()

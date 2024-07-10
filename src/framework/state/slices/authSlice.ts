@@ -40,7 +40,7 @@ const authSlice = createSlice({
       state.error = null
     },
   },
-  extraReducers: (builder) => {},
+  //extraReducers: (builder) => {},
 })
 
 export const { loginFailure, loginSuccess, logoutSuccess, loginLoading } =

@@ -1,12 +1,10 @@
-import React from 'react'
-import { useStyles } from './home.styles'
-import { Box, CircularProgress, Typography } from '@mui/material'
+//import { useStyles } from './home.styles'
 import { useNavigate } from 'react-router-dom'
 import FButton from '../../components/FButton/FButton'
 import { useAuthService } from '../../framework/state/services/authService'
 
 const Home = () => {
-  const { classes: styles } = useStyles()
+  //const { classes: styles } = useStyles()
   const { logoutUser } = useAuthService()
 
   const navigate = useNavigate()
