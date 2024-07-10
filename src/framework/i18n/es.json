@@ -1,0 +1,14 @@
+{
+    "Welcome to React": "Bienvenido a React y react-i18next",
+    "Hello": "Hola",
+    "Goodbye": "Adiós",
+    "register": "Registrarse",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "email": "Email",
+    "name": "Nombre",
+    "apellido": "Apellido",
+    "password": "Contraseña",
+    "usedEmail": "Este email ya esta en uso"
+}

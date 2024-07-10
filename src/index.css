@@ -1,0 +1,6 @@
+body {
+    margin: 0
+}
+.rs-picker-popup-daterange {
+    z-index: 10000000000!important; /* added a large random number, you can choose it more carefully based on your use-case.*/
+  }
