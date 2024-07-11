@@ -6,7 +6,7 @@ import {
   getAuth,
   setPersistence,
   signInWithEmailAndPassword,
-  browserSessionPersistence,
+  browserLocalPersistence,
 } from 'firebase/auth'
 
 // Optionally import the services that you want to use
@@ -18,15 +18,14 @@ import {
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyAJa5-Nu5r-izN80fjBfzhgKmck2NuD9_4',
-  authDomain: 'marketplace-f65c0.firebaseapp.com',
-  databaseURL:
-    'https://marketplace-f65c0-default-rtdb.europe-west1.firebasedatabase.app',
-  projectId: 'marketplace-f65c0',
-  storageBucket: 'marketplace-f65c0.appspot.com',
-  messagingSenderId: '33038217968',
-  appId: '1:33038217968:web:4bcdb54c208b93cb5c4835',
-  measurementId: 'G-LZZXTCJH2M',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 }
 
 // Initialize Firebase
@@ -35,19 +34,6 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
 const auth = getAuth()
-setPersistence(auth, browserSessionPersistence)
-  .then(() => {
-    // Existing and future Auth states are now persisted in the current
-    // session only. Closing the window would clear any existing state even
-    // if a user forgets to sign out.
-    // ...
-    // New sign-in will be persisted with session persistence.
-    return signInWithEmailAndPassword(auth, email, password)
-  })
-  .catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code
-    const errorMessage = error.message
-  })
+setPersistence(auth, browserLocalPersistence)
 
 export { auth, db }

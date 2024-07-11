@@ -23,5 +23,8 @@ export interface UserData {
     title: string
     description: string
     imageUrl: string
+    competition: string
+    category: string
+    subCatergory: string
   }
   
