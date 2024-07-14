@@ -9,6 +9,7 @@ import { useAuthService } from '../../framework/state/services/authService'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTheme } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import Loader from '../../components/Loader'
 
 interface RegisterFormFieldsProps {
   email: string
@@ -49,17 +50,7 @@ const Register = () => {
 
   return (
     <Box className={styles.registerContainer}>
-      {loading && (
-        <CircularProgress
-          size={48}
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        />
-      )}
+      {loading && <Loader />}
       <Box
         className={styles.registerBox}
         style={{ opacity: loading ? 0.5 : 1 }}

@@ -13,6 +13,7 @@ import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import es from './framework/i18n/es.json'
 import 'intl-pluralrules'
+import VerifyId from './features/VerifyId/VerifyId'
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -46,12 +47,16 @@ const router = createBrowserRouter([
             element: <Home />,
           },
           {
-            path: 'about',
-            element: <div>About</div>,
+            path: 'profile',
+            element: <div>profile</div>,
           },
           {
             path: 'categories',
             element: <Home />,
+          },
+          {
+            path: 'verifyId',
+            element: <VerifyId />,
           },
           {
             index: true,

@@ -4,21 +4,21 @@ import { Breakpoint } from '@mui/material'
 export const theme = {
   palette: {
     primary: {
-      main: '#6140EC',
+      main: '#3D9970',
       light: '#D8E8EB',
     },
     secondary: {
-      main: '#1098AD',
+      main: '#dde0fb',
       light: '#D8E8EB',
     },
     text: {
-      primary: '#000000',
+      primary: '#757575',
       secondary: '#074A56',
       input: '#495057',
     },
     action: {
-      active: '#0B7285',
-      hover: '#FFF',
+      active: '#F7F7F7',
+      hover: '#F7F7F7',
       disabled: '#CED4DA',
       disabledBorder: '#DEE2E6',
     },
@@ -27,19 +27,20 @@ export const theme = {
       default: '#F8F9FA',
     },
     error: {
-      main: '#C92A2A',
+      main: '#D65B5B',
     },
     success: {
-      main: '#51CF66',
+      main: '#12B76A',
     },
     warning: {
-      main: '#F08C00',
+      main: '#F79008',
     },
     info: {
       main: '#1C7ED6',
     },
     common: {
       greyE6: '#ADB5BD',
+      greyE7:'#757575',
       black: '#000',
       white: '#FFF',
       transparent: 'transparent',
@@ -56,7 +57,7 @@ export const theme = {
     values: {
       sm: 600,
       md: 900,
-      lg: 1200,
+      lg: 1320,
     },
   },
   zIndex: {

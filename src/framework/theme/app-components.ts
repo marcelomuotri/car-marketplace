@@ -55,6 +55,11 @@ export const appComponents: Components<Omit<Theme, 'components'>> = {
         bodyExtraBold: 'p',
       },
     },
+    styleOverrides: {
+      root: {
+        fontSize: '14px',  // Establece el tamaño de fuente aquí
+      },
+    },
   },
   MuiButton: {
     styleOverrides: {
@@ -79,6 +84,28 @@ export const appComponents: Components<Omit<Theme, 'components'>> = {
           animation: 'animation-wiooy9 1.6s linear 0.5s infinite',
           background: `linear-gradient( 90deg, transparent, ${theme.palette.common.greyE6}, transparent )`,
         },
+      },
+    },
+  },
+  MuiToolbar: {
+    styleOverrides: {
+      root: {
+        '@media (min-width: 600px)': {
+          minHeight: 34, /* También asegúrate de manejar el media query */
+        },
+      }
+    }
+  },
+  MuiListItemButton: {
+    styleOverrides: {
+      root: {
+          borderRadius: 4,
+          '&.Mui-selected': {
+            backgroundColor: '#F7F7F7',
+            '&:hover': {
+              backgroundColor: '#F7F7F7',
+            },
+          },
       },
     },
   },

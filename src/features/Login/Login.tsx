@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { RootState } from '../../framework/state/store'
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useStyles } from './login.styles'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import FTextInput from '../../components/FTextInput/FTextInput'
@@ -9,6 +9,7 @@ import { useAuthService } from '../../framework/state/services/authService'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTheme } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import Loader from '../../components/Loader'
 
 interface LoginFormFieldsProps {
   email: string
@@ -42,17 +43,7 @@ const Login = () => {
 
   return (
     <Box className={styles.loginContainer}>
-      {loading && (
-        <CircularProgress
-          size={48}
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        />
-      )}
+      {loading && <Loader />}
       <Box className={styles.loginBox} style={{ opacity: loading ? 0.5 : 1 }}>
         <Typography>{t('login')}</Typography>
         <FTextInput

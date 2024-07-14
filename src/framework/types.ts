@@ -26,5 +26,10 @@ export interface UserData {
     competition: string
     category: string
     subCatergory: string
+    startingDate: Date
+    active: boolean
+    visitors: number
+    price: number
+    contacts: number
   }
   

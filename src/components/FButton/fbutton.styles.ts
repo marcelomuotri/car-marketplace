@@ -3,11 +3,12 @@ import { Theme } from '@mui/material'
 
 export const useStyles = makeStyles()((theme: Theme) => ({
   button: {
-    padding: 8,
+    padding: '10px 20px',
     justifyContent: 'center',
     alignItems: 'center',
     border: '1px solid transparent',
-    borderRadius: 48,
+    borderRadius: 8,
+    fontWeight: 700,
     ':hover': {
       borderColor: theme.palette.primary.main,
     },
@@ -23,5 +24,8 @@ export const useStyles = makeStyles()((theme: Theme) => ({
       paddingLeft: 48,
       paddingRight: 48,
     },
+  },
+  title: {
+    fontWeight: 700,
   },
 }))

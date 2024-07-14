@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { LoadingButton } from '@mui/lab'
+import { Button } from '@mui/material'
 import { useStyles } from './fbutton.styles'
 import { Typography } from '@mui/material'
 
@@ -21,19 +21,18 @@ type SharedBtnProps = {
   size?: 'small' | 'medium' | 'large'
   className?: string
   disabled?: boolean
-  loading?: boolean
   fullWidth?: boolean
   href?: string
   textTransform?: 'inherit' | 'initial' | 'none' | 'lowercase' | 'uppercase'
+  padding?: string
 }
 
 const FButton = (props: SharedBtnProps) => {
   const { classes: styles, cx } = useStyles()
 
   return (
-    <LoadingButton
+    <Button
       href={props.href}
-      loading={props.loading}
       disabled={props.disabled || false}
       className={cx(props.className, styles.button)}
       variant={props.variant || 'contained'}
@@ -54,13 +53,14 @@ const FButton = (props: SharedBtnProps) => {
           textTransform={
             props.textTransform ? props.textTransform : 'capitalize'
           }
+          className={styles.title}
         >
           {props.title}
         </Typography>
       ) : (
         props.titleTypography
       )}
-    </LoadingButton>
+    </Button>
   )
 }
 

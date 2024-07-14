@@ -1,8 +1,9 @@
 import { useLocation, Navigate, Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '../framework/state/store'
-import { Box, CircularProgress } from '@mui/material'
+import { Box } from '@mui/material'
 import { useAuthService } from '../framework/state/services/authService'
+import Loader from '../components/Loader'
 
 const AuthGuard = () => {
   const location = useLocation()
@@ -14,7 +15,7 @@ const AuthGuard = () => {
   if (loading) {
     return (
       <Box>
-        <CircularProgress />
+        <Loader />
       </Box>
     )
   }
