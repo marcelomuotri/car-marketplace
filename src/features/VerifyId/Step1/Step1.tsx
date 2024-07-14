@@ -43,6 +43,7 @@ const Step1 = () => {
           correctamente antes de avanzar al siguiente paso.
         </Typography>
         <Grid container spacing={2}>
+          //@ts-ignore
           <Grid item xs={12} sm={6}>
             <FInput
               type='text'
