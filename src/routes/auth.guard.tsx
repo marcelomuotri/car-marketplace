@@ -20,7 +20,6 @@ const AuthGuard = () => {
     )
   }
   if (!isAuthenticated) {
-    // Redirigir al usuario a la página de login
     return <Navigate to='/login' state={{ from: location }} />
   }
 

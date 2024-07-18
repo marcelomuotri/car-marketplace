@@ -41,7 +41,6 @@ const Sidebar = ({ setMenuOpened, menuOpened }: sideBarProps) => {
 
   const handleLogout = () => {
     logoutUser()
-    console.log('Cerrar sesión')
     // Aquí puedes agregar tu lógica para cerrar sesión, como limpiar el estado o llamar a una API
   }
 

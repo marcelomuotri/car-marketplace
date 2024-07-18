@@ -40,7 +40,7 @@ export const theme = {
     },
     common: {
       greyE6: '#ADB5BD',
-      greyE7:'#757575',
+      greyE7: '#757575',
       black: '#000',
       white: '#FFF',
       transparent: 'transparent',
@@ -65,4 +65,7 @@ export const theme = {
   },
   typography: typographys,
   spacing: 1,
+  shape: {
+    borderRadius: 4,
+  },
 }

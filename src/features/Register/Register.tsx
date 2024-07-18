@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { RootState } from '../../framework/state/store'
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useStyles } from './register.styles'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import FTextInput from '../../components/FTextInput/FTextInput'
@@ -13,9 +13,8 @@ import Loader from '../../components/Loader'
 
 interface RegisterFormFieldsProps {
   email: string
-  name: string
-  surname: string
   password: string
+  repeatPassword: string
 }
 
 const Register = () => {
@@ -33,9 +32,8 @@ const Register = () => {
   } = useForm<RegisterFormFieldsProps>({
     defaultValues: {
       email: '',
-      name: '',
-      surname: '',
       password: '',
+      repeatPassword: '',
     },
   })
 
@@ -70,30 +68,21 @@ const Register = () => {
           }}
         />
         <FTextInput
-          name='name'
-          control={control}
-          label='Name'
-          error={errors.password}
-          rules={{
-            required: 'Password is required',
-            maxLength: { value: 20, message: 'Max length is 20' },
-          }}
-        />
-        <FTextInput
-          name='surname'
-          control={control}
-          label='Surname'
-          error={errors.password}
-          rules={{
-            required: 'Password is required',
-            maxLength: { value: 20, message: 'Max length is 20' },
-          }}
-        />
-        <FTextInput
           name='password'
           control={control}
           label='Password'
           error={errors.password}
+          rules={{
+            required: 'Password is required',
+            maxLength: { value: 20, message: 'Max length is 20' },
+          }}
+          type='password'
+        />
+        <FTextInput
+          name='repeatPassword'
+          control={control}
+          label='Repetir password'
+          error={errors.repeatPassword}
           rules={{
             required: 'Password is required',
             maxLength: { value: 20, message: 'Max length is 20' },

@@ -89,7 +89,6 @@ interface ProductsListProps {
 }
 
 const CheckboxList = ({ products }: ProductsListProps) => {
-  console.log(products)
   const [checked, setChecked] = useState<number[]>([])
   const [allChecked, setAllChecked] = useState(false)
   const { classes: styles } = useStyles()

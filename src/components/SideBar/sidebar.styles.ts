@@ -12,7 +12,6 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     [theme.breakpoints.down('sm')]: {
       height: '100vh',
     },
-    
   },
   closeIcon: {
     display: 'flex',
@@ -20,10 +19,10 @@ export const useStyles = makeStyles()((theme: Theme) => ({
   },
   arrow: {
     color: theme.palette.text.primary,
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
   },
   itemButton: {
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
   },
   optionText: {
     color: 'theme.palette.text.primary',
@@ -34,11 +33,10 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     '& .MuiListItemIcon-root': {
       minWidth: '0px',
       marginRight: '8px',
-    }
+    },
   },
   itemBottom: {
     marginRight: 0,
     paddingRight: 0,
-
   },
 }))

@@ -57,7 +57,7 @@ export const appComponents: Components<Omit<Theme, 'components'>> = {
     },
     styleOverrides: {
       root: {
-        fontSize: '14px',  // Establece el tamaño de fuente aquí
+        fontSize: '14px', // Establece el tamaño de fuente aquí
       },
     },
   },
@@ -72,6 +72,7 @@ export const appComponents: Components<Omit<Theme, 'components'>> = {
         ':hover': {
           boxShadow: 'none',
         },
+        borderRadius: theme.shape.borderRadius,
       },
     },
   },
@@ -91,21 +92,36 @@ export const appComponents: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       root: {
         '@media (min-width: 600px)': {
-          minHeight: 34, /* También asegúrate de manejar el media query */
+          minHeight: 34 /* También asegúrate de manejar el media query */,
         },
-      }
-    }
+      },
+    },
   },
-  MuiListItemButton: {
+  // MuiListItemButton: {
+  //   styleOverrides: {
+  //     root: {
+  //         borderRadius: 4,
+  //         '&.Mui-selected': {
+  //           backgroundColor: '#F7F7F7',
+  //           '&:hover': {
+  //             backgroundColor: '#F7F7F7',
+  //           },
+  //         },
+  //     },
+  //   },
+  // },
+  MuiOutlinedInput: {
     styleOverrides: {
       root: {
-          borderRadius: 4,
-          '&.Mui-selected': {
-            backgroundColor: '#F7F7F7',
-            '&:hover': {
-              backgroundColor: '#F7F7F7',
-            },
-          },
+        borderRadius: 8,
+        height: 40,
+      },
+    },
+  },
+  MuiSvgIcon: {
+    styleOverrides: {
+      root: {
+        color: theme.palette.text.primary, // Establece el tamaño de fuente aquí
       },
     },
   },

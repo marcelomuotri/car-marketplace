@@ -5,22 +5,24 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
-import { doc, setDoc, getDoc } from 'firebase/firestore'
+import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
 import {
   loginFailure,
   loginSuccess,
   logoutSuccess,
   loginLoading,
+  updateUserData,
 } from '../slices/authSlice'
 import { auth, db } from '../../../../firebaseConfig'
+import { createUserPayload } from '../../models/authModel'
+import dayjs from 'dayjs'
 
 export const useAuthService = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      console.log('firebaseUser', firebaseUser)
       if (firebaseUser) {
         const docRef = doc(db, 'users', firebaseUser.uid)
         const docSnap = await getDoc(docRef)
@@ -39,6 +41,7 @@ export const useAuthService = () => {
   }, [])
 
   const loginUser = async ({ email, password }) => {
+    //TODO, aca tendria que fetchear la base de datos para traer los datos del usuario
     dispatch(loginLoading())
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -56,12 +59,18 @@ export const useAuthService = () => {
       }
       return user
     } catch (error) {
-      console.log(error)
+      console.error(error)
       dispatch(loginFailure(error.message))
     }
   }
-  const createUser = async ({ email, password, name, surname }) => {
+  const createUser = async ({ email, password }) => {
+    // Validación de parámetros
+    if (!email || !password) {
+      throw new Error('Email and password are required')
+    }
+
     dispatch(loginLoading())
+
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -71,32 +80,33 @@ export const useAuthService = () => {
       const user = userCredential.user
 
       if (user) {
-        //modelo para guardar datos
-        //TODO: crear un modelo para crear un usuario
-        const payload = {
-          user: user.email,
-          userData: {
-            name,
-            surname,
-            email,
-          },
-        }
-        dispatch(loginSuccess(payload))
-
-        // Intentar almacenar información adicional en Firestore
-        // TODO: crear un modelo para userPayload
-        const userPayload = {
-          email: user.email,
-          name,
-          surname,
-        }
-
+        const userPayload = createUserPayload(user)
         await saveUserToFirestore(userPayload, user.uid)
+        dispatch(loginSuccess({ user: user.email, userData: userPayload }))
         return user
+      } else {
+        throw new Error('User creation failed')
       }
     } catch (error) {
       console.error('Error creating user:', error)
       dispatch(loginFailure(error.message))
+      throw error
+    }
+  }
+
+  const fetchUserData = async (uid) => {
+    try {
+      const userDocRef = doc(db, 'users', uid)
+      const userDoc = await getDoc(userDocRef)
+      if (userDoc.exists()) {
+        const userData = userDoc.data()
+        console.log(userData)
+        dispatch(updateUserData(userData))
+      } else {
+        console.error('No such document!')
+      }
+    } catch (e) {
+      console.error('Error fetching document:', e)
     }
   }
 
@@ -109,14 +119,35 @@ export const useAuthService = () => {
     }
   }
 
+  const updateUserToFirestore = async (userPayload, uid) => {
+    try {
+      const userDocRef = doc(db, 'users', uid)
+      const parsedFields = {
+        ...userPayload,
+        updatedAt: dayjs().toISOString(),
+      }
+      dispatch(updateUserData(parsedFields))
+      await updateDoc(userDocRef, parsedFields)
+    } catch (e) {
+      console.error('Error updating document to Firestore:', e)
+    }
+  }
+
   const logoutUser = async () => {
     try {
       await signOut(auth)
       dispatch(logoutSuccess())
     } catch (error) {
       //TODO logout failure
-      console.log(error)
+      console.error(error)
     }
   }
-  return { loginUser, logoutUser, createUser }
+  return {
+    loginUser,
+    logoutUser,
+    createUser,
+    saveUserToFirestore,
+    updateUserToFirestore,
+    fetchUserData,
+  }
 }

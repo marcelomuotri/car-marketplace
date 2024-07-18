@@ -13,5 +13,5 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1000,
-  }
+  },
 }))

@@ -65,6 +65,9 @@ const appTheme = createTheme({
   typography: appTypographys,
   spacing: theme.spacing,
   components: appComponents,
+  shape: {
+    borderRadius: theme.shape.borderRadius,
+  },
 })
 
 export default appTheme

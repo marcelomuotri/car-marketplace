@@ -19,5 +19,23 @@
     "stillDontHavePublications": "Todavía no tienes publicaciones.",
     "createTheFirstOne": "¡Crea una nueva!",
     "createPublication": "Crear publicación",
-    "youMustVerifyYoutData": "Debes verificar tu identidad para que tus publicaciones se puedan mostrar en la app"
+    "youMustVerifyYoutData": "Debes verificar tu identidad para que tus publicaciones se puedan mostrar en la app",
+    "weAreVerifyingYourData": "Estamos verificando tu perfil. Pronto tendrás novedades.",
+    "next": "Siguiente",
+    "back": "Anterior",
+    "end": "Finalizar",
+    "personalData": "Datos personales",
+    "confirmPersonalData": "Confirma tus datos personales",
+    "completeAndConfirm": "Completá y confirmá tus datos personales. Asegurate de estén escritos correctamente antes de avanzar al siguiente paso.",
+    "docuementAndSelfie": "Documento y selfie",
+    "documentAndPhotoSelfie": "Documento y foto  selfie",
+    "toCompleteVerifyProcess": "Para completar el proceso de verificación, necesitamos una imagen de tu documento de identidad y una Selfie.",
+    "DNIFront": "Foto DNI Frente",
+    "DNIPhotoBack": "Foto DNI Dorso",
+    "SelfiePhoto": "Foto Selfie",
+    "makeSureYourFace": "Asegurate de que tu rostro este claro y visible, sin accesorios que lo cubran.",
+    "completeProfile": "completar perfil",
+    "verificationRequestSubmitted": "¡Tu solicitud de verificación ha sido enviada correctamente!",
+    "youWillReceiveTheConfirmationSoon": "Pronto recibirás la confirmación. Mientras esperás, podés comenzar a crear tu perfil para que otros usuarios te conozcan y sepan que vendes."
+    
 }

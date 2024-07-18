@@ -1,5 +1,5 @@
 //import { useStyles } from './home.styles'
-import { useNavigate } from 'react-router-dom'
+//import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { db } from '../../../firebaseConfig'
 import {
@@ -10,20 +10,17 @@ import {
   query,
   startAfter,
 } from 'firebase/firestore'
-import FButton from '../../components/FButton/FButton'
-import { useAuthService } from '../../framework/state/services/authService'
-import { Box, Button } from '@mui/material'
-import ProductList from './components/ProductsList/ProductList'
-import TopBar from './components/topBar/TopBar'
-import { parseProduct } from '../../framework/validators/parseProduct'
-import { LegendToggleOutlined } from '@mui/icons-material'
-import { useStyles } from './home.styles'
+import { Box, Fade } from '@mui/material'
+//import { useStyles } from './home.styles'
 import Loader from '../../components/Loader'
 import EmptyProducts from './components/EmptyProducts/EmptyProducts'
 import VerifyWarning from '../../components/VerifyWarning/VerifyWarning'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../framework/state/store'
 
 const Home = () => {
-  const { classes: styles } = useStyles()
+  //const { classes: styles } = useStyles()
+  const { userData } = useSelector((state: RootState) => state.auth)
 
   const [products, setProducts] = useState<any>([])
   const [loading, setLoading] = useState(true)
@@ -69,11 +66,9 @@ const Home = () => {
 
       setLoading(false)
     } catch (error) {
-      console.error('Error fetching products:', error)
       setLoading(false)
     }
   }
-  console.log(products)
 
   const goToNextPage = () => {
     if (lastVisible) {
@@ -95,7 +90,13 @@ const Home = () => {
   return (
     <Box>
       {loading && <Loader />}
-      <VerifyWarning />
+      {userData?.verifiedStatus !== 'verified' && (
+        <Fade in={true} timeout={700}>
+          <Box>
+            <VerifyWarning verifiedStatus={userData?.verifiedStatus} />
+          </Box>
+        </Fade>
+      )}
       {products.length > 0 && <EmptyProducts />}
       {/* <FButton title='cerrar sesion' onClick={onCloseSession()} /> */}
       {/* <TopBar />

@@ -23,7 +23,7 @@ const authSlice = createSlice({
     },
     loginSuccess(
       state,
-      action: PayloadAction<{ user: string; userData: UserData }>,
+      action: PayloadAction<{ user: string; userData: UserData }>
     ) {
       //TODO remove any
       state.user = action.payload.user
@@ -39,11 +39,19 @@ const authSlice = createSlice({
       state.loading = false
       state.error = null
     },
+    updateUserData: (state, action: PayloadAction<any>) => {
+      state.userData = action.payload
+    },
   },
   //extraReducers: (builder) => {},
 })
 
-export const { loginFailure, loginSuccess, logoutSuccess, loginLoading } =
-  authSlice.actions
+export const {
+  loginFailure,
+  loginSuccess,
+  logoutSuccess,
+  loginLoading,
+  updateUserData,
+} = authSlice.actions
 // Exporta el reducer de la slice
 export const authReducer = authSlice.reducer

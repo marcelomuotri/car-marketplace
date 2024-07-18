@@ -10,9 +10,14 @@ import {
   FormControl,
   InputLabel,
   FormHelperText,
+  Typography,
+  Box,
 } from '@mui/material'
 import { Controller, Control, FieldError } from 'react-hook-form'
 import { makeStyles } from 'tss-react/mui'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider/LocalizationProvider'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 const useStyles = makeStyles()((theme) => ({
   input: {
@@ -31,6 +36,8 @@ interface GenericInputProps {
   options?: { value: string; label: string }[] // For select and radio
   defaultValue?: any
   helperText?: string
+  width?: string | number // Prop para el ancho
+  height?: string | number // Prop para la altura
 }
 
 const FInput: React.FC<GenericInputProps> = ({
@@ -44,31 +51,35 @@ const FInput: React.FC<GenericInputProps> = ({
   options = [],
   defaultValue,
   helperText = '',
+  width = '100%', // Valor predeterminado de 230px
   ...props
 }) => {
   const { classes } = useStyles()
 
+  //todo, ver que onda con field, si sirve para algo
   const renderInput = (field) => {
     switch (type) {
       case 'text':
       case 'number':
-      case 'date':
       case 'phone':
         return (
-          <TextField
-            type={type === 'phone' ? 'tel' : type}
-            {...field}
-            {...props}
-            label={label}
-            placeholder={placeholder}
-            error={!!error}
-            helperText={error ? error.message : helperText}
-            variant='outlined'
-            fullWidth
-            InputLabelProps={{
-              shrink: false,
-            }}
-          />
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+            <Typography>{placeholder}</Typography>
+            <TextField
+              type={type === 'phone' ? 'tel' : type}
+              {...field}
+              {...props}
+              placeholder={label}
+              error={!!error}
+              helperText={error ? error.message : helperText}
+              variant='outlined'
+              InputLabelProps={{
+                shrink: false,
+              }}
+              fullWidth
+              size='small'
+            />
+          </Box>
         )
       case 'select':
         return (
@@ -77,6 +88,7 @@ const FInput: React.FC<GenericInputProps> = ({
             error={!!error}
             fullWidth
             variant='outlined'
+            style={{ width }} // Aplicar el ancho personalizado
           >
             <InputLabel>{label}</InputLabel>
             <Select
@@ -103,6 +115,7 @@ const FInput: React.FC<GenericInputProps> = ({
           <FormControlLabel
             control={<Checkbox {...field} checked={field.value} {...props} />}
             label={label}
+            style={{ width }} // Aplicar el ancho personalizado
           />
         )
       case 'radio':
@@ -111,6 +124,7 @@ const FInput: React.FC<GenericInputProps> = ({
             component='fieldset'
             className={classes.input}
             error={!!error}
+            style={{ width }} // Aplicar el ancho personalizado
           >
             <RadioGroup {...field} {...props}>
               {options.map((option) => (
@@ -128,6 +142,29 @@ const FInput: React.FC<GenericInputProps> = ({
               </FormHelperText>
             )}
           </FormControl>
+        )
+      case 'date':
+        return (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+            <Typography>{placeholder}</Typography>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                {...field}
+                onChange={(date) => field.onChange(date)}
+                format={'DD/MM/YYYY'}
+                value={field.value || null}
+                slotProps={{
+                  textField: {
+                    variant: 'outlined',
+                    error: !!error,
+                    helperText: error ? error.message : helperText,
+                    fullWidth: true,
+                    size: 'small',
+                  },
+                }}
+              />
+            </LocalizationProvider>
+          </Box>
         )
       default:
         return null

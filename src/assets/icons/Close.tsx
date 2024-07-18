@@ -1,4 +1,4 @@
-const CloseIcon = ({ width = 28, height = 28, color = '#757575' }) => (
+const CloseIcon = ({ width = 28, height = 28 }) => (
   <svg
     width={width}
     height={height}

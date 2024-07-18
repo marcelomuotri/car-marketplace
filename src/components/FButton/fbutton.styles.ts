@@ -7,7 +7,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     border: '1px solid transparent',
-    borderRadius: 8,
+    borderRadius: theme.shape.borderRadius,
     fontWeight: 700,
     ':hover': {
       borderColor: theme.palette.primary.main,

@@ -2,12 +2,8 @@
 import { initializeApp } from 'firebase/app'
 
 import { getFirestore } from 'firebase/firestore'
-import {
-  getAuth,
-  setPersistence,
-  signInWithEmailAndPassword,
-  browserLocalPersistence,
-} from 'firebase/auth'
+import { getStorage } from 'firebase/storage'
+import { getAuth, setPersistence, browserLocalPersistence } from 'firebase/auth'
 
 // Optionally import the services that you want to use
 // import {...} from "firebase/auth";
@@ -34,5 +30,6 @@ const db = getFirestore(app)
 
 const auth = getAuth()
 setPersistence(auth, browserLocalPersistence)
+const storage = getStorage(app)
 
-export { auth, db }
+export { auth, db, storage }

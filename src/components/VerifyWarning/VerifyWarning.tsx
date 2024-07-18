@@ -1,8 +1,12 @@
-import { Box, Typography, Grid, useMediaQuery } from '@mui/material'
+import { Box, Typography, Grid } from '@mui/material'
 import { makeStyles } from 'tss-react/mui'
 import { Theme } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+
+interface VerifyWarningProps {
+  verifiedStatus: string | undefined
+}
 
 const useStyles = makeStyles()((theme: Theme) => ({
   container: {
@@ -25,25 +29,33 @@ const useStyles = makeStyles()((theme: Theme) => ({
   },
 }))
 
-const VerifyWarning = () => {
+const VerifyWarning = ({ verifiedStatus }: VerifyWarningProps) => {
   const { t } = useTranslation()
   const { classes: styles } = useStyles()
 
   return (
     <Box className={styles.container}>
       <Grid container justifyContent='center' alignItems='center' spacing={2}>
-        <Grid item xs={12} sm='auto'>
+        {verifiedStatus === 'unverified' ? (
+          <>
+            <Grid item xs={12} sm='auto'>
+              <Typography className={styles.title}>
+                {t('youMustVerifyYoutData')}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm='auto'>
+              <Link to='/verifyId'>
+                <Typography className={styles.verifyNow}>
+                  Verificar ahora
+                </Typography>
+              </Link>
+            </Grid>
+          </>
+        ) : (
           <Typography className={styles.title}>
-            {t('youMustVerifyYoutData')}
+            {t('weAreVerifyingYourData')}
           </Typography>
-        </Grid>
-        <Grid item xs={12} sm='auto'>
-          <Link to='/verifyId'>
-            <Typography className={styles.verifyNow}>
-              Verificar ahora
-            </Typography>
-          </Link>
-        </Grid>
+        )}
       </Grid>
     </Box>
   )

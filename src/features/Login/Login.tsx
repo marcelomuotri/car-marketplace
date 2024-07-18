@@ -17,7 +17,7 @@ interface LoginFormFieldsProps {
 }
 
 const Login = () => {
-  const { loading, error } = useSelector((state: RootState) => state.auth)
+  const { user, loading, error } = useSelector((state: RootState) => state.auth)
   const { t } = useTranslation()
   const navigation = useNavigate()
   const { classes: styles } = useStyles()
@@ -33,6 +33,9 @@ const Login = () => {
     },
   })
   const theme = useTheme()
+  if (user) {
+    navigation('/')
+  }
 
   const onHandleLogin: SubmitHandler<LoginFormFieldsProps> = async (data) => {
     const user = await loginUser(data)

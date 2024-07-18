@@ -12,6 +12,6 @@ export const useStyles = makeStyles()((theme: Theme) => ({
   },
   avatar: {
     width: '30px',
-    height: '30px'
-  }
+    height: '30px',
+  },
 }))
