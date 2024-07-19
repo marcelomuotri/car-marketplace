@@ -14,6 +14,8 @@ import { initReactI18next } from 'react-i18next'
 import es from './framework/i18n/es.json'
 import 'intl-pluralrules'
 import VerifyId from './features/VerifyId/VerifyId'
+import MyProfile from './features/MyProfile/MyProfile'
+import EditProfile from './features/EditProfile/EditProfile'
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -52,7 +54,11 @@ const router = createBrowserRouter([
           },
           {
             path: 'profile',
-            element: <div>profile</div>,
+            element: <MyProfile />,
+          },
+          {
+            path: 'editProfile',
+            element: <EditProfile />,
           },
           {
             path: 'categories',

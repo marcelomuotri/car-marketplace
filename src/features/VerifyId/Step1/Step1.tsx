@@ -5,7 +5,13 @@ import { useTranslation } from 'react-i18next'
 import FInput from '../../../components/FInput'
 import FForm from '../../../components/FForm'
 
-const useStyles = makeStyles()((theme: Theme) => ({}))
+const useStyles = makeStyles()((theme: Theme) => ({
+  gridContainer: {
+    [theme.breakpoints.down('md')]: {
+      display: 'block',
+    },
+  },
+}))
 
 const Step1 = ({ control, errors }: any) => {
   const { t } = useTranslation()
@@ -17,7 +23,12 @@ const Step1 = ({ control, errors }: any) => {
       formTitle={t('Confirma tus datos personales')}
       formSubtitle={t('completeAndConfirm')}
     >
-      <Grid container columnSpacing={56} rowSpacing={26}>
+      <Grid
+        container
+        columnSpacing={56}
+        rowSpacing={26}
+        className={styles.gridContainer}
+      >
         <Grid item xs={12} sm={6}>
           <FInput
             type='text'

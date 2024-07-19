@@ -2,7 +2,6 @@ import { useCallback } from 'react'
 import { makeStyles } from 'tss-react/mui'
 import { useDropzone } from 'react-dropzone'
 import { Box, Typography } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
 import UploadIcon from '../assets/icons/UploadIcon'
 import InfoIcon from '../assets/icons/InfoIcon'
 
@@ -46,12 +45,6 @@ const useStyles = makeStyles()((theme) => ({
     fontWeight: 600,
     color: theme.palette.common.black,
   },
-  subTitle: {
-    whiteSpace: 'nowrap',
-    [theme.breakpoints.down('sm')]: {
-      whiteSpace: 'normal',
-    },
-  },
   columnContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -74,7 +67,6 @@ const UploadImage: React.FC<UploadImageProps> = ({
   setImage,
 }) => {
   const { classes } = useStyles()
-  //const theme = useTheme()
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {

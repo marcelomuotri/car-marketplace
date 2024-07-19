@@ -24,4 +24,5 @@ export const createUserPayload: (user: any) => UserData = (user) => ({
   contactEmail: null,
   photoToShowUrl: null,
   isSeller: true,
+  nameToShow: null,
 })

@@ -26,7 +26,7 @@ const VerifyId = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { uploadImage } = useUploadImage()
-  const { updateUserToFirestore, fetchUserData } = useAuthService()
+  const { updateUserToFirestore } = useAuthService()
   const [showSuccess, setShowSuccess] = useState(false)
   const [activeStep, setActiveStep] = useState(0)
   const [isNextDisabled, setIsNextDisabled] = useState(true)
@@ -94,7 +94,6 @@ const VerifyId = () => {
     if (activeStep === steps.length - 1) {
       handleSubmit(onSubmit)()
       setShowSuccess(true)
-      //fetchUserData(userData?.uid)
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1)
     }

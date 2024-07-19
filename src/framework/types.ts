@@ -23,6 +23,7 @@ export interface UserData {
   contactEmail: string | null
   photoToShowUrl: string | null
   isSeller: boolean
+  nameToShow: string | null
 }
 
 export interface AuthState {

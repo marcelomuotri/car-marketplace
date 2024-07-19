@@ -94,22 +94,6 @@ export const useAuthService = () => {
     }
   }
 
-  const fetchUserData = async (uid) => {
-    try {
-      const userDocRef = doc(db, 'users', uid)
-      const userDoc = await getDoc(userDocRef)
-      if (userDoc.exists()) {
-        const userData = userDoc.data()
-        console.log(userData)
-        dispatch(updateUserData(userData))
-      } else {
-        console.error('No such document!')
-      }
-    } catch (e) {
-      console.error('Error fetching document:', e)
-    }
-  }
-
   const saveUserToFirestore = async (userPayload, uid) => {
     try {
       const userDocRef = doc(db, 'users', uid)
@@ -148,6 +132,5 @@ export const useAuthService = () => {
     createUser,
     saveUserToFirestore,
     updateUserToFirestore,
-    fetchUserData,
   }
 }

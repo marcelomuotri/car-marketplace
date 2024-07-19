@@ -7,14 +7,13 @@ const useStyles = makeStyles()((theme: Theme) => ({
     fontSize: 20,
     fontWeight: 500,
     marginBottom: 16,
-    marginTop: 123,
     color: '#000',
     [theme.breakpoints.down('sm')]: {
       marginTop: 0,
     },
   },
   formContainer: {
-    padding: '25px 25px 60px 25px',
+    padding: '25px 25px 25px 25px',
     background: '#fff',
     borderRadius: theme.shape.borderRadius,
     [theme.breakpoints.down('sm')]: {
