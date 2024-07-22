@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { makeStyles } from 'tss-react/mui'
-import { useDropzone } from 'react-dropzone'
+import { useDropzone, DropzoneOptions } from 'react-dropzone'
 import { Box, Typography } from '@mui/material'
 import UploadIcon from '../assets/icons/UploadIcon'
 import InfoIcon from '../assets/icons/InfoIcon'
@@ -24,7 +24,7 @@ const useStyles = makeStyles()((theme) => ({
   imagePreview: {
     width: 178,
     height: 105,
-    backgroundColor: '#E7E7E7',
+    backgroundColor: theme.palette.grey[300],
     display: 'flex',
     justifyContent: 'center',
     borderRadius: theme.shape.borderRadius,
@@ -59,16 +59,18 @@ interface UploadImageProps {
   title: string
   subTitle?: string
   setImage: (file: File) => void
+  image: string
 }
 
 const UploadImage: React.FC<UploadImageProps> = ({
   title,
   subTitle,
   setImage,
+  image,
 }) => {
   const { classes } = useStyles()
 
-  const onDrop = useCallback(
+  const onDrop = useCallback<NonNullable<DropzoneOptions['onDrop']>>(
     (acceptedFiles: File[]) => {
       if (acceptedFiles.length > 0) {
         setImage(acceptedFiles[0])
@@ -80,23 +82,25 @@ const UploadImage: React.FC<UploadImageProps> = ({
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
     useDropzone({ onDrop })
 
+  const previewImage = acceptedFiles[0]
+    ? URL.createObjectURL(acceptedFiles[0])
+    : image
+
   return (
     <>
       <Box className={classes.titleContainer}>
         <Typography className={classes.titleText}>{title}</Typography>
         <InfoIcon />
       </Box>
-      {subTitle && (
-        <Typography className={classes.subTitle}>{subTitle}</Typography>
-      )}
-      <div {...getRootProps()}>
+      {subTitle && <Typography>{subTitle}</Typography>}
+      <div {...getRootProps()} role='button' aria-label='Upload Image Dropzone'>
         <input {...getInputProps()} />
         {isDragActive ? (
           <Box className={classes.columnContainer}>
             <Box
               className={classes.dropzoneContainer}
               sx={{
-                border: '1px dashed red!important',
+                border: '1px dashed rgba(0, 122, 255, 0.86)',
               }}
             >
               <UploadIcon />
@@ -105,16 +109,10 @@ const UploadImage: React.FC<UploadImageProps> = ({
               </Typography>
             </Box>
           </Box>
-        ) : acceptedFiles[0] ? (
-          <>
-            <Box className={classes.imagePreview}>
-              <img
-                src={URL.createObjectURL(acceptedFiles[0])}
-                alt='profile'
-                className={classes.image}
-              />
-            </Box>
-          </>
+        ) : previewImage ? (
+          <Box className={classes.imagePreview}>
+            <img src={previewImage} alt='preview' className={classes.image} />
+          </Box>
         ) : (
           <Box className={classes.columnContainer}>
             <Box className={classes.dropzoneContainer}>

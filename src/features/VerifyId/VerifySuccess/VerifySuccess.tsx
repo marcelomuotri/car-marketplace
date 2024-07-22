@@ -54,7 +54,7 @@ const VerifySuccess = () => {
       </Box>
       <FButton
         className={styles.button}
-        title={t('completeProfile')}
+        title={t('Crear tu primera publicacion')}
         onClick={handleCompleteProfile}
       />
     </>

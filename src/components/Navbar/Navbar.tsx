@@ -21,7 +21,7 @@ const NavBar = ({ setMenuOpened }: NavbarProps) => {
   }
 
   return (
-    <AppBar position='static' className={styles.appbar}>
+    <AppBar className={styles.appbar}>
       <Toolbar className={styles.toolbar}>
         {matchesDownSm ? (
           <IconButton onClick={onToggleMenu}>

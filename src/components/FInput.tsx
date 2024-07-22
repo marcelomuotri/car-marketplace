@@ -28,16 +28,28 @@ const useStyles = makeStyles()((theme) => ({
 interface GenericInputProps {
   name: string
   control: Control<any>
-  label: string
+  label?: string
   error?: FieldError
   rules?: any
-  type: 'text' | 'number' | 'date' | 'select' | 'phone' | 'checkbox' | 'radio'
+  type:
+    | 'text'
+    | 'number'
+    | 'date'
+    | 'select'
+    | 'phone'
+    | 'checkbox'
+    | 'radio'
+    | 'password'
   placeholder?: string
   options?: { value: string; label: string }[] // For select and radio
   defaultValue?: any
   helperText?: string
   width?: string | number // Prop para el ancho
   height?: string | number // Prop para la altura
+  rows?: number // Prop para el número de filas
+  sx?: any
+  validationType?: 'email' | 'phone' | 'number' | 'text'
+  disabled?: boolean
 }
 
 const FInput: React.FC<GenericInputProps> = ({
@@ -52,16 +64,56 @@ const FInput: React.FC<GenericInputProps> = ({
   defaultValue,
   helperText = '',
   width = '100%', // Valor predeterminado de 230px
+  rows = 1,
+  validationType,
+  disabled,
   ...props
 }) => {
   const { classes } = useStyles()
 
-  //todo, ver que onda con field, si sirve para algo
+  const getValidationRules = (validationType: string) => {
+    switch (validationType) {
+      case 'email':
+        return {
+          pattern: {
+            value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+            message: 'La direccion de email es invalida',
+          },
+        }
+      case 'phone':
+        return {
+          pattern: {
+            value: /^\d{10}$/,
+            message: 'el telefono es invalido',
+          },
+        }
+      case 'number':
+        return {
+          pattern: {
+            value: /^\d+$/,
+            message: 'Solo se admiten numeros',
+          },
+        }
+      case 'text':
+        return {
+          pattern: {
+            value: /^[a-zA-Z ]*$/,
+            message: 'Solo se admite texto',
+          },
+        }
+      default:
+        return {}
+    }
+  }
+
+  const validationRules = { ...rules, ...getValidationRules(validationType) }
+
   const renderInput = (field) => {
     switch (type) {
       case 'text':
       case 'number':
       case 'phone':
+      case 'password':
         return (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
             <Typography>{placeholder}</Typography>
@@ -78,6 +130,9 @@ const FInput: React.FC<GenericInputProps> = ({
               }}
               fullWidth
               size='small'
+              rows={rows}
+              multiline={rows > 1}
+              disabled={disabled}
             />
           </Box>
         )
@@ -96,6 +151,7 @@ const FInput: React.FC<GenericInputProps> = ({
               {...props}
               label={label}
               defaultValue={defaultValue}
+              inputProps={{ 'aria-label': 'Without label' }}
             >
               {options.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -162,6 +218,7 @@ const FInput: React.FC<GenericInputProps> = ({
                     size: 'small',
                   },
                 }}
+                disabled={disabled}
               />
             </LocalizationProvider>
           </Box>
@@ -175,7 +232,7 @@ const FInput: React.FC<GenericInputProps> = ({
     <Controller
       name={name}
       control={control}
-      rules={rules}
+      rules={validationRules}
       render={({ field }) => renderInput(field)}
     />
   )

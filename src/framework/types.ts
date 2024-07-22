@@ -9,7 +9,7 @@ export interface UserData {
   role: string
   createdAt: string
   verifiedStatus: string
-  phone: string | null
+  phoneNumber: string | null
   address: string | null
   city: string | null
   state: string | null
@@ -24,6 +24,7 @@ export interface UserData {
   photoToShowUrl: string | null
   isSeller: boolean
   nameToShow: string | null
+  dni: string | null
 }
 
 export interface AuthState {

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Box } from '@mui/material'
-import Step1 from './Step1/Step1'
 import Step2 from './Step2/Step2'
 import FButton from '../../components/FButton/FButton'
 import { useStyles } from './verifyId.styles'
@@ -11,14 +10,27 @@ import { useAuthService } from '../../framework/state/services/authService'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../framework/state/store'
-import { convertDatesToISOString } from '../../framework/utils/dayjsConverter'
+import {
+  convertDatesToISOString,
+  convertISOStringToDayjs,
+} from '../../framework/utils/dayjsConverter'
 import VerifySuccess from './VerifySuccess/VerifySuccess'
+import EditProfileForm from '../EditProfile/Components/EditProfileForm'
+import { Dayjs } from 'dayjs'
 
 interface FormValues {
   name: string
-  surname: string
   dni: string
-  birthdate: Date | null
+  surname: string
+  birthdate: Dayjs
+  contactEmail: string
+  phoneNumber: string
+  address: string
+  city: string
+  state: string
+  nameToShow: string
+  description: string
+  profilePhoto: string
 }
 
 const VerifyId = () => {
@@ -33,6 +45,7 @@ const VerifyId = () => {
   const [photoProfile, setPhotoProfile] = useState<File | null>(null)
   const [photoFrontID, setPhotoFrontID] = useState<File | null>(null)
   const [photoBackID, setPhotoBackID] = useState<File | null>(null)
+  const [photoToShow, setPhotoToShow] = useState<File | null>(null)
   const { userData } = useSelector((state: RootState) => state.auth)
 
   const {
@@ -44,10 +57,17 @@ const VerifyId = () => {
   } = useForm<FormValues>({
     mode: 'onBlur',
     defaultValues: {
-      name: '',
-      surname: '',
-      dni: '',
-      birthdate: null,
+      name: userData?.name || '',
+      dni: userData?.dni || '',
+      surname: userData?.surname || '',
+      birthdate: convertISOStringToDayjs(userData?.birthdate) || '',
+      contactEmail: userData?.contactEmail || '',
+      phoneNumber: userData?.phoneNumber || '',
+      address: userData?.address || '',
+      city: userData?.city || '',
+      state: userData?.state || '',
+      nameToShow: userData?.nameToShow || '',
+      description: userData?.description || '',
     },
   })
 
@@ -80,7 +100,12 @@ const VerifyId = () => {
   ])
 
   const steps = [
-    <Step1 control={control} errors={errors} />,
+    <EditProfileForm
+      control={control}
+      errors={errors}
+      setPhotoToShow={setPhotoToShow}
+      photoToShowUrl={userData?.photoToShowUrl}
+    />,
     <Step2
       control={control}
       errors={errors}
@@ -115,9 +140,11 @@ const VerifyId = () => {
       ? await uploadImage(photoFrontID)
       : null
     const photoBackIDUrl = photoBackID ? await uploadImage(photoBackID) : null
+    const photoToShowUrl = photoToShow ? await uploadImage(photoToShow) : null
 
     const userDataToUpdate = {
       ...data,
+      photoToShowUrl: photoToShowUrl,
       photoProfileUrl: photoProfileUrl,
       photoFrontIdUrl: photoFrontIDUrl,
       photobackIdUrl: photoBackIDUrl,

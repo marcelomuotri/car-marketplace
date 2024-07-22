@@ -3,7 +3,9 @@ import { Theme } from '@mui/material'
 
 export const useStyles = makeStyles()((theme: Theme) => ({
   sideBarContainer: {
-    height: '93.8vh',
+    position: 'sticky',
+    top: 50,
+    height: '93.5vh',
     width: '230px',
     flexDirection: 'column',
     justifyContent: 'space-between',

@@ -6,7 +6,7 @@ import {
   signOut,
 } from 'firebase/auth'
 import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore'
-import { onAuthStateChanged } from 'firebase/auth'
+import { onAuthStateChanged, updatePassword } from 'firebase/auth'
 import {
   loginFailure,
   loginSuccess,
@@ -17,9 +17,11 @@ import {
 import { auth, db } from '../../../../firebaseConfig'
 import { createUserPayload } from '../../models/authModel'
 import dayjs from 'dayjs'
+import { useSnackbar } from 'notistack'
 
 export const useAuthService = () => {
   const dispatch = useDispatch()
+  const { enqueueSnackbar } = useSnackbar()
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -30,6 +32,7 @@ export const useAuthService = () => {
           userData: docSnap.data(),
           user: firebaseUser.email,
         }
+
         dispatch(loginSuccess(payload))
       } else {
         dispatch(loginFailure())
@@ -94,6 +97,37 @@ export const useAuthService = () => {
     }
   }
 
+  const changePassword = async (oldPassword, newPassword) => {
+    const user = auth.currentUser
+    const email = user.email
+    signInWithEmailAndPassword(auth, email, oldPassword)
+      .then((userCredential) => {
+        // El usuario ha iniciado sesión correctamente.
+        const user = userCredential.user
+
+        // Ahora puedes actualizar la contraseña del usuario
+        updatePassword(user, newPassword)
+          .then(() => {
+            enqueueSnackbar('Contraseña actualizada correctamente.', {
+              variant: 'success',
+            })
+          })
+          .catch((error) => {
+            console.error('Error al actualizar la contraseña:', error)
+            enqueueSnackbar('Error al actualizar la contraseña.', {
+              variant: 'error',
+            })
+          })
+      })
+      .catch((error) => {
+        // Hubo un error al iniciar sesión.
+        console.error('Error al iniciar sesión:', error)
+        enqueueSnackbar('Error al actualizar la contraseña.', {
+          variant: 'error',
+        })
+      })
+  }
+
   const saveUserToFirestore = async (userPayload, uid) => {
     try {
       const userDocRef = doc(db, 'users', uid)
@@ -132,5 +166,6 @@ export const useAuthService = () => {
     createUser,
     saveUserToFirestore,
     updateUserToFirestore,
+    changePassword,
   }
 }

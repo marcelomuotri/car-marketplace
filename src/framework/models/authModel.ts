@@ -10,7 +10,7 @@ export const createUserPayload: (user: any) => UserData = (user) => ({
   role: 'user',
   createdAt: dayjs().toISOString(),
   verifiedStatus: 'unverified',
-  phone: null,
+  phoneNumber: null,
   address: null,
   city: null,
   state: null,
@@ -25,4 +25,5 @@ export const createUserPayload: (user: any) => UserData = (user) => ({
   photoToShowUrl: null,
   isSeller: true,
   nameToShow: null,
+  dni: null,
 })

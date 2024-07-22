@@ -16,6 +16,7 @@ import 'intl-pluralrules'
 import VerifyId from './features/VerifyId/VerifyId'
 import MyProfile from './features/MyProfile/MyProfile'
 import EditProfile from './features/EditProfile/EditProfile'
+import { SnackbarProvider } from 'notistack'
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -92,12 +93,19 @@ const AppRouter = () => {
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={appTheme}>
-        <MyNotificationsProvider />
-        <AppRouter />
-      </ThemeProvider>
-    </Provider>
+    <SnackbarProvider
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+    >
+      <Provider store={store}>
+        <ThemeProvider theme={appTheme}>
+          <MyNotificationsProvider />
+          <AppRouter />
+        </ThemeProvider>
+      </Provider>
+    </SnackbarProvider>
   )
 }
 

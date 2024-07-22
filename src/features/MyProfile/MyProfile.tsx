@@ -3,10 +3,23 @@ import { Theme } from '@mui/material/styles'
 import { Avatar, Box, Button, Grid, Typography } from '@mui/material'
 import Tick from '../../assets/icons/Tick'
 import { useTheme } from '@mui/material/styles'
-import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import EditIcon from '../../assets/icons/EditIcon'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../framework/state/store'
+import { formattedDate } from '../../framework/utils/dayjsConverter'
+import FModal from '../../components/FModal/FModal'
+import FInput from '../../components/FInput'
+import { useForm } from 'react-hook-form'
+import { useState } from 'react'
+import { useAuthService } from '../../framework/state/services/authService'
+
+interface FormValues {
+  oldPassword: string
+  newPassword: string
+  repeatNewPassword: string
+}
 
 const useStyles = makeStyles()((theme: Theme) => ({
   container: {
@@ -29,6 +42,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '20px 30px 20px 30px',
+    borderRadius: theme.shape.borderRadius,
     [theme.breakpoints.down('md')]: {
       display: 'grid',
       padding: 20,
@@ -65,6 +79,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
     justifyContent: 'flex-end',
   },
   body: {
+    borderRadius: theme.shape.borderRadius,
     display: 'flex',
     [theme.breakpoints.down('md')]: {
       display: 'grid',
@@ -105,23 +120,107 @@ const useStyles = makeStyles()((theme: Theme) => ({
     color: theme.palette.common.black,
     fontSize: 14,
   },
+  changePasswordButton: {
+    color: '#007AFF',
+    fontSize: 12,
+    fontWeight: 400,
+    padding: 0,
+    textDecoration: 'underline',
+    '&:hover': {
+      background: 'transparent',
+    },
+  },
+  modalInputContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 20,
+  },
 }))
 const MyProfile = () => {
+  const { userData } = useSelector((state: RootState) => state.auth)
   const { classes: styles } = useStyles()
   const navigation = useNavigate()
   const theme = useTheme()
   const { t } = useTranslation()
+  const [openChangePasswordModal, setOpenChangePasswordModal] = useState(false)
+  const [modalError, setModalError] = useState<string | null>(null)
+  const { changePassword } = useAuthService()
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    defaultValues: {
+      oldPassword: '',
+      newPassword: '',
+      repeatNewPassword: '',
+    },
+  })
+
   const handleEditProfile = () => {
     navigation('/editProfile')
   }
+  const onOpenChangePasswordModal = () => {
+    setOpenChangePasswordModal(true)
+  }
+
+  const onChangePassword = handleSubmit((data) => {
+    const { oldPassword, newPassword, repeatNewPassword } = data
+    if (newPassword !== repeatNewPassword) {
+      setModalError('Las contraseñas no coinciden')
+      return
+    }
+    changePassword(oldPassword, newPassword)
+    setOpenChangePasswordModal(false)
+  })
+
   return (
     <Box className={styles.container}>
+      <FModal
+        title='Cambiar contraseña'
+        submitButtonTitle='Cambiar contraseña'
+        open={openChangePasswordModal}
+        saveFullWidth
+        onSave={onChangePassword}
+        onClose={() => setOpenChangePasswordModal(false)}
+      >
+        <Box className={styles.modalInputContainer}>
+          <FInput
+            placeholder='Contraseña actual'
+            type='password'
+            name='oldPassword'
+            control={control}
+            error={errors.oldPassword}
+          />
+          <FInput
+            placeholder='Nueva contraseña'
+            type='password'
+            name='newPassword'
+            control={control}
+            error={errors.oldPassword}
+          />
+          <FInput
+            placeholder='Repetir nueva contraseña'
+            type='password'
+            name='repeatNewPassword'
+            control={control}
+            error={errors.oldPassword}
+          />
+          {modalError && (
+            <Typography sx={{ color: 'red' }}>{modalError}</Typography>
+          )}
+        </Box>
+      </FModal>
       <Box className={styles.myProfileContainer}>
         <Box className={styles.header}>
           <Box className={styles.headerLeft}>
-            <Avatar sx={{ marginRight: 10, width: 60, height: 60 }} />
+            <Avatar
+              src={userData?.photoToShowUrl}
+              sx={{ marginRight: 10, width: 60, height: 60 }}
+            />
             <Typography className={styles.headerTitle}>
-              Escapes Claudio
+              {userData?.nameToShow}
             </Typography>
             <Tick />
           </Box>
@@ -130,7 +229,7 @@ const MyProfile = () => {
               {t('accountEmail')}
             </Typography>
             <Typography className={styles.fontText}>
-              hola@cositas.com
+              {userData?.userEmail}
             </Typography>
           </Box>
           <Box className={styles.headerRight}>
@@ -140,7 +239,12 @@ const MyProfile = () => {
             <Typography sx={{ color: theme.palette.common.black }}>
               **************
             </Typography>
-            <Link to='/changePassword'>Cambiar contraseña</Link>
+            <Button
+              onClick={onOpenChangePasswordModal}
+              className={styles.changePasswordButton}
+            >
+              Cambiar contraseña
+            </Button>
           </Box>
         </Box>
         <Box className={styles.bodyContainer}>
@@ -169,23 +273,27 @@ const MyProfile = () => {
                     <Typography className={styles.fontTitleSub}>
                       Nombre
                     </Typography>
-                    <Typography> Carlos Roberto</Typography>
+                    <Typography> {userData?.name}</Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>DNI</Typography>
-                    <Typography> 35375904</Typography>
+                    <Typography> {userData?.dni} </Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
                       Apellido
                     </Typography>
-                    <Typography> Fernandez Fort</Typography>
+                    <Typography> {userData?.surname} </Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
                       Fecha de nacimiento
                     </Typography>
-                    <Typography> 20/06/1990</Typography>
+                    <Typography>
+                      {userData?.birthdate
+                        ? formattedDate(userData?.birthdate)
+                        : ''}
+                    </Typography>
                   </Grid>
                 </Grid>
               </Box>
@@ -203,31 +311,31 @@ const MyProfile = () => {
                     <Typography className={styles.fontTitleSub}>
                       Email de contacto
                     </Typography>
-                    <Typography> carlos@roberto.com.ar</Typography>
+                    <Typography> {userData?.contactEmail}</Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
                       Telefono de contacto
                     </Typography>
-                    <Typography> +34 33145454</Typography>
+                    <Typography> {userData?.phoneNumber}</Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
                       Domicilio
                     </Typography>
-                    <Typography> Santa Maria de oro 1234</Typography>
+                    <Typography> {userData?.address}</Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
                       Ciudad
                     </Typography>
-                    <Typography> Ituzaingo</Typography>
+                    <Typography> {userData?.city}</Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
                       Provincia
                     </Typography>
-                    <Typography> Buenos Aires</Typography>
+                    <Typography> {userData?.state}</Typography>
                   </Grid>
                 </Grid>
               </Box>
@@ -240,22 +348,13 @@ const MyProfile = () => {
                 <Typography className={styles.fontTitleSub}>
                   Nombres para mostrar
                 </Typography>
-                <Typography> Escapes claudio</Typography>
+                <Typography> {userData?.nameToShow}</Typography>
               </Box>
               <Box>
                 <Typography className={styles.fontTitleSub}>
                   Descripcion
                 </Typography>
-                <Typography>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                </Typography>
+                <Typography>{userData?.description}</Typography>
               </Box>
             </Box>
           </Box>

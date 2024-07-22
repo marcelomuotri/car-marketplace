@@ -12,3 +12,11 @@ export const convertDatesToISOString = (data) => {
   }
   return convert(data)
 }
+
+export const convertISOStringToDayjs = (isoString) => {
+  return dayjs(isoString)
+}
+
+export const formattedDate = (isoString) => {
+  return dayjs(isoString).format('DD-MM-YYYY')
+}

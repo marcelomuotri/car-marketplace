@@ -16,5 +16,11 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     paddingBottom: 10,
     borderBottom: '1px solid',
     borderColor: theme.palette.primary.main,
+    marginBottom: 30,
+  },
+  buttonContainer: {
+    marginTop: 20,
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
 }))

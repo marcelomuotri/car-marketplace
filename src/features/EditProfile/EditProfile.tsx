@@ -1,10 +1,22 @@
-import FForm from '../../components/FForm'
-import { Box, Grid, TextField, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { makeStyles } from 'tss-react/mui'
 import { Theme } from '@mui/material/styles'
-import FInput from '../../components/FInput'
 import { useForm } from 'react-hook-form'
-import UploadImage from '../../components/UploadImage'
+import FButton from '../../components/FButton/FButton'
+import EditProfileForm from './Components/EditProfileForm'
+import {
+  convertDatesToISOString,
+  convertISOStringToDayjs,
+} from '../../framework/utils/dayjsConverter'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../framework/state/store'
+import { useAuthService } from '../../framework/state/services/authService'
+import { Dayjs } from 'dayjs'
+import { useUploadImage } from '../../framework/state/services/uploadImageService'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Loader from '../../components/Loader'
+import { useSnackbar } from 'notistack'
 
 const useStyles = makeStyles()((theme: Theme) => ({
   container: {
@@ -63,211 +75,94 @@ const useStyles = makeStyles()((theme: Theme) => ({
 interface FormValues {
   name: string
   dni: string
+  surname: string
+  birthdate: Dayjs
+  contactEmail: string
+  phoneNumber: string
+  address: string
+  city: string
+  state: string
+  nameToShow: string
+  description: string
+  profilePhoto: string
 }
 
 const EditProfile = () => {
   const { classes: styles } = useStyles()
+  const navigate = useNavigate()
+  const { enqueueSnackbar } = useSnackbar()
+  const { userData } = useSelector((state: RootState) => state.auth)
+  const { updateUserToFirestore } = useAuthService()
+  const { uploadImage, uploading } = useUploadImage()
+  const [photoToShow, setPhotoToShow] = useState<File | null>(null)
+
   const {
     control,
     handleSubmit,
     formState: { errors },
-    getValues,
-    watch,
   } = useForm<FormValues>({
     mode: 'onBlur',
     defaultValues: {
-      name: '',
-      dni: '',
+      name: userData?.name || '',
+      dni: userData?.dni || '',
+      surname: userData?.surname || '',
+      birthdate: convertISOStringToDayjs(userData?.birthdate) || '',
+      contactEmail: userData?.contactEmail || '',
+      phoneNumber: userData?.phoneNumber || '',
+      address: userData?.address || '',
+      city: userData?.city || '',
+      state: userData?.state || '',
+      nameToShow: userData?.nameToShow || '',
+      description: userData?.description || '',
     },
   })
+
+  const onHandleSaveProfile = async (data: FormValues) => {
+    let photoToShowUrl = userData?.photoToShowUrl || null
+    try {
+      if (photoToShow) {
+        photoToShowUrl = await uploadImage(photoToShow)
+      }
+
+      const parsedUserData = convertDatesToISOString(data)
+      parsedUserData.photoToShowUrl = photoToShowUrl
+
+      await updateUserToFirestore(parsedUserData, userData?.uid)
+      enqueueSnackbar('Perfil actualizado', { variant: 'success' })
+      navigate('/profile')
+    } catch (error) {
+      console.error('Error updating profile:', error)
+      enqueueSnackbar('Error al actualizar el perfil', { variant: 'error' })
+
+      // Aquí puedes agregar más lógica para manejar el error, como mostrar una notificación al usuario.
+    }
+  }
+
   return (
-    <Box className={styles.container}>
-      <Box className={styles.editProfileContainer}>
-        <FForm
-          title='Datos de perfil'
-          formTitle='Confirma los datos de tu perfil'
-          formSubtitle='Completá y confirmá los siguientes datos. Solo se publicarán los datos de la cuenta, como el nombre para mostrar, la descripción, los datos de contacto y tu ciudad. No publicaremos tus datos personales.'
-        >
-          <Box className={styles.body}>
-            <Box className={styles.bodyLeft}>
-              <Box>
-                <Typography className={styles.fontTitle}>
-                  DATOS PERSONALES
-                </Typography>
-                <Grid
-                  container
-                  columnSpacing={25}
-                  rowSpacing={25}
-                  className={styles.gridContainer}
-                >
-                  <Grid item md={6}>
-                    <Typography className={styles.fontTitleSub}>
-                      Nombre
-                    </Typography>
-                    <FInput
-                      name='name'
-                      type='text'
-                      control={control}
-                      label='Nombre'
-                    />
-                  </Grid>
-                  <Grid item md={6}>
-                    <Typography className={styles.fontTitleSub}>DNI</Typography>
-                    <FInput
-                      name='dni'
-                      type='text'
-                      control={control}
-                      label='Nombre'
-                    />
-                  </Grid>
-                  <Grid item md={6}>
-                    <Typography className={styles.fontTitleSub}>
-                      Apellido
-                    </Typography>
-                    <FInput
-                      name='surname'
-                      type='text'
-                      control={control}
-                      label='Apellido'
-                    />
-                  </Grid>
-                  <Grid item md={6}>
-                    <Typography className={styles.fontTitleSub}>
-                      Fecha de nacimiento
-                    </Typography>
-                    <FInput
-                      name='birthdate'
-                      type='text'
-                      control={control}
-                      label='Fecha de nacimiento'
-                    />
-                  </Grid>
-                </Grid>
-              </Box>
-              <Box>
-                <Typography className={styles.fontTitle} sx={{ marginTop: 10 }}>
-                  CONTACTO Y DOMICILIO
-                </Typography>
-                <Grid
-                  container
-                  columnSpacing={25}
-                  rowSpacing={25}
-                  className={styles.gridContainer}
-                >
-                  <Grid item md={6}>
-                    <Typography className={styles.fontTitleSub}>
-                      Email de contacto
-                    </Typography>
-                    <FInput
-                      name='contactEmail'
-                      type='text'
-                      control={control}
-                      label='email@email.com'
-                    />
-                  </Grid>
-                  <Grid item md={6}>
-                    <Typography className={styles.fontTitleSub}>
-                      Telefono de contacto
-                    </Typography>
-                    <FInput
-                      name='phoneNumber'
-                      type='text'
-                      control={control}
-                      label='1555137056'
-                    />
-                  </Grid>
-                  <Grid item md={6}>
-                    <Typography className={styles.fontTitleSub}>
-                      Domicilio
-                    </Typography>
-                    <FInput
-                      name='address'
-                      type='text'
-                      control={control}
-                      label='Calle falsa 123'
-                    />
-                  </Grid>
-                  <Grid item md={6}>
-                    <Typography className={styles.fontTitleSub}>
-                      Ciudad
-                    </Typography>
-                    <FInput
-                      name='city'
-                      type='text'
-                      control={control}
-                      label='Buenos aires'
-                    />
-                  </Grid>
-                  <Grid item md={6}>
-                    <Typography className={styles.fontTitleSub}>
-                      Provincia
-                    </Typography>
-                    <FInput
-                      name='state'
-                      type='text'
-                      control={control}
-                      label='Buenos aires'
-                    />
-                  </Grid>
-                </Grid>
-              </Box>
-            </Box>
-            <Box className={styles.bodyRight}>
-              <Box>
-                <Typography
-                  className={styles.fontTitle}
-                  sx={{ marginBottom: 25 }}
-                >
-                  DATOS DE LA CUENTA
-                </Typography>
-                <Grid
-                  container
-                  rowSpacing={25}
-                  className={styles.gridContainer}
-                >
-                  <Grid item md={12}>
-                    <Typography className={styles.fontTitleSub}>
-                      Nombre para mostrar
-                    </Typography>
-                    <FInput
-                      name='state'
-                      type='text'
-                      control={control}
-                      label='Buenos aires'
-                    />
-                  </Grid>
-                  <Grid item md={12}>
-                    <Typography className={styles.fontTitleSub}>
-                      Descripcion
-                    </Typography>
-                    <FInput
-                      name='description'
-                      type='text'
-                      control={control}
-                      label=' '
-                      multiline
-                      rows={6}
-                      sx={{
-                        '& .MuiOutlinedInput-root': {
-                          minHeight: 150, // Aplicar altura mínima si se especifica
-                        },
-                      }}
-                    />
-                  </Grid>
-                  <Grid item md={12}>
-                    <UploadImage
-                      title={'Nombre para mostrar'}
-                      subTitle={
-                        'Adjuntá una foto de tu marca, tu comercio o tu perfil para que los usuarios te conozcan.'
-                      }
-                    />
-                  </Grid>
-                </Grid>
-              </Box>
-            </Box>
+    <Box>
+      {uploading && <Loader />}
+      <Box className={styles.container}>
+        <Box className={styles.editProfileContainer}>
+          <EditProfileForm
+            control={control}
+            errors={errors}
+            photoToShowUrl={userData?.photoToShowUrl}
+            setPhotoToShow={setPhotoToShow}
+          />
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'end',
+              marginTop: 10,
+              marginBottom: 10,
+            }}
+          >
+            <FButton
+              title={'Guardar'}
+              onClick={handleSubmit(onHandleSaveProfile)}
+            />
           </Box>
-          {/* Form fields go here */}
-        </FForm>
+        </Box>
       </Box>
     </Box>
   )
