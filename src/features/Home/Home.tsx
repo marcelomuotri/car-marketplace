@@ -34,6 +34,7 @@ const Home = () => {
   if (loading) return <Loader />
 
   console.log(userData?.uid)
+  console.log(products)
   return (
     <Box>
       {userData?.verifiedStatus !== 'verified' && (
@@ -43,7 +44,7 @@ const Home = () => {
           </Box>
         </Fade>
       )}
-      {products.length === 0 && <EmptyProducts />}
+      <EmptyProducts />
 
       {/* <Button onClick={goToPreviousPage}>Previous</Button>
       <Button onClick={goToNextPage}>Next</Button> */}

@@ -40,16 +40,16 @@ i18n.use(initReactI18next).init({
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Navigate to='/home' replace />,
-  },
-  {
-    path: '/',
     element: <AuthGuard />, // AuthGuard como ruta superior
     children: [
       {
         path: '/',
         element: <Layout />, // Layout como hijo de AuthGuard
         children: [
+          {
+            index: true,
+            element: <Navigate to='/home' replace />,
+          },
           {
             path: 'home',
             element: <Home />,
@@ -73,10 +73,6 @@ const router = createBrowserRouter([
           {
             path: 'verifyId',
             element: <VerifyId />,
-          },
-          {
-            index: true,
-            element: <Navigate to='/home' replace />,
           },
         ],
       },

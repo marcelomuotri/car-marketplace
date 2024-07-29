@@ -34,7 +34,7 @@ const Login = () => {
   })
   const theme = useTheme()
   if (user) {
-    navigation('/')
+    navigation('/home')
   }
 
   const onHandleLogin: SubmitHandler<LoginFormFieldsProps> = async (data) => {
