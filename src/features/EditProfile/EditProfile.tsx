@@ -95,6 +95,7 @@ const EditProfile = () => {
   const { updateUserToFirestore } = useAuthService()
   const { uploadImage, uploading } = useUploadImage()
   const [photoToShow, setPhotoToShow] = useState<File | null>(null)
+  console.log(userData)
 
   const {
     control,

@@ -76,6 +76,7 @@ const CreatePublication = () => {
   const [photo3, setPhoto3] = useState<File | null>(null)
   const [showSuccess, setShowSuccess] = useState(false)
   const { userData } = useSelector((state: RootState) => state.auth)
+  console.log(userData)
 
   const {
     control,
