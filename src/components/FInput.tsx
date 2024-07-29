@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import {
   TextField,
   Checkbox,
@@ -8,16 +8,18 @@ import {
   Select,
   MenuItem,
   FormControl,
-  InputLabel,
   FormHelperText,
   Typography,
   Box,
+  Autocomplete,
+  FormGroup,
 } from '@mui/material'
 import { Controller, Control, FieldError } from 'react-hook-form'
 import { makeStyles } from 'tss-react/mui'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { theme } from '../framework/theme/theme'
 
 const useStyles = makeStyles()((theme) => ({
   input: {
@@ -40,6 +42,8 @@ interface GenericInputProps {
     | 'checkbox'
     | 'radio'
     | 'password'
+    | 'autocomplete'
+    | 'checkboxGroup'
   placeholder?: string
   options?: { value: string; label: string }[] // For select and radio
   defaultValue?: any
@@ -50,6 +54,28 @@ interface GenericInputProps {
   sx?: any
   validationType?: 'email' | 'phone' | 'number' | 'text'
   disabled?: boolean
+}
+
+interface InputWithTitleProps {
+  label?: string
+  children: ReactNode
+}
+
+const InputWithTitle: React.FC<InputWithTitleProps> = ({ label, children }) => {
+  return (
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+      <Typography
+        sx={{
+          color: theme.palette.common.black,
+          fontWeight: 600,
+          fontSize: 14,
+        }}
+      >
+        {label}
+      </Typography>
+      {children}
+    </Box>
+  )
 }
 
 const FInput: React.FC<GenericInputProps> = ({
@@ -108,20 +134,19 @@ const FInput: React.FC<GenericInputProps> = ({
 
   const validationRules = { ...rules, ...getValidationRules(validationType) }
 
-  const renderInput = (field) => {
+  const renderInput = (field: any) => {
     switch (type) {
       case 'text':
       case 'number':
       case 'phone':
       case 'password':
         return (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-            <Typography>{placeholder}</Typography>
+          <InputWithTitle label={label}>
             <TextField
               type={type === 'phone' ? 'tel' : type}
               {...field}
               {...props}
-              placeholder={label}
+              placeholder={placeholder}
               error={!!error}
               helperText={error ? error.message : helperText}
               variant='outlined'
@@ -134,7 +159,7 @@ const FInput: React.FC<GenericInputProps> = ({
               multiline={rows > 1}
               disabled={disabled}
             />
-          </Box>
+          </InputWithTitle>
         )
       case 'select':
         return (
@@ -145,20 +170,21 @@ const FInput: React.FC<GenericInputProps> = ({
             variant='outlined'
             style={{ width }} // Aplicar el ancho personalizado
           >
-            <InputLabel>{label}</InputLabel>
-            <Select
-              {...field}
-              {...props}
-              label={label}
-              defaultValue={defaultValue}
-              inputProps={{ 'aria-label': 'Without label' }}
-            >
-              {options.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
+            <InputWithTitle label={label}>
+              <Select
+                {...field}
+                {...props}
+                defaultValue={defaultValue}
+                inputProps={{ 'aria-label': 'Without label' }}
+                disabled={disabled}
+              >
+                {options.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </InputWithTitle>
             {helperText && (
               <FormHelperText>
                 {error ? error.message : helperText}
@@ -174,6 +200,32 @@ const FInput: React.FC<GenericInputProps> = ({
             style={{ width }} // Aplicar el ancho personalizado
           />
         )
+      case 'checkboxGroup':
+        return (
+          <Box>
+            <FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
+              {options.map((option) => (
+                <FormControlLabel
+                  key={option.value}
+                  control={
+                    <Checkbox
+                      {...field}
+                      checked={field.value.includes(option.value)}
+                      onChange={(e) => {
+                        const newValue = e.target.checked
+                          ? [...field.value, option.value]
+                          : field.value.filter((val) => val !== option.value)
+                        field.onChange(newValue)
+                      }}
+                      {...props}
+                    />
+                  }
+                  label={option.label}
+                />
+              ))}
+            </FormGroup>
+          </Box>
+        )
       case 'radio':
         return (
           <FormControl
@@ -182,7 +234,16 @@ const FInput: React.FC<GenericInputProps> = ({
             error={!!error}
             style={{ width }} // Aplicar el ancho personalizado
           >
-            <RadioGroup {...field} {...props}>
+            <Typography
+              sx={{
+                color: theme.palette.common.black,
+                fontWeight: 600,
+                fontSize: 14,
+              }}
+            >
+              {label}
+            </Typography>
+            <RadioGroup {...field} {...props} row>
               {options.map((option) => (
                 <FormControlLabel
                   key={option.value}
@@ -201,8 +262,7 @@ const FInput: React.FC<GenericInputProps> = ({
         )
       case 'date':
         return (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-            <Typography>{placeholder}</Typography>
+          <InputWithTitle label={label}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 {...field}
@@ -221,7 +281,30 @@ const FInput: React.FC<GenericInputProps> = ({
                 disabled={disabled}
               />
             </LocalizationProvider>
-          </Box>
+          </InputWithTitle>
+        )
+      case 'autocomplete':
+        return (
+          <InputWithTitle label={label}>
+            <Autocomplete
+              {...field}
+              {...props}
+              id='free-solo-demo'
+              freeSolo
+              options={options}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  error={!!error}
+                  helperText={error ? error.message : helperText}
+                  variant='outlined'
+                  size='small'
+                />
+              )}
+              onChange={(_, data) => field.onChange(data)}
+              disabled={disabled}
+            />
+          </InputWithTitle>
         )
       default:
         return null

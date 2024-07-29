@@ -17,6 +17,7 @@ import VerifyId from './features/VerifyId/VerifyId'
 import MyProfile from './features/MyProfile/MyProfile'
 import EditProfile from './features/EditProfile/EditProfile'
 import { SnackbarProvider } from 'notistack'
+import CreatePublication from './features/CreatePublication/CreatePublication'
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
           {
             path: 'home',
             element: <Home />,
+          },
+          {
+            path: 'createPublication',
+            element: <CreatePublication />,
           },
           {
             path: 'profile',

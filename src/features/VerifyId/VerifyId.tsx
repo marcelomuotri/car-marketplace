@@ -14,9 +14,10 @@ import {
   convertDatesToISOString,
   convertISOStringToDayjs,
 } from '../../framework/utils/dayjsConverter'
-import VerifySuccess from './VerifySuccess/VerifySuccess'
 import EditProfileForm from '../EditProfile/Components/EditProfileForm'
 import { Dayjs } from 'dayjs'
+import Success from '../../components/Success/Success'
+import BoySleeping from '../../assets/images/BoySleeping'
 
 interface FormValues {
   name: string
@@ -154,10 +155,20 @@ const VerifyId = () => {
     updateUserToFirestore(parsedUserData, userData?.uid)
   }
 
+  const navigateHome = () => {
+    navigate('/home')
+  }
+
   return (
     <Box className={styles.container}>
       {showSuccess ? (
-        <VerifySuccess />
+        <Success
+          Image={BoySleeping}
+          title={t('verificationRequestSubmitted')}
+          subTitle={t('youWillReceiveTheConfirmationSoon')}
+          buttonTitle={'Crear tu primera publicacion'}
+          onClickButton={navigateHome}
+        />
       ) : (
         <Box className={styles.formContainer}>
           <Box>{steps[activeStep]}</Box>

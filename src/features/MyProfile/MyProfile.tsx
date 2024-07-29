@@ -136,6 +136,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
     gap: 20,
   },
 }))
+
 const MyProfile = () => {
   const { userData } = useSelector((state: RootState) => state.auth)
   const { classes: styles } = useStyles()
@@ -161,6 +162,7 @@ const MyProfile = () => {
   const handleEditProfile = () => {
     navigation('/editProfile')
   }
+
   const onOpenChangePasswordModal = () => {
     setOpenChangePasswordModal(true)
   }
@@ -168,7 +170,7 @@ const MyProfile = () => {
   const onChangePassword = handleSubmit((data) => {
     const { oldPassword, newPassword, repeatNewPassword } = data
     if (newPassword !== repeatNewPassword) {
-      setModalError('Las contraseñas no coinciden')
+      setModalError(t('passwordsDontMatch'))
       return
     }
     changePassword(oldPassword, newPassword)
@@ -178,8 +180,8 @@ const MyProfile = () => {
   return (
     <Box className={styles.container}>
       <FModal
-        title='Cambiar contraseña'
-        submitButtonTitle='Cambiar contraseña'
+        title={t('changePassword')}
+        submitButtonTitle={t('changePassword')}
         open={openChangePasswordModal}
         saveFullWidth
         onSave={onChangePassword}
@@ -187,25 +189,25 @@ const MyProfile = () => {
       >
         <Box className={styles.modalInputContainer}>
           <FInput
-            placeholder='Contraseña actual'
+            placeholder={t('currentPassword')}
             type='password'
             name='oldPassword'
             control={control}
             error={errors.oldPassword}
           />
           <FInput
-            placeholder='Nueva contraseña'
+            placeholder={t('newPassword')}
             type='password'
             name='newPassword'
             control={control}
-            error={errors.oldPassword}
+            error={errors.newPassword}
           />
           <FInput
-            placeholder='Repetir nueva contraseña'
+            placeholder={t('repeatNewPassword')}
             type='password'
             name='repeatNewPassword'
             control={control}
-            error={errors.oldPassword}
+            error={errors.repeatNewPassword}
           />
           {modalError && (
             <Typography sx={{ color: 'red' }}>{modalError}</Typography>
@@ -243,7 +245,7 @@ const MyProfile = () => {
               onClick={onOpenChangePasswordModal}
               className={styles.changePasswordButton}
             >
-              Cambiar contraseña
+              {t('changePassword')}
             </Button>
           </Box>
         </Box>
@@ -254,14 +256,14 @@ const MyProfile = () => {
               sx={{ color: '#007AFF' }}
               onClick={handleEditProfile}
             >
-              Editar
+              {t('edit')}
             </Button>
           </Box>
           <Box className={styles.body}>
             <Box className={styles.bodyLeft}>
               <Box>
                 <Typography className={styles.fontTitle}>
-                  DATOS PERSONALES
+                  {t('personalData')}
                 </Typography>
                 <Grid
                   container
@@ -271,23 +273,25 @@ const MyProfile = () => {
                 >
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
-                      Nombre
+                      {t('firstName')}
                     </Typography>
                     <Typography> {userData?.name}</Typography>
                   </Grid>
                   <Grid item md={6}>
-                    <Typography className={styles.fontTitleSub}>DNI</Typography>
+                    <Typography className={styles.fontTitleSub}>
+                      {t('dni')}
+                    </Typography>
                     <Typography> {userData?.dni} </Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
-                      Apellido
+                      {t('lastName')}
                     </Typography>
                     <Typography> {userData?.surname} </Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
-                      Fecha de nacimiento
+                      {t('birthDate')}
                     </Typography>
                     <Typography>
                       {userData?.birthdate
@@ -299,7 +303,7 @@ const MyProfile = () => {
               </Box>
               <Box sx={{ marginTop: 56 }}>
                 <Typography className={styles.fontTitle}>
-                  CONTACTO Y DOMICILIO
+                  {t('contactAndAddress')}
                 </Typography>
                 <Grid
                   container
@@ -309,31 +313,31 @@ const MyProfile = () => {
                 >
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
-                      Email de contacto
+                      {t('contactEmail')}
                     </Typography>
                     <Typography> {userData?.contactEmail}</Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
-                      Telefono de contacto
+                      {t('phoneNumber')}
                     </Typography>
                     <Typography> {userData?.phoneNumber}</Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
-                      Domicilio
+                      {t('address')}
                     </Typography>
                     <Typography> {userData?.address}</Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
-                      Ciudad
+                      {t('city')}
                     </Typography>
                     <Typography> {userData?.city}</Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
-                      Provincia
+                      {t('state')}
                     </Typography>
                     <Typography> {userData?.state}</Typography>
                   </Grid>
@@ -342,17 +346,17 @@ const MyProfile = () => {
             </Box>
             <Box className={styles.bodyRight}>
               <Typography className={styles.fontTitle}>
-                DATOS DE LA CUENTA
+                {t('accountData')}
               </Typography>
               <Box>
                 <Typography className={styles.fontTitleSub}>
-                  Nombres para mostrar
+                  {t('displayName')}
                 </Typography>
                 <Typography> {userData?.nameToShow}</Typography>
               </Box>
               <Box>
                 <Typography className={styles.fontTitleSub}>
-                  Descripcion
+                  {t('description')}
                 </Typography>
                 <Typography>{userData?.description}</Typography>
               </Box>

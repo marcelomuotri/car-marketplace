@@ -7,6 +7,7 @@ import UploadImage from '../../../components/UploadImage'
 import { provinces } from '../../../framework/constants/provinces'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../framework/state/store'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles()((theme: Theme) => ({
   container: {
@@ -70,18 +71,19 @@ const EditProfileForm = ({
 }: any) => {
   const { classes: styles } = useStyles()
   const { userData } = useSelector((state: RootState) => state.auth)
+  const { t } = useTranslation()
 
   return (
     <FForm
-      title='Datos de perfil'
-      formTitle='Confirma los datos de tu perfil'
-      formSubtitle='Completá y confirmá los siguientes datos. Solo se publicarán los datos de la cuenta, como el nombre para mostrar, la descripción, los datos de contacto y tu ciudad. No publicaremos tus datos personales.'
+      title={t('profileData')}
+      formTitle={t('confirmProfileData')}
+      formSubtitle={t('completeAndConfirmData')}
     >
       <Box className={styles.body}>
         <Box className={styles.bodyLeft}>
           <Box>
             <Typography className={styles.fontTitle}>
-              DATOS PERSONALES
+              {t('personalData')}
             </Typography>
             <Grid
               container
@@ -90,62 +92,57 @@ const EditProfileForm = ({
               className={styles.gridContainer}
             >
               <Grid item md={6}>
-                <Typography className={styles.fontTitleSub}>Nombre</Typography>
                 <FInput
                   name='name'
                   type='text'
                   control={control}
-                  label='Nombre'
-                  rules={{ required: 'Este campo es obligatorio' }}
+                  label={t('firstName')}
+                  rules={{ required: t('requiredField') }}
                   error={errors.name}
                   disabled={
                     userData?.verifiedStatus === 'verified' ||
                     userData?.verifiedStatus === 'pending'
                   }
+                  placeholder='Mario'
                 />
               </Grid>
               <Grid item md={6}>
-                <Typography className={styles.fontTitleSub}>DNI</Typography>
                 <FInput
                   name='dni'
                   type='number'
                   control={control}
-                  label='35387654'
-                  rules={{ required: 'Este campo es obligatorio' }}
+                  label={t('dni')}
+                  rules={{ required: t('requiredField') }}
                   error={errors.dni}
                   disabled={
                     userData?.verifiedStatus === 'verified' ||
                     userData?.verifiedStatus === 'pending'
                   }
+                  placeholder='34543211'
                 />
               </Grid>
               <Grid item md={6}>
-                <Typography className={styles.fontTitleSub}>
-                  Apellido
-                </Typography>
                 <FInput
                   name='surname'
                   type='text'
                   control={control}
-                  label='Apellido'
-                  rules={{ required: 'Este campo es obligatorio' }}
+                  label={t('lastName')}
+                  rules={{ required: t('requiredField') }}
                   error={errors.surname}
                   disabled={
                     userData?.verifiedStatus === 'verified' ||
                     userData?.verifiedStatus === 'pending'
                   }
+                  placeholder='Casas'
                 />
               </Grid>
               <Grid item md={6}>
-                <Typography className={styles.fontTitleSub}>
-                  Fecha de nacimiento
-                </Typography>
                 <FInput
                   name='birthdate'
                   type='date'
                   control={control}
-                  label='Fecha de nacimiento'
-                  rules={{ required: 'Este campo es obligatorio' }}
+                  label={t('birthDate')}
+                  rules={{ required: t('requiredField') }}
                   error={errors.birthdate}
                   disabled={
                     userData?.verifiedStatus === 'verified' ||
@@ -157,7 +154,7 @@ const EditProfileForm = ({
           </Box>
           <Box>
             <Typography className={styles.fontTitle} sx={{ marginTop: 20 }}>
-              CONTACTO Y DOMICILIO
+              {t('contactAndAddress')}
             </Typography>
             <Grid
               container
@@ -166,65 +163,57 @@ const EditProfileForm = ({
               className={styles.gridContainer}
             >
               <Grid item md={6}>
-                <Typography className={styles.fontTitleSub}>
-                  Email de contacto
-                </Typography>
                 <FInput
                   name='contactEmail'
                   type='text'
                   control={control}
-                  label='email@email.com'
-                  rules={{ required: 'Este campo es obligatorio' }}
+                  label={t('contactEmail')}
+                  rules={{ required: t('requiredField') }}
                   error={errors.contactEmail}
                   validationType='email'
+                  placeholder='mario@casas.com.ar'
                 />
               </Grid>
               <Grid item md={6}>
-                <Typography className={styles.fontTitleSub}>
-                  Telefono de contacto
-                </Typography>
                 <FInput
                   name='phoneNumber'
                   type='text'
                   control={control}
-                  label='1345223344'
-                  rules={{ required: 'Este campo es obligatorio' }}
+                  label={t('phoneNumber')}
+                  rules={{ required: t('requiredField') }}
                   error={errors.phoneNumber}
+                  placeholder='15 55 67 89 90'
                 />
               </Grid>
               <Grid item md={6}>
-                <Typography className={styles.fontTitleSub}>
-                  Domicilio
-                </Typography>
                 <FInput
                   name='address'
                   type='text'
                   control={control}
-                  label='Alberdi 897'
-                  rules={{ required: 'Este campo es obligatorio' }}
+                  label={t('address')}
+                  rules={{ required: t('requiredField') }}
                   error={errors.address}
+                  placeholder='Amenabar 1567'
                 />
               </Grid>
               <Grid item md={6}>
-                <Typography className={styles.fontTitleSub}>Ciudad</Typography>
                 <FInput
                   name='city'
                   type='text'
                   control={control}
-                  label='Buenos aires'
-                  rules={{ required: 'Este campo es obligatorio' }}
+                  label={t('city')}
+                  rules={{ required: t('requiredField') }}
                   error={errors.city}
+                  placeholder='Buenos aires'
                 />
               </Grid>
               <Grid item md={6}>
-                <Typography className={styles.fontTitleSub}>
-                  Provincia
-                </Typography>
                 <FInput
                   name='state'
                   type='select'
+                  label={t('state')}
                   control={control}
-                  rules={{ required: 'Este campo es obligatorio' }}
+                  rules={{ required: t('requiredField') }}
                   error={errors.state}
                   options={provinces}
                 />
@@ -235,38 +224,33 @@ const EditProfileForm = ({
         <Box className={styles.bodyRight}>
           <Box>
             <Typography className={styles.fontTitle}>
-              DATOS DE LA CUENTA
+              {t('accountData')}
             </Typography>
             <Grid container rowSpacing={13} className={styles.gridContainer}>
               <Grid item md={12}>
-                <Typography className={styles.fontTitleSub}>
-                  Nombre para mostrar
-                </Typography>
                 <FInput
                   name='nameToShow'
                   type='text'
                   control={control}
-                  label='Buenos aires'
-                  rules={{ required: 'Este campo es obligatorio' }}
+                  label={t('displayName')}
+                  rules={{ required: t('requiredField') }}
                   error={errors.nameToShow}
+                  placeholder='Ford Argentina'
                 />
               </Grid>
               <Grid item md={12}>
-                <Typography className={styles.fontTitleSub}>
-                  Descripcion
-                </Typography>
                 <FInput
                   name='description'
                   type='text'
                   control={control}
-                  label=' '
+                  label={t('description')}
                   rows={6}
                   sx={{
                     '& .MuiOutlinedInput-root': {
-                      minHeight: 150, // Aplicar altura mínima si se especifica
+                      minHeight: 150,
                     },
                   }}
-                  rules={{ required: 'Este campo es obligatorio' }}
+                  rules={{ required: t('requiredField') }}
                   error={errors.description}
                 />
               </Grid>
@@ -274,10 +258,8 @@ const EditProfileForm = ({
                 <UploadImage
                   image={photoToShowUrl}
                   setImage={setPhotoToShow}
-                  title={'Foto para mostrar'}
-                  subTitle={
-                    'Adjuntá una foto de tu marca, tu comercio o tu perfil para que los usuarios te conozcan.'
-                  }
+                  title={t('displayPhoto')}
+                  subTitle={t('uploadPhotoSubTitle')}
                 />
               </Grid>
             </Grid>

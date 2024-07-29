@@ -56,10 +56,10 @@ const useStyles = makeStyles()((theme) => ({
 }))
 
 interface UploadImageProps {
-  title: string
+  title?: string
   subTitle?: string
   setImage: (file: File) => void
-  image: string
+  image?: string
 }
 
 const UploadImage: React.FC<UploadImageProps> = ({
@@ -89,8 +89,12 @@ const UploadImage: React.FC<UploadImageProps> = ({
   return (
     <>
       <Box className={classes.titleContainer}>
-        <Typography className={classes.titleText}>{title}</Typography>
-        <InfoIcon />
+        {title && (
+          <>
+            <Typography className={classes.titleText}>{title}</Typography>
+            <InfoIcon />
+          </>
+        )}
       </Box>
       {subTitle && <Typography>{subTitle}</Typography>}
       <div {...getRootProps()} role='button' aria-label='Upload Image Dropzone'>

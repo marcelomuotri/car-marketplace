@@ -39,17 +39,44 @@ export interface SignInPayload {
   password: string
 }
 
-export interface Product {
-  id: string
+export interface ProductUpload {
+  uid: string
   title: string
   description: string
-  imageUrl: string
-  competition: string
-  category: string
-  subCatergory: string
-  startingDate: Date
+  price?: number | ''
+  applyPrice?: boolean
+  currency?: string | ''
+  photo1Url?: string | null
+  photo2Url?: string | null
+  photo3Url?: string | null
+  year?: string
+  condition?: string
+  location?: string
+  featured?: boolean
+  categoryId?: number
+  subcategoryId?: number
+  brandId?: number
+  modelId?: number
+  sizeId?: number
+  homologation?: boolean | null
+  competitionId?: number
   active: boolean
   visitors: number
-  price: number
   contacts: number
+}
+
+export interface Product extends ProductUpload {
+  id: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface CategoryData {
+  subCategories: string[]
+  brands: { [brand: string]: string[] }
+  condition: string[]
+  year: string
+  size?: string[]
+  homologation?: boolean[]
+  competition?: string[]
 }
