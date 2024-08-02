@@ -27,48 +27,52 @@ const TopBar = ({ setTitleFilter, setDateFilter }: TopBarProps) => {
 
   return (
     <Box className={styles.topBar}>
-      <Autocomplete
-        id='free-solo-demo'
-        freeSolo
-        options={[]}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant='outlined'
-            onChange={(e) => setTitleFilter(e.target.value)}
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <InputAdornment position='end'>
-                  <IconButton edge='end' sx={{ marginRight: 5 }}>
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            sx={{
-              width: 200,
-              backgroundColor: 'white',
-            }}
+      <Box className={styles.leftBar}>
+        <Box className={styles.containerCenter}>
+          <Autocomplete
+            id='free-solo-demo'
+            freeSolo
+            options={[]}
+            className={styles.searchInput}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant='outlined'
+                onChange={(e) => setTitleFilter(e.target.value)}
+                InputProps={{
+                  ...params.InputProps,
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <IconButton edge='end' sx={{ marginRight: 5 }}>
+                        <SearchIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            )}
           />
-        )}
-      />
-      <DateRangePicker
-        format='dd/MM/yyyy'
-        placeholder={t('selectDate')}
-        size='lg'
-        showHeader={false}
-        ranges={[]}
-        style={{
-          width: 250,
-        }}
-        onChange={(value) => setDateFilter(value)}
-      />
-      <FButton
-        title={t('newPublication')}
-        size='small'
-        onClick={onCreatePublication}
-      />
+        </Box>
+        <Box className={styles.containerCenter}>
+          <DateRangePicker
+            format='dd/MM/yyyy'
+            placeholder={t('selectDate')}
+            size='lg'
+            showHeader={false}
+            ranges={[]}
+            className={styles.picker}
+            onChange={(value) => setDateFilter(value)}
+          />
+        </Box>
+      </Box>
+      <Box className={styles.containerCenter}>
+        <FButton
+          title={t('newPublication')}
+          size='small'
+          onClick={onCreatePublication}
+          className={styles.createPublicationButton}
+        />
+      </Box>
     </Box>
   )
 }
