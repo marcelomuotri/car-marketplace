@@ -31,7 +31,7 @@ export interface AuthState {
   user: string | null
   loading: boolean
   error: string | null
-  userData: UserData | null
+  userData: UserData
 }
 
 export interface SignInPayload {
@@ -43,7 +43,7 @@ export interface ProductUpload {
   uid: string
   title: string
   description: string
-  price?: number | ''
+  price?: string | ''
   applyPrice?: boolean
   currency?: string | ''
   photo1Url?: string | null
@@ -53,13 +53,13 @@ export interface ProductUpload {
   condition?: string
   location?: string
   featured?: boolean
-  categoryId?: number
-  subcategoryId?: number
-  brandId?: number
-  modelId?: number
-  sizeId?: number
+  category?: string
+  subCategory?: string
+  brand?: string
+  model?: string
+  size?: string
   homologation?: boolean | null
-  competitionId?: number
+  competition?: string[]
   active: boolean
   visitors: number
   contacts: number

@@ -13,7 +13,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     border: '1px solid',
     borderColor: theme.palette.primary.main,
     padding: '20px',
-    borderRadius: '5px',
+    borderRadius: theme.shape.borderRadius,
     display: 'flex',
     flexDirection: 'column',
     gap: '20px',

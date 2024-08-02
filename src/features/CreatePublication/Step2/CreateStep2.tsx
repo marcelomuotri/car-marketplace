@@ -183,7 +183,6 @@ const CreateStep2 = ({ control, errors, watch, setValue }: any) => {
                 name='model'
                 error={errors.model}
                 control={control}
-                rules={{ required: t('requiredField') }}
                 options={modelOptions}
                 label='Modelo'
               />

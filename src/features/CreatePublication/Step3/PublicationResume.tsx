@@ -1,8 +1,7 @@
 import { Box, Grid, Typography } from '@mui/material'
-import React from 'react'
 import { makeStyles } from 'tss-react/mui'
 import { Theme } from '@mui/material/styles'
-import UploadImage from '../../../components/UploadImage'
+import { ProductUpload } from '../../../framework/types'
 
 const useStyles = makeStyles()((theme: Theme) => ({
   container: {
@@ -61,33 +60,13 @@ const useStyles = makeStyles()((theme: Theme) => ({
   },
 }))
 
-interface FormValues {
-  title: string
-  currency: string | null
-  price: number | ''
-  description: string
-  photo1Url: string
-  photo2Url: string
-  photo3Url: string
-  applyPrice: boolean
-  category: string
-  subCategory: string
-  condition: string
-  brand: { value: string }
-  model: { value: string }
-  year: number | string
-  size: string
-  homologation: boolean | null
-  competition: string[]
-}
-
 const PublicationResume = ({
   values,
   photo1,
   photo2,
   photo3,
 }: {
-  values: FormValues
+  values: ProductUpload
   photo1: File | null
   photo2: File | null
   photo3: File | null
@@ -118,8 +97,8 @@ const PublicationResume = ({
 
   const fields = [
     { label: 'Condición', value: condition },
-    { label: 'Marca', value: brand.value },
-    { label: 'Modelo', value: model.value },
+    { label: 'Marca', value: brand?.value },
+    { label: 'Modelo', value: model?.value },
     { label: 'Año', value: year },
     { label: 'Talle', value: size },
     {
@@ -129,7 +108,8 @@ const PublicationResume = ({
     },
     {
       label: 'Competencia',
-      value: competition?.length > 0 ? competition.join(', ') : null,
+      value:
+        competition && competition?.length > 0 ? competition?.join(', ') : null,
     },
     { label: 'Moneda', value: currency === '1' ? 'USD' : 'ARS' },
   ]

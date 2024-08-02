@@ -6,7 +6,5 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: theme.spacing(2),
-    borderBottom: `1px solid ${theme.palette.divider}`,
   },
 }))

@@ -7,10 +7,9 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 250,
     background: 'white',
     padding: 20,
-    borderRadius: 10,
+    borderRadius: theme.shape.borderRadius,
   },
   modalTitle: {
     paddingBottom: 10,
@@ -21,6 +20,6 @@ export const useStyles = makeStyles()((theme: Theme) => ({
   buttonContainer: {
     marginTop: 20,
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-around',
   },
 }))

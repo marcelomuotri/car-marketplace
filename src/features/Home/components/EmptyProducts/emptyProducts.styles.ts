@@ -11,7 +11,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     width: 432,
     height: 371,
     backgroundColor: theme.palette.common.white,
-    borderRadius: 4,
+    borderRadius: theme.shape.borderRadius,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

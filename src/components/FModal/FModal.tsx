@@ -10,6 +10,7 @@ interface FmodalProps {
   submitButtonTitle?: string
   saveFullWidth?: boolean
   onSave: () => void
+  showCancelButton?: boolean
 }
 
 const FModal = ({
@@ -20,6 +21,7 @@ const FModal = ({
   submitButtonTitle = 'Guardar',
   saveFullWidth = false,
   onSave,
+  showCancelButton,
 }: FmodalProps) => {
   const { classes: styles } = useStyles()
 
@@ -29,6 +31,15 @@ const FModal = ({
         <Typography className={styles.modalTitle}>{title}</Typography>
         {children}
         <Box className={styles.buttonContainer}>
+          {showCancelButton && (
+            <FButton
+              variant='outlined'
+              size='small'
+              title='cancelar'
+              onClick={onClose}
+              fullWidth={saveFullWidth}
+            />
+          )}
           <FButton
             size='small'
             title={submitButtonTitle}

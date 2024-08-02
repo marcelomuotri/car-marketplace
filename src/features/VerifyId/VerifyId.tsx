@@ -156,7 +156,7 @@ const VerifyId = () => {
   }
 
   const navigateHome = () => {
-    navigate('/home')
+    navigate('/createPublication')
   }
 
   return (

@@ -12,7 +12,7 @@ export const appComponents: Components<Omit<Theme, 'components'>> = {
         },
 
         '&::-webkit-scrollbar-thumb, *::-webkit-scrollbar-thumb': {
-          borderRadius: 8,
+          borderRadius: theme.shape.borderRadius,
           backgroundColor: theme.palette.action.disabled,
           border: '5px solid transparent',
           backgroundClip: 'padding-box',
@@ -122,6 +122,18 @@ export const appComponents: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       root: {
         color: theme.palette.text.primary, // Establece el tamaño de fuente aquí
+      },
+    },
+  },
+  MuiDataGrid: {
+    styleOverrides: {
+      virtualScroller: {
+        borderRadius: theme.shape.borderRadius,
+      },
+      columnHeaderRow: {
+        backgroundColor: '#EFEFEF!important',
+        color: theme.palette.common.black,
+        fontWeight: 500,
       },
     },
   },

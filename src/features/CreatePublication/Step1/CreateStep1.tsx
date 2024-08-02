@@ -38,11 +38,14 @@ const useStyles = makeStyles()((theme: Theme) => ({
 const CreateStep1 = ({
   control,
   errors,
+  photo1,
+  photo2,
+  photo3,
   setPhoto1,
   setPhoto2,
   setPhoto3,
   isDisabled,
-}) => {
+}: any) => {
   const { classes: styles } = useStyles()
   const { t } = useTranslation()
 
@@ -134,7 +137,7 @@ const CreateStep1 = ({
             marginBottom: 20,
           }}
         >
-          <UploadImage setImage={setPhoto1} />
+          <UploadImage image={photo1} setImage={setPhoto1} />
         </Grid>
         <Grid
           item
@@ -146,7 +149,7 @@ const CreateStep1 = ({
             marginBottom: 20,
           }}
         >
-          <UploadImage setImage={setPhoto2} />
+          <UploadImage image={photo2} setImage={setPhoto2} />
         </Grid>
         <Grid
           item
@@ -158,7 +161,7 @@ const CreateStep1 = ({
             marginBottom: 20,
           }}
         >
-          <UploadImage setImage={setPhoto3} />
+          <UploadImage image={photo3} setImage={setPhoto3} />
         </Grid>
       </Grid>
     </FForm>

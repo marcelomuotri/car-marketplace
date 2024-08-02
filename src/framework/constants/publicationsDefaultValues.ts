@@ -1,0 +1,28 @@
+import { Product } from '../types'
+
+export const publicationsDefaultValues: Product = {
+  title: '',
+  currency: '',
+  price: '',
+  applyPrice: false,
+  description: '',
+  photo1Url: '',
+  photo2Url: '',
+  photo3Url: '',
+  category: '',
+  subCategory: '',
+  condition: '',
+  brand: '',
+  model: '',
+  year: '',
+  size: '',
+  homologation: null,
+  competition: [],
+  contacts: 0,
+  visitors: 0,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  id: '',
+  uid: '',
+  active: false,
+}

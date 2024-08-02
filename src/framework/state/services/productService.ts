@@ -5,6 +5,8 @@ import {
   getDocs,
   QueryDocumentSnapshot,
   addDoc,
+  where,
+  query,
 } from 'firebase/firestore'
 import { Product, ProductUpload } from '../../types'
 import { parseProduct } from '../../validators/parseProduct'
@@ -17,13 +19,17 @@ export const useProductService = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<Error | null>(null)
 
-  const getProducts = useCallback(async () => {
+  const getProducts = useCallback(async (userId: string) => {
     setLoading(true)
     setError(null)
+    if (!userId) {
+      setLoading(false)
+    }
 
     try {
       const collectionRef = collection(db, 'products')
-      const querySnapshot = await getDocs(collectionRef)
+      const q = query(collectionRef, where('uid', '==', userId))
+      const querySnapshot = await getDocs(q)
       const products: Product[] = []
 
       querySnapshot.forEach((doc: QueryDocumentSnapshot) => {

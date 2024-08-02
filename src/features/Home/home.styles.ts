@@ -2,6 +2,12 @@ import { makeStyles } from 'tss-react/mui'
 import { Theme } from '@mui/material'
 
 export const useStyles = makeStyles()((theme: Theme) => ({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '20px',
+    gap: '20px',
+  },
   loadingOverlay: {
     position: 'fixed',
     top: 0,
