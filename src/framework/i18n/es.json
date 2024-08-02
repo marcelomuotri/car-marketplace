@@ -82,5 +82,6 @@
   "view_summary": "Ver resumen",
   "modify": "Modificar",
   "newPublication": "Nueva publicación",
-  "selectDate": "Seleccionar fecha"
+  "selectDate": "Seleccionar fecha",
+  "pause": "Pausar"
 }

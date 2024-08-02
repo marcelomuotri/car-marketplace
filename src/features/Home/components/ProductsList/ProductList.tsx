@@ -54,7 +54,7 @@ const ProductList = ({ products }: ProductsListProps) => {
       field: 'active',
       headerName: t('status'),
       width: 150,
-      valueGetter: (value) => (value ? 'Activo' : 'Inactivo'),
+      valueGetter: (value) => (value ? 'Activa' : 'Pausada'),
     },
     {
       field: 'price',
@@ -171,7 +171,7 @@ const ProductList = ({ products }: ProductsListProps) => {
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         <MenuItem onClick={handleEditPublication}>{t('modify')}</MenuItem>
         <MenuItem onClick={handleChangeActivate}>
-          {selectedProduct?.active ? t('deactivate') : t('activate')}
+          {selectedProduct?.active ? t('pause') : t('activate')}
         </MenuItem>
         <MenuItem onClick={handleOpenDeleteModal}>{t('delete')}</MenuItem>
         <MenuItem onClick={handleRedirectResume}>{t('view_summary')}</MenuItem>
