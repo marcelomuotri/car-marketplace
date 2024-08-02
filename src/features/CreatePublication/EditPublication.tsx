@@ -60,7 +60,7 @@ const EditPublication = () => {
   const [photo3, setPhoto3] = useState<File | null>(null)
   const { userData } = useSelector((state: RootState) => state.auth)
 
-  const { product, isLoading, error } = useGetProductsById(publicationId || '')
+  const { product, isLoading } = useGetProductsById(publicationId || '')
   const { updateProductData, isUpdating } = useUpdateProduct()
 
   const {
@@ -157,6 +157,7 @@ const EditPublication = () => {
       errors={errors}
       watch={watch}
       setValue={setValue}
+      selectedCategory={values.category}
     />,
     <PublicationResume
       values={values}

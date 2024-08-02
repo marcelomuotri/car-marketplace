@@ -67,9 +67,9 @@ const PublicationResume = ({
   photo3,
 }: {
   values: ProductUpload
-  photo1: File | null
-  photo2: File | null
-  photo3: File | null
+  photo1?: File | null
+  photo2?: File | null
+  photo3?: File | null
 }) => {
   const { classes: styles } = useStyles()
   const {
@@ -115,9 +115,9 @@ const PublicationResume = ({
   ]
 
   const images = [
-    { label: 'Foto 1', file: photo1 },
-    { label: 'Foto 2', file: photo2 },
-    { label: 'Foto 3', file: photo3 },
+    { label: 'Foto 1', file: photo1, url: values.photo1Url },
+    { label: 'Foto 2', file: photo2, url: values.photo2Url },
+    { label: 'Foto 3', file: photo3, url: values.photo3Url },
   ]
 
   return (
@@ -161,7 +161,7 @@ const PublicationResume = ({
         <Grid container>
           {images.map(
             (image, index) =>
-              image.file && (
+              (image.file || image.url) && (
                 <Grid
                   item
                   md={4}
@@ -172,11 +172,16 @@ const PublicationResume = ({
                   <Typography className={styles.fieldTitle}>
                     {image.label}:
                   </Typography>
-                  <img
-                    src={URL.createObjectURL(image.file)}
+                  <Box
+                    component='img'
+                    src={
+                      image.file
+                        ? URL.createObjectURL(image.file)
+                        : image.url || ''
+                    }
                     alt={image.label}
                     className={styles.image}
-                    style={{ width: 178, height: 105 }}
+                    sx={{ width: 178, height: 105 }}
                   />
                 </Grid>
               )

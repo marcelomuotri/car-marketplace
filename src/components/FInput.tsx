@@ -302,6 +302,12 @@ const FInput: React.FC<GenericInputProps> = ({
                 />
               )}
               onChange={(_, data) => field.onChange(data)}
+              onInputChange={(event, newInputValue) => {
+                if (!options.includes(newInputValue)) {
+                  console.log(newInputValue)
+                  field.onChange(newInputValue)
+                }
+              }}
               disabled={disabled}
             />
           </InputWithTitle>

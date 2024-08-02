@@ -10,6 +10,7 @@ import { useStyles } from './topBar.styles'
 import { useNavigate } from 'react-router-dom'
 import SearchIcon from '../../../../assets/icons/SearchIcon'
 import { DateRangePicker } from 'rsuite'
+import { useTranslation } from 'react-i18next'
 
 interface TopBarProps {
   setTitleFilter: (title: string) => void
@@ -19,6 +20,7 @@ interface TopBarProps {
 const TopBar = ({ setTitleFilter, setDateFilter }: TopBarProps) => {
   const { classes: styles } = useStyles()
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const onCreatePublication = () => {
     navigate('/createPublication')
   }
@@ -53,7 +55,7 @@ const TopBar = ({ setTitleFilter, setDateFilter }: TopBarProps) => {
       />
       <DateRangePicker
         format='dd/MM/yyyy'
-        placeholder='Seleccionar fecha'
+        placeholder={t('selectDate')}
         size='lg'
         showHeader={false}
         ranges={[]}
@@ -63,7 +65,7 @@ const TopBar = ({ setTitleFilter, setDateFilter }: TopBarProps) => {
         onChange={(value) => setDateFilter(value)}
       />
       <FButton
-        title='Nueva publicacion'
+        title={t('newPublication')}
         size='small'
         onClick={onCreatePublication}
       />

@@ -49,7 +49,7 @@ const CreatePublication = () => {
   const { classes: styles } = useStyles()
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { uploadImage } = useUploadImage()
+  const { uploadImage, uploading } = useUploadImage()
   const { addNewProduct, isLoading } = useAddProduct()
   const [activeStep, setActiveStep] = useState(0)
   const [isNextDisabled, setIsNextDisabled] = useState(true)
@@ -73,22 +73,65 @@ const CreatePublication = () => {
 
   const values = watch()
 
+  const variants = [
+    {
+      category: ['autos', 'motos', 'kartings'],
+      fields: ['condition', 'brand', 'model', 'subCategory', 'year'],
+    },
+    {
+      category: ['equipamiento'],
+      fields: ['condition', 'size', 'homologation', 'competition'],
+    },
+    {
+      category: [
+        'piezas de motor',
+        'piezas de unidad',
+        'accesorios',
+        'herramientas',
+      ],
+      fields: ['condition', 'competition'],
+    },
+    {
+      category: ['servicios'],
+      fields: ['competition'],
+    },
+  ]
+
+  const fieldsToCheck = variants.find((variant) =>
+    variant.category.includes(values.category ?? '')
+  )
+
   useEffect(() => {
     const checkIsNextDisabled = () => {
       const hasErrors = Object.keys(errors).length > 0
       if (activeStep === 0) {
-        const firstStepValues = {
+        const firstStepValues: any = {
           title: values.title,
-          currency: values.currency,
-          price: values.price,
           description: values.description,
         }
+        if (!values.applyPrice) {
+          firstStepValues.currency = values.currency
+          firstStepValues.price = values.price
+        }
+
         const hasEmptyFields = Object.values(firstStepValues).some(
           (value) => value === '' || value === undefined
         )
         setIsNextDisabled(hasErrors || hasEmptyFields || !photo1)
       } else if (activeStep === 1) {
-        setIsNextDisabled(hasErrors)
+        const secondStepValues: any = {
+          category: values.category,
+          subCategory: values.subCategory,
+        }
+        if (fieldsToCheck) {
+          fieldsToCheck.fields.forEach((field) => {
+            secondStepValues[field] = values[field]
+          })
+        }
+        const hasEmptyFields = Object.values(secondStepValues).some(
+          (value) => value === '' || value === undefined || value === null
+        )
+        setIsNextDisabled(hasErrors || hasEmptyFields)
       }
     }
     checkIsNextDisabled()
@@ -115,6 +158,7 @@ const CreatePublication = () => {
       errors={errors}
       watch={watch}
       setValue={setValue}
+      selectedCategory={values.category}
     />,
     <PublicationResume
       values={values}
@@ -163,7 +207,7 @@ const CreatePublication = () => {
     navigate('/home')
   }
 
-  if (isLoading) {
+  if (isLoading || uploading) {
     return <Loader />
   }
 

@@ -41,16 +41,23 @@ const useStyles = makeStyles()((theme: Theme) => ({
   },
 }))
 
-const CreateStep2 = ({ control, errors, watch, setValue }: any) => {
+const CreateStep2 = ({
+  control,
+  errors,
+  watch,
+  setValue,
+  selectedCategory,
+}: any) => {
   const { classes: styles } = useStyles()
   const { t } = useTranslation()
   const { getCategories, data } = useCategoryService()
+  console.log(selectedCategory)
+  //TODO poner RTK para categorias
   useEffect(() => {
     getCategories()
   }, [getCategories])
 
   // yo tengo 4 layouts distintos, - Los primeros 2 salen siempre, autos motos y kartings
-  const selectedCategory: string = watch('category')
   const selectedBrand = watch('brand')
   const vehiclesActive = ['autos', 'motos', 'kartings'].includes(
     selectedCategory
@@ -73,7 +80,6 @@ const CreateStep2 = ({ control, errors, watch, setValue }: any) => {
   const capitalizeFirstLetter = (string: string) => {
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
-  //let data: { categories: Categories }
 
   const categories = Object.keys(data).map((category) => ({
     value: category,
@@ -183,6 +189,7 @@ const CreateStep2 = ({ control, errors, watch, setValue }: any) => {
                 name='model'
                 error={errors.model}
                 control={control}
+                rules={{ required: t('requiredField') }}
                 options={modelOptions}
                 label='Modelo'
               />

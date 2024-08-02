@@ -20,6 +20,7 @@ import { SnackbarProvider } from 'notistack'
 import CreatePublication from './features/CreatePublication/CreatePublication'
 import 'rsuite/dist/rsuite-no-reset.min.css'
 import EditPublication from './features/CreatePublication/EditPublication'
+import ResumePage from './features/CreatePublication/ResumePage'
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
           {
             path: 'editPublication/:publicationId',
             element: <EditPublication />,
+          },
+          {
+            path: 'resumePage/:publicationId',
+            element: <ResumePage />,
           },
           {
             path: 'profile',

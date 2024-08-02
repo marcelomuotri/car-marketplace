@@ -10,12 +10,15 @@ import {
 import Loader from '../../../../components/Loader'
 import ConfirmModal from '../../../../components/ConfirmModal/ConfirmModal'
 import { useNavigate } from 'react-router-dom'
+import { getCurrencyLabel } from '../../../../framework/utils/currencyConverter'
+import { useTranslation } from 'react-i18next'
 
 interface ProductsListProps {
   products: Product[]
 }
 
 const ProductList = ({ products }: ProductsListProps) => {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { removeProduct, isDeleting } = useDeleteProduct()
   const { updateProductData, isUpdating } = useUpdateProduct()
@@ -40,22 +43,32 @@ const ProductList = ({ products }: ProductsListProps) => {
         />
       ),
     },
-    { field: 'title', headerName: 'Producto', width: 200 },
+    { field: 'title', headerName: t('product'), width: 200 },
     {
       field: 'createdAt',
-      headerName: 'Fecha',
+      headerName: t('date'),
       width: 150,
       valueGetter: (value) => new Date(value).toLocaleDateString(),
     },
     {
       field: 'active',
-      headerName: 'Estado',
+      headerName: t('status'),
       width: 150,
       valueGetter: (value) => (value ? 'Activo' : 'Inactivo'),
     },
-    { field: 'price', headerName: 'Precio', width: 150 },
-    { field: 'visitors', headerName: 'Visitas', width: 120 },
-    { field: 'contacts', headerName: 'Contactos', width: 120 },
+    {
+      field: 'price',
+      headerName: t('price'),
+      width: 150,
+      valueGetter: (value, row) => {
+        if (!value) return 'N/A'
+        const currencyLabel = getCurrencyLabel(row.currency)
+        return currencyLabel + ' ' + value
+      },
+    },
+
+    { field: 'visitors', headerName: t('visitors'), width: 120 },
+    { field: 'contacts', headerName: t('contacts'), width: 120 },
     {
       field: 'options',
       headerName: '',
@@ -118,13 +131,20 @@ const ProductList = ({ products }: ProductsListProps) => {
     return <Loader />
   }
 
+  const handleRedirectResume = () => {
+    if (selectedProduct) {
+      navigate(`/resumePage/${selectedProduct.id}`)
+    }
+    handleClose()
+  }
+
   return (
     <Box>
       <ConfirmModal
         open={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
-        title='Borrar publicacion'
-        text='¿Estas seguro que deseas borrar esta publicacion?'
+        title={t('delete_publication')}
+        text={t('delete_publication_confirm')}
         showCancelButton={true}
         onSave={handleDeleteProduct}
       />
@@ -149,12 +169,12 @@ const ProductList = ({ products }: ProductsListProps) => {
         disableColumnMenu={true}
       />
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        <MenuItem onClick={handleEditPublication}>Modificar</MenuItem>
+        <MenuItem onClick={handleEditPublication}>{t('modify')}</MenuItem>
         <MenuItem onClick={handleChangeActivate}>
-          {selectedProduct?.active ? 'Desactivar' : 'Activar'}
+          {selectedProduct?.active ? t('deactivate') : t('activate')}
         </MenuItem>
-        <MenuItem onClick={handleOpenDeleteModal}>Borrar</MenuItem>
-        <MenuItem onClick={handleClose}>Ir a la publicacion</MenuItem>
+        <MenuItem onClick={handleOpenDeleteModal}>{t('delete')}</MenuItem>
+        <MenuItem onClick={handleRedirectResume}>{t('view_summary')}</MenuItem>
       </Menu>
     </Box>
   )

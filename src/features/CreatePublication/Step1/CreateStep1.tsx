@@ -4,11 +4,7 @@ import { Grid, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { makeStyles } from 'tss-react/mui'
 import UploadImage from '../../../components/UploadImage'
-
-const currencies = [
-  { value: '1', label: 'USD' },
-  { value: '2', label: 'ARS' },
-]
+import { currencies } from '../../../framework/constants/currencies'
 
 const useStyles = makeStyles()((theme: Theme) => ({
   fontTitleSub: {
