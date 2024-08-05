@@ -48,12 +48,23 @@ const Login = () => {
 
   const handleSignInWithGoogle = async () => {
     const provider = new GoogleAuthProvider()
-    const user = await signInWithPopup(auth, provider)
-    signInWithGoogle(user)
+    provider.setCustomParameters({
+      prompt: 'select_account', // Fuerza a seleccionar una cuenta cada vez
+    })
 
-    console.log(user)
-    //yo aca suelo  crear un user en la coleccion si el usuario no existe
-    //si el usuario existe lo logueo
+    try {
+      const result = await signInWithPopup(auth, provider)
+      const user = result.user
+      console.log(result)
+      console.log(user)
+      if (user) {
+        await signInWithGoogle(result)
+        navigation('/')
+      }
+    } catch (error) {
+      console.error('Google sign-in error:', error)
+      // Maneja el error según sea necesario
+    }
   }
 
   return (

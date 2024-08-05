@@ -97,12 +97,13 @@ export const useAuthService = () => {
     }
   }
 
-  const signInWithGoogle = async (user) => {
+  const signInWithGoogle = async (result) => {
     //TODO
-    const isNewUser = user._tokenResponse.isNewUser
+    const isNewUser = result._tokenResponse.isNewUser
     if (isNewUser) {
-      const userPayload = createUserPayload(user.user)
-      saveUserToFirestore(userPayload, user.user.uid)
+      const userPayload = createUserPayload(result.user)
+      saveUserToFirestore(userPayload, result.user.uid)
+      //aca si tengo problemas puedo volver a ponerle el uid al userData para ver si se arregla
     }
   }
 
