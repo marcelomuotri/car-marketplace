@@ -9,7 +9,7 @@ import { currencies } from '../../../framework/constants/currencies'
 const useStyles = makeStyles()((theme: Theme) => ({
   fontTitleSub: {
     color: theme.palette.common.black,
-    fontWeight: 600,
+    fontWeight: 400,
     fontSize: 14,
   },
   formTitle: {
@@ -77,6 +77,7 @@ const CreateStep1 = ({
             error={errors.currency}
             options={currencies}
             disabled={isDisabled}
+            placeholder='Seleccionar'
           />
         </Grid>
         <Grid item md={3}>
@@ -90,7 +91,7 @@ const CreateStep1 = ({
             disabled={isDisabled}
           />
         </Grid>
-        <Grid item md={2}>
+        <Grid item md={2} sx={{ display: 'flex', alignItems: 'end' }}>
           <FInput
             type='checkbox'
             name='applyPrice'
@@ -128,7 +129,6 @@ const CreateStep1 = ({
           md={4}
           sx={{
             display: 'flex',
-            justifyContent: 'center',
             alignItems: 'center',
             marginBottom: 20,
           }}
@@ -140,7 +140,6 @@ const CreateStep1 = ({
           md={4}
           sx={{
             display: 'flex',
-            justifyContent: 'center',
             alignItems: 'center',
             marginBottom: 20,
           }}
@@ -152,7 +151,6 @@ const CreateStep1 = ({
           md={4}
           sx={{
             display: 'flex',
-            justifyContent: 'center',
             alignItems: 'center',
             marginBottom: 20,
           }}

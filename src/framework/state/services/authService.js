@@ -97,6 +97,15 @@ export const useAuthService = () => {
     }
   }
 
+  const signInWithGoogle = async (user) => {
+    //TODO
+    const isNewUser = user._tokenResponse.isNewUser
+    if (isNewUser) {
+      const userPayload = createUserPayload(user.user)
+      saveUserToFirestore(userPayload, user.user.uid)
+    }
+  }
+
   const changePassword = async (oldPassword, newPassword) => {
     const user = auth.currentUser
     const email = user.email
@@ -164,6 +173,7 @@ export const useAuthService = () => {
     loginUser,
     logoutUser,
     createUser,
+    signInWithGoogle,
     saveUserToFirestore,
     updateUserToFirestore,
     changePassword,

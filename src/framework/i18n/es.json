@@ -95,5 +95,6 @@
   "subject": "Motivo de la consulta",
   "chooseAnOption": "Elegí una de las opciones",
   "writeYourQuery": "Escribí el detalle de tu consulta",
-  "send": "Enviar"
+  "send": "Enviar",
+  "verifyNow": "Verificar ahora"
 }

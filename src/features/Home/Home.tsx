@@ -17,7 +17,7 @@ dayjs.extend(isBetween)
 
 const Home = () => {
   const { classes: styles } = useStyles()
-  const { userData } = useSelector((state: RootState) => state.auth)
+  const { userData, user } = useSelector((state: RootState) => state.auth)
   const [titleFilter, setTitleFilter] = useState<string | null>(null)
   const [dateFilter, setDateFilter] = useState<string | null>(null)
   const { products, isLoading } = useGetProductsByUser()

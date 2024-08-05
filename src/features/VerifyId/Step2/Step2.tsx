@@ -36,6 +36,7 @@ const Step2: React.FC<Step2Props> = ({
             title={t('SelfiePhoto')}
             subTitle={t('makeSureYourFace')}
             setImage={setPhotoProfile}
+            subtitleStyles={{ textWrap: 'nowrap' }}
           />
         </Grid>
       </Grid>

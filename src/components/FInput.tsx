@@ -174,7 +174,18 @@ const FInput: React.FC<GenericInputProps> = ({
               <Select
                 {...field}
                 {...props}
-                defaultValue={defaultValue}
+                displayEmpty
+                renderValue={(selected) => {
+                  if (!selected) {
+                    return (
+                      <p style={{ color: 'rgb(117 117 117 / 46%)' }}>
+                        {placeholder}
+                      </p>
+                    )
+                  }
+                  return options.find((option) => option.value === selected)
+                    ?.label
+                }}
                 inputProps={{ 'aria-label': 'Without label' }}
                 disabled={disabled}
               >
@@ -195,9 +206,16 @@ const FInput: React.FC<GenericInputProps> = ({
       case 'checkbox':
         return (
           <FormControlLabel
-            control={<Checkbox {...field} checked={field.value} {...props} />}
+            control={
+              <Checkbox
+                sx={{ paddingBottom: 0, paddingRight: 4 }}
+                {...field}
+                checked={field.value}
+                {...props}
+              />
+            }
             label={label}
-            style={{ width }} // Aplicar el ancho personalizado
+            sx={{ alignItems: 'end' }}
           />
         )
       case 'checkboxGroup':
@@ -209,6 +227,7 @@ const FInput: React.FC<GenericInputProps> = ({
                   key={option.value}
                   control={
                     <Checkbox
+                      sx={{ paddingRight: 4 }}
                       {...field}
                       checked={field.value.includes(option.value)}
                       onChange={(e) => {
@@ -299,6 +318,7 @@ const FInput: React.FC<GenericInputProps> = ({
                   helperText={error ? error.message : helperText}
                   variant='outlined'
                   size='small'
+                  placeholder={placeholder}
                 />
               )}
               onChange={(_, data) => field.onChange(data)}

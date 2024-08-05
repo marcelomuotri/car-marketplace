@@ -10,6 +10,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useTheme } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import Loader from '../../components/Loader'
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { auth } from '../../../firebaseConfig'
 
 interface LoginFormFieldsProps {
   email: string
@@ -21,7 +23,7 @@ const Login = () => {
   const { t } = useTranslation()
   const navigation = useNavigate()
   const { classes: styles } = useStyles()
-  const { loginUser } = useAuthService()
+  const { loginUser, signInWithGoogle } = useAuthService()
   const {
     handleSubmit,
     control,
@@ -42,6 +44,16 @@ const Login = () => {
     if (user) {
       navigation('/')
     }
+  }
+
+  const handleSignInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider()
+    const user = await signInWithPopup(auth, provider)
+    signInWithGoogle(user)
+
+    console.log(user)
+    //yo aca suelo  crear un user en la coleccion si el usuario no existe
+    //si el usuario existe lo logueo
   }
 
   return (
@@ -70,6 +82,10 @@ const Login = () => {
           type='password'
         />
         <FButton onClick={handleSubmit(onHandleLogin)} title={'login'} />
+        <FButton
+          onClick={handleSignInWithGoogle}
+          title={'Sign in with google'}
+        />
         {error && (
           <Typography color='red'>Usuario o contraseña incorrecta</Typography>
         )}

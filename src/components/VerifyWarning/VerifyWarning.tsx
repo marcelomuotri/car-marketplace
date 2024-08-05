@@ -24,8 +24,10 @@ const useStyles = makeStyles()((theme: Theme) => ({
     fontSize: '14px',
   },
   verifyNow: {
+    marginLeft: '10px',
     fontWeight: 700,
     fontSize: '14px',
+    textDecoration: 'underline',
   },
 }))
 
@@ -46,7 +48,7 @@ const VerifyWarning = ({ verifiedStatus }: VerifyWarningProps) => {
             <Grid item xs={12} sm='auto'>
               <Link to='/verifyId'>
                 <Typography className={styles.verifyNow}>
-                  Verificar ahora
+                  {t('verifyNow')}
                 </Typography>
               </Link>
             </Grid>

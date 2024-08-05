@@ -142,6 +142,7 @@ const CreateStep2 = ({
             rules={{ required: t('requiredField') }}
             options={categories}
             label='Categoría'
+            placeholder='Seleccionar'
           />
         </Grid>
         <Grid item md={6}>
@@ -154,6 +155,7 @@ const CreateStep2 = ({
               rules={{ required: t('requiredField') }}
               options={subCategoryOptions}
               label='Subcategoria'
+              placeholder='Seleccionar'
             />
           )}
         </Grid>
@@ -181,6 +183,7 @@ const CreateStep2 = ({
                 rules={{ required: t('requiredField') }}
                 options={brandsOptions}
                 label='Marca'
+                placeholder='Seleccionar'
               />
             </Grid>
             <Grid item md={6}>
@@ -192,6 +195,7 @@ const CreateStep2 = ({
                 rules={{ required: t('requiredField') }}
                 options={modelOptions}
                 label='Modelo'
+                placeholder='Seleccionar'
               />
             </Grid>
             <Grid item md={6}>
@@ -217,6 +221,7 @@ const CreateStep2 = ({
                 rules={{ required: t('requiredField') }}
                 options={equipmentOptions}
                 label='Talle'
+                placeholder='Seleccionar'
               />
             </Grid>
             <Grid item md={6}>
@@ -228,6 +233,7 @@ const CreateStep2 = ({
                 rules={{ required: t('requiredField') }}
                 options={homologationOptions}
                 label='Homologacion'
+                placeholder='Seleccionar'
               />
             </Grid>
           </>

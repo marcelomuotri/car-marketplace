@@ -60,6 +60,7 @@ interface UploadImageProps {
   subTitle?: string
   setImage: (file: File) => void
   image?: string
+  subtitleStyles?: any
 }
 
 const UploadImage: React.FC<UploadImageProps> = ({
@@ -67,6 +68,7 @@ const UploadImage: React.FC<UploadImageProps> = ({
   subTitle,
   setImage,
   image,
+  subtitleStyles,
 }) => {
   const { classes } = useStyles()
 
@@ -96,8 +98,13 @@ const UploadImage: React.FC<UploadImageProps> = ({
           </>
         )}
       </Box>
-      {subTitle && <Typography>{subTitle}</Typography>}
-      <div {...getRootProps()} role='button' aria-label='Upload Image Dropzone'>
+      {subTitle && <Typography sx={subtitleStyles}>{subTitle}</Typography>}
+      <div
+        style={{ marginTop: 16 }}
+        {...getRootProps()}
+        role='button'
+        aria-label='Upload Image Dropzone'
+      >
         <input {...getInputProps()} />
         {isDragActive ? (
           <Box className={classes.columnContainer}>

@@ -30,7 +30,7 @@ const ProductList = ({ products, isVerified }: ProductsListProps) => {
     {
       field: 'photo',
       headerName: '',
-      width: 150,
+      flex: 0.5,
       renderCell: (params: GridRenderCellParams) => (
         <Box
           component='img'
@@ -43,23 +43,23 @@ const ProductList = ({ products, isVerified }: ProductsListProps) => {
         />
       ),
     },
-    { field: 'title', headerName: t('product'), width: 200 },
+    { field: 'title', headerName: t('product'), flex: 1 },
     {
       field: 'createdAt',
       headerName: t('date'),
-      width: 150,
+      flex: 0.5,
       valueGetter: (value) => new Date(value).toLocaleDateString(),
     },
     {
       field: 'active',
       headerName: t('status'),
-      width: 150,
+      flex: 0.5,
       valueGetter: (value) => (value ? 'Activa' : 'Pausada'),
     },
     {
       field: 'price',
       headerName: t('price'),
-      width: 150,
+      flex: 0.5,
       valueGetter: (value, row) => {
         if (!value) return 'N/A'
         const currencyLabel = getCurrencyLabel(row.currency)
@@ -67,12 +67,12 @@ const ProductList = ({ products, isVerified }: ProductsListProps) => {
       },
     },
 
-    { field: 'visitors', headerName: t('visitors'), width: 120 },
-    { field: 'contacts', headerName: t('contacts'), width: 120 },
+    { field: 'visitors', headerName: t('visitors'), flex: 0.5 },
+    { field: 'contacts', headerName: t('contacts'), flex: 0.5 },
     {
       field: 'options',
       headerName: '',
-      width: 50,
+      flex: 0.2,
       renderCell: (params: GridRenderCellParams) => (
         <IconButton
           edge='end'

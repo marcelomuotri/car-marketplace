@@ -83,7 +83,7 @@ const EditProfileForm = ({
         <Box className={styles.bodyLeft}>
           <Box>
             <Typography className={styles.fontTitle}>
-              {t('personalData')}
+              {t('personalData').toUpperCase()}
             </Typography>
             <Grid
               container
@@ -216,6 +216,7 @@ const EditProfileForm = ({
                   rules={{ required: t('requiredField') }}
                   error={errors.state}
                   options={provinces}
+                  placeholder='Buenos Aires'
                 />
               </Grid>
             </Grid>
