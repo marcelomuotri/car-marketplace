@@ -68,6 +68,9 @@ const useStyles = makeStyles()((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
     gap: 5,
+    [theme.breakpoints.down('md')]: {
+      alignItems: 'flex-start',
+    },
   },
   bodyContainer: {
     background: theme.palette.common.white,
@@ -113,7 +116,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
   },
   fontTitleSub: {
     color: theme.palette.common.black,
-    fontWeight: 600,
+    fontWeight: 500,
     fontSize: 14,
   },
   fontText: {
@@ -263,7 +266,7 @@ const MyProfile = () => {
             <Box className={styles.bodyLeft}>
               <Box>
                 <Typography className={styles.fontTitle}>
-                  {t('personalData')}
+                  {t('personalData').toUpperCase()}
                 </Typography>
                 <Grid
                   container
@@ -275,25 +278,34 @@ const MyProfile = () => {
                     <Typography className={styles.fontTitleSub}>
                       {t('firstName')}
                     </Typography>
-                    <Typography> {userData?.name}</Typography>
+                    <Typography variant={'bodyRegular'}>
+                      {' '}
+                      {userData?.name}
+                    </Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
                       {t('dni')}
                     </Typography>
-                    <Typography> {userData?.dni} </Typography>
+                    <Typography variant={'bodyRegular'}>
+                      {' '}
+                      {userData?.dni}{' '}
+                    </Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
                       {t('lastName')}
                     </Typography>
-                    <Typography> {userData?.surname} </Typography>
+                    <Typography variant={'bodyRegular'}>
+                      {' '}
+                      {userData?.surname}{' '}
+                    </Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
                       {t('birthDate')}
                     </Typography>
-                    <Typography>
+                    <Typography variant={'bodyRegular'}>
                       {userData?.birthdate
                         ? formattedDate(userData?.birthdate)
                         : ''}
@@ -315,31 +327,46 @@ const MyProfile = () => {
                     <Typography className={styles.fontTitleSub}>
                       {t('contactEmail')}
                     </Typography>
-                    <Typography> {userData?.contactEmail}</Typography>
+                    <Typography variant={'bodyRegular'}>
+                      {' '}
+                      {userData?.contactEmail}
+                    </Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
                       {t('phoneNumber')}
                     </Typography>
-                    <Typography> {userData?.phoneNumber}</Typography>
+                    <Typography variant={'bodyRegular'}>
+                      {' '}
+                      {userData?.phoneNumber}
+                    </Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
                       {t('address')}
                     </Typography>
-                    <Typography> {userData?.address}</Typography>
+                    <Typography variant={'bodyRegular'}>
+                      {' '}
+                      {userData?.address}
+                    </Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
                       {t('city')}
                     </Typography>
-                    <Typography> {userData?.city}</Typography>
+                    <Typography variant={'bodyRegular'}>
+                      {' '}
+                      {userData?.city}
+                    </Typography>
                   </Grid>
                   <Grid item md={6}>
                     <Typography className={styles.fontTitleSub}>
                       {t('state')}
                     </Typography>
-                    <Typography> {userData?.state}</Typography>
+                    <Typography variant={'bodyRegular'}>
+                      {' '}
+                      {userData?.state}
+                    </Typography>
                   </Grid>
                 </Grid>
               </Box>
@@ -352,13 +379,18 @@ const MyProfile = () => {
                 <Typography className={styles.fontTitleSub}>
                   {t('displayName')}
                 </Typography>
-                <Typography> {userData?.nameToShow}</Typography>
+                <Typography variant={'bodyRegular'}>
+                  {' '}
+                  {userData?.nameToShow}
+                </Typography>
               </Box>
               <Box>
                 <Typography className={styles.fontTitleSub}>
                   {t('description')}
                 </Typography>
-                <Typography>{userData?.description}</Typography>
+                <Typography variant={'bodyRegular'}>
+                  {userData?.description}
+                </Typography>
               </Box>
             </Box>
           </Box>

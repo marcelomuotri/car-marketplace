@@ -121,7 +121,7 @@ export const appComponents: Components<Omit<Theme, 'components'>> = {
   MuiSvgIcon: {
     styleOverrides: {
       root: {
-        color: theme.palette.text.primary, // Establece el tamaño de fuente aquí
+        color: theme.palette.text.primary,
       },
     },
   },
@@ -134,6 +134,13 @@ export const appComponents: Components<Omit<Theme, 'components'>> = {
         backgroundColor: '#EFEFEF!important',
         color: theme.palette.common.black,
         fontWeight: 500,
+      },
+    },
+  },
+  MuiSelect: {
+    styleOverrides: {
+      icon: {
+        color: theme.palette.text.primary,
       },
     },
   },

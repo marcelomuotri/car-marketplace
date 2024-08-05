@@ -21,6 +21,7 @@ import CreatePublication from './features/CreatePublication/CreatePublication'
 import 'rsuite/dist/rsuite-no-reset.min.css'
 import EditPublication from './features/CreatePublication/EditPublication'
 import ResumePage from './features/CreatePublication/ResumePage'
+import Support from './features/Support/Support'
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -78,8 +79,8 @@ const router = createBrowserRouter([
             element: <EditProfile />,
           },
           {
-            path: 'categories',
-            element: <Home />,
+            path: 'support',
+            element: <Support />,
           },
           {
             path: 'verifyId',

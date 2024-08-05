@@ -8,6 +8,7 @@ const ConfirmModal = ({
   title,
   text,
   showCancelButton,
+  submitButtonTitle,
 }: any) => {
   return (
     <FModal
@@ -16,6 +17,7 @@ const ConfirmModal = ({
       title={title}
       onSave={onSave}
       showCancelButton={showCancelButton}
+      submitButtonTitle={submitButtonTitle}
     >
       <Typography>{text}</Typography>
     </FModal>

@@ -5,7 +5,11 @@ import { useTranslation } from 'react-i18next'
 import FButton from '../../../../components/FButton/FButton'
 import { useNavigate } from 'react-router-dom'
 
-const EmptyProducts = () => {
+interface EmptyProductsProps {
+  userRejected: boolean
+}
+
+const EmptyProducts = ({ userRejected }: EmptyProductsProps) => {
   const { classes: styles } = useStyles()
   const { t } = useTranslation()
   const navigation = useNavigate()
@@ -27,12 +31,14 @@ const EmptyProducts = () => {
           <BoyThinking />
         </Box>
       </Box>
-      <Box className={styles.buttonContainer}>
-        <FButton
-          onClick={onHandleCreatePublication}
-          title={t('createPublication')}
-        />
-      </Box>
+      {!userRejected && (
+        <Box className={styles.buttonContainer}>
+          <FButton
+            onClick={onHandleCreatePublication}
+            title={t('createPublication')}
+          />
+        </Box>
+      )}
     </>
   )
 }

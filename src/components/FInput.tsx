@@ -67,7 +67,7 @@ const InputWithTitle: React.FC<InputWithTitleProps> = ({ label, children }) => {
       <Typography
         sx={{
           color: theme.palette.common.black,
-          fontWeight: 600,
+          fontWeight: 400,
           fontSize: 14,
         }}
       >

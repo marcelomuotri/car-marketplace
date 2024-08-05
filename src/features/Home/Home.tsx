@@ -22,6 +22,7 @@ const Home = () => {
   const [dateFilter, setDateFilter] = useState<string | null>(null)
   const { products, isLoading } = useGetProductsByUser()
   const [filteredProducts, setFilteredProducts] = useState(products)
+  const userRejected = userData?.verifiedStatus === 'rejected'
 
   useEffect(() => {
     let updatedProducts = products
@@ -56,16 +57,17 @@ const Home = () => {
           </Box>
         </Fade>
       )}
-      {products ? (
+      {products?.length > 0 ? (
         <Box className={styles.container}>
           <TopBar
+            userRejected={userRejected}
             setTitleFilter={setTitleFilter}
             setDateFilter={setDateFilter}
           />
           <ProductList products={filteredProducts} />
         </Box>
       ) : (
-        <EmptyProducts />
+        <EmptyProducts userRejected={userRejected} />
       )}
     </Box>
   )

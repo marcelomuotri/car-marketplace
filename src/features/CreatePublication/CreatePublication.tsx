@@ -18,22 +18,9 @@ import GirlOk from '../../assets/images/GirlOk'
 import { useAddProduct } from '../../framework/api/productApi'
 import { ProductUpload } from '../../framework/types'
 import { publicationsDefaultValues } from '../../framework/constants/publicationsDefaultValues'
+import FContainer from '../../components/FContainer'
 
 const useStyles = makeStyles()((theme: Theme) => ({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  formContainer: {
-    maxWidth: 880,
-    padding: 25,
-    width: '100%',
-    [theme.breakpoints.down('sm')]: {
-      width: 'auto',
-    },
-  },
   buttonContainer: {
     display: 'flex',
     justifyContent: 'end',
@@ -211,35 +198,27 @@ const CreatePublication = () => {
     return <Loader />
   }
 
-  return (
-    <Box className={styles.container}>
-      {showSuccess ? (
-        <Success
-          Image={GirlOk}
-          title='¡Tu producto ha sido publicado correctamente!'
-          maxWidth={500}
-          buttonTitle='Volver a publicaciones'
-          onClickButton={navigateHome}
+  return showSuccess ? (
+    <Success
+      Image={GirlOk}
+      title='¡Tu producto ha sido publicado correctamente!'
+      maxWidth={500}
+      buttonTitle='Volver a publicaciones'
+      onClickButton={navigateHome}
+    />
+  ) : (
+    <FContainer>
+      <Box>{steps[activeStep]}</Box>
+      <Box className={styles.buttonContainer}>
+        <FButton variant='outlined' onClick={handleBack} title={t('back')} />
+        <FButton
+          variant='contained'
+          onClick={handleNext}
+          disabled={isNextDisabled}
+          title={activeStep === steps.length - 1 ? t('end') : t('next')}
         />
-      ) : (
-        <Box className={styles.formContainer}>
-          <Box>{steps[activeStep]}</Box>
-          <Box className={styles.buttonContainer}>
-            <FButton
-              variant='outlined'
-              onClick={handleBack}
-              title={t('back')}
-            />
-            <FButton
-              variant='contained'
-              onClick={handleNext}
-              disabled={isNextDisabled}
-              title={activeStep === steps.length - 1 ? t('end') : t('next')}
-            />
-          </Box>
-        </Box>
-      )}
-    </Box>
+      </Box>
+    </FContainer>
   )
 }
 

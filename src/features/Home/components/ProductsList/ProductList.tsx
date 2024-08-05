@@ -143,10 +143,10 @@ const ProductList = ({ products }: ProductsListProps) => {
       <ConfirmModal
         open={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
-        title={t('delete_publication')}
         text={t('delete_publication_confirm')}
         showCancelButton={true}
         onSave={handleDeleteProduct}
+        submitButtonTitle={t('delete')}
       />
       <DataGrid
         rowHeight={70}

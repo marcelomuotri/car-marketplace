@@ -18,6 +18,7 @@ import EditProfileForm from '../EditProfile/Components/EditProfileForm'
 import { Dayjs } from 'dayjs'
 import Success from '../../components/Success/Success'
 import BoySleeping from '../../assets/images/BoySleeping'
+import FContainer from '../../components/FContainer'
 
 interface FormValues {
   name: string
@@ -159,36 +160,29 @@ const VerifyId = () => {
     navigate('/createPublication')
   }
 
-  return (
-    <Box className={styles.container}>
-      {showSuccess ? (
-        <Success
-          Image={BoySleeping}
-          title={t('verificationRequestSubmitted')}
-          subTitle={t('youWillReceiveTheConfirmationSoon')}
-          buttonTitle={'Crear tu primera publicacion'}
-          onClickButton={navigateHome}
-        />
-      ) : (
-        <Box className={styles.formContainer}>
-          <Box>{steps[activeStep]}</Box>
-          <Box className={styles.buttonContainer}>
-            <FButton
-              variant='outlined'
-              onClick={handleBack}
-              title={t('back')}
-            />
-
-            <FButton
-              variant='contained'
-              onClick={handleNext}
-              disabled={isNextDisabled}
-              title={activeStep === steps.length - 1 ? t('end') : t('next')}
-            />
-          </Box>
+  return showSuccess ? (
+    <Success
+      Image={BoySleeping}
+      title={t('verificationRequestSubmitted')}
+      subTitle={t('youWillReceiveTheConfirmationSoon')}
+      buttonTitle={'Crear tu primera publicacion'}
+      onClickButton={navigateHome}
+    />
+  ) : (
+    <FContainer>
+      <Box className={styles.formContainer}>
+        <Box>{steps[activeStep]}</Box>
+        <Box className={styles.buttonContainer}>
+          <FButton variant='outlined' onClick={handleBack} title={t('back')} />
+          <FButton
+            variant='contained'
+            onClick={handleNext}
+            disabled={isNextDisabled}
+            title={activeStep === steps.length - 1 ? t('end') : t('next')}
+          />
         </Box>
-      )}
-    </Box>
+      </Box>
+    </FContainer>
   )
 }
 

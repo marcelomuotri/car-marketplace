@@ -17,6 +17,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../../components/Loader'
 import { useSnackbar } from 'notistack'
+import FContainer from '../../components/FContainer'
 
 const useStyles = makeStyles()((theme: Theme) => ({
   container: {
@@ -95,7 +96,6 @@ const EditProfile = () => {
   const { updateUserToFirestore } = useAuthService()
   const { uploadImage, uploading } = useUploadImage()
   const [photoToShow, setPhotoToShow] = useState<File | null>(null)
-  console.log(userData)
 
   const {
     control,
@@ -142,29 +142,27 @@ const EditProfile = () => {
   return (
     <Box>
       {uploading && <Loader />}
-      <Box className={styles.container}>
-        <Box className={styles.editProfileContainer}>
-          <EditProfileForm
-            control={control}
-            errors={errors}
-            photoToShowUrl={userData?.photoToShowUrl}
-            setPhotoToShow={setPhotoToShow}
+      <FContainer maxWidth={980}>
+        <EditProfileForm
+          control={control}
+          errors={errors}
+          photoToShowUrl={userData?.photoToShowUrl}
+          setPhotoToShow={setPhotoToShow}
+        />
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'end',
+            marginTop: 32,
+            marginBottom: 10,
+          }}
+        >
+          <FButton
+            title={'Guardar'}
+            onClick={handleSubmit(onHandleSaveProfile)}
           />
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'end',
-              marginTop: 10,
-              marginBottom: 10,
-            }}
-          >
-            <FButton
-              title={'Guardar'}
-              onClick={handleSubmit(onHandleSaveProfile)}
-            />
-          </Box>
         </Box>
-      </Box>
+      </FContainer>
     </Box>
   )
 }

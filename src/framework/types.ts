@@ -80,3 +80,15 @@ export interface CategoryData {
   homologation?: boolean[]
   competition?: string[]
 }
+
+export interface SupportQueryUpload {
+  subject: string
+  description: string
+}
+
+export interface SupportQuery extends SupportQueryUpload {
+  email: string
+  uid: string
+  name: string | null
+  createdAt: string
+}

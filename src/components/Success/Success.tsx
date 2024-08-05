@@ -1,9 +1,18 @@
 import { makeStyles } from 'tss-react/mui'
-import { Theme } from '@mui/material/styles'
 import { Box, Typography } from '@mui/material'
 import FButton from '../FButton/FButton'
 
 const useStyles = makeStyles<{ maxWidth: number }>()((theme, { maxWidth }) => ({
+  successContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 16,
+    [theme.breakpoints.down('sm')]: {
+      gap: 8,
+    },
+  },
   verifySuccessContainer: {
     maxWidth: maxWidth,
     marginTop: 69,
@@ -31,6 +40,10 @@ const useStyles = makeStyles<{ maxWidth: number }>()((theme, { maxWidth }) => ({
   },
   button: {
     marginTop: 40,
+    [theme.breakpoints.down('md')]: {
+      marginTop: 24,
+      marginBottom: 20,
+    },
   },
 }))
 
@@ -54,7 +67,7 @@ const VerifySuccess = ({
   const { classes: styles } = useStyles({ maxWidth })
 
   return (
-    <>
+    <Box className={styles.successContainer}>
       <Box className={styles.verifySuccessContainer}>
         {title && <Typography className={styles.title}>{title}</Typography>}
         {subTitle && (
@@ -69,7 +82,7 @@ const VerifySuccess = ({
           onClick={onClickButton}
         />
       )}
-    </>
+    </Box>
   )
 }
 

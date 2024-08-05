@@ -1,4 +1,5 @@
-import { Modal, Box, Typography } from '@mui/material'
+import { Modal, Box, Typography, IconButton } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
 import { useStyles } from './fmodal.styles'
 import FButton from '../FButton/FButton'
 
@@ -11,6 +12,7 @@ interface FmodalProps {
   saveFullWidth?: boolean
   onSave: () => void
   showCancelButton?: boolean
+  width?: string | number
 }
 
 const FModal = ({
@@ -22,13 +24,21 @@ const FModal = ({
   saveFullWidth = false,
   onSave,
   showCancelButton,
+  width = 'max-content',
 }: FmodalProps) => {
-  const { classes: styles } = useStyles()
+  const { classes: styles } = useStyles({ width })
 
   return (
     <Modal open={open} onClose={onClose}>
       <Box className={styles.modalContainer}>
-        <Typography className={styles.modalTitle}>{title}</Typography>
+        <Box className={styles.closeButtonContainer}>
+          <IconButton sx={{ padding: 0 }} onClick={onClose} aria-label='close'>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        {title && (
+          <Typography className={styles.modalTitle}>{title}</Typography>
+        )}
         {children}
         <Box className={styles.buttonContainer}>
           {showCancelButton && (

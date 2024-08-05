@@ -15,9 +15,15 @@ import { useTranslation } from 'react-i18next'
 interface TopBarProps {
   setTitleFilter: (title: string) => void
   setDateFilter: (value: any) => void
+  userRejected: boolean
 }
 
-const TopBar = ({ setTitleFilter, setDateFilter }: TopBarProps) => {
+const TopBar = ({
+  setTitleFilter,
+  setDateFilter,
+  userRejected,
+}: TopBarProps) => {
+  console.log(userRejected)
   const { classes: styles } = useStyles()
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -66,12 +72,14 @@ const TopBar = ({ setTitleFilter, setDateFilter }: TopBarProps) => {
         </Box>
       </Box>
       <Box className={styles.containerCenter}>
-        <FButton
-          title={t('newPublication')}
-          size='small'
-          onClick={onCreatePublication}
-          className={styles.createPublicationButton}
-        />
+        {!userRejected && (
+          <FButton
+            title={t('newPublication')}
+            size='small'
+            onClick={onCreatePublication}
+            className={styles.createPublicationButton}
+          />
+        )}
       </Box>
     </Box>
   )

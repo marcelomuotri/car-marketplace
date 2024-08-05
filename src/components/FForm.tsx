@@ -27,6 +27,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
   },
   formTitleContainer: {
     marginBottom: 30,
+    color: theme.palette.text.primary,
     [theme.breakpoints.down('sm')]: {
       marginTop: 10,
       display: 'block',
@@ -36,7 +37,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
 
 interface FFormProps {
   children: React.ReactNode
-  title: string
+  title?: string
   formTitle: string
   formSubtitle: string
 }

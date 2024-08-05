@@ -83,5 +83,17 @@
   "modify": "Modificar",
   "newPublication": "Nueva publicación",
   "selectDate": "Seleccionar fecha",
-  "pause": "Pausar"
+  "pause": "Pausar",
+  "publicationsProblem": "Problemas con una publicación",
+  "profileProblem": "Problemas con mi cuenta",
+  "verificationProblem": "Problemas con la verificación",
+  "others": "Otros",
+  "querySent": "Tu consulta ha sido enviada correctamente",
+  "querySentSubtitle": "Pronto alguien del equipo se contactará para ayudarte",
+  "supportSubtitle": "Utilizá este formulario para contactarte con nosotros por cualquier duda o inconveniente con la aplicación",
+  "queries": "Consultas",
+  "subject": "Motivo de la consulta",
+  "chooseAnOption": "Elegí una de las opciones",
+  "writeYourQuery": "Escribí el detalle de tu consulta",
+  "send": "Enviar"
 }
