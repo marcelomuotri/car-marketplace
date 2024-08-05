@@ -15,9 +15,10 @@ import { useTranslation } from 'react-i18next'
 
 interface ProductsListProps {
   products: Product[]
+  isVerified: boolean
 }
 
-const ProductList = ({ products }: ProductsListProps) => {
+const ProductList = ({ products, isVerified }: ProductsListProps) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { removeProduct, isDeleting } = useDeleteProduct()
@@ -35,7 +36,6 @@ const ProductList = ({ products }: ProductsListProps) => {
           component='img'
           sx={{
             paddingLeft: 36,
-            width: 70,
             height: 50,
           }}
           src={params.row.photo1Url || 'defaultImagePath.jpg'}
@@ -170,7 +170,7 @@ const ProductList = ({ products }: ProductsListProps) => {
       />
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         <MenuItem onClick={handleEditPublication}>{t('modify')}</MenuItem>
-        <MenuItem onClick={handleChangeActivate}>
+        <MenuItem disabled={!isVerified} onClick={handleChangeActivate}>
           {selectedProduct?.active ? t('pause') : t('activate')}
         </MenuItem>
         <MenuItem onClick={handleOpenDeleteModal}>{t('delete')}</MenuItem>

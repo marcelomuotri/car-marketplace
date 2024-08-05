@@ -1,4 +1,4 @@
-import { Box, Theme, Typography } from '@mui/material'
+import { Box, Fade, Theme, Typography } from '@mui/material'
 import { makeStyles } from 'tss-react/mui'
 
 const useStyles = makeStyles()((theme: Theme) => ({
@@ -46,16 +46,18 @@ const FForm = ({ children, title, formTitle, formSubtitle }: FFormProps) => {
   const { classes: styles } = useStyles()
 
   return (
-    <Box className={styles.container}>
-      <Typography className={styles.title}>{title}</Typography>
-      <Box className={styles.formContainer}>
-        <Box className={styles.formTitleContainer}>
-          <Typography className={styles.formTitle}>{formTitle}</Typography>
-          <Typography>{formSubtitle}</Typography>
+    <Fade in={true} timeout={700}>
+      <Box className={styles.container}>
+        <Typography className={styles.title}>{title}</Typography>
+        <Box className={styles.formContainer}>
+          <Box className={styles.formTitleContainer}>
+            <Typography className={styles.formTitle}>{formTitle}</Typography>
+            <Typography>{formSubtitle}</Typography>
+          </Box>
+          {children}
         </Box>
-        {children}
       </Box>
-    </Box>
+    </Fade>
   )
 }
 

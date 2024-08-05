@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Fade } from '@mui/material'
 import { makeStyles } from 'tss-react/mui'
 
 const useStyles = makeStyles<{ maxWidth: number }>()((theme, { maxWidth }) => ({

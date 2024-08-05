@@ -54,6 +54,13 @@ const useStyles = makeStyles()((theme: Theme) => ({
   item: {
     marginBottom: theme.spacing(2),
   },
+  imageContainer: {
+    width: 178,
+    height: 105,
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: theme.palette.grey[300],
+  },
   image: {
     maxWidth: '100%',
     marginBottom: theme.spacing(2),
@@ -172,17 +179,19 @@ const PublicationResume = ({
                   <Typography className={styles.fieldTitle}>
                     {image.label}:
                   </Typography>
-                  <Box
-                    component='img'
-                    src={
-                      image.file
-                        ? URL.createObjectURL(image.file)
-                        : image.url || ''
-                    }
-                    alt={image.label}
-                    className={styles.image}
-                    sx={{ width: 178, height: 105 }}
-                  />
+                  <Box className={styles.imageContainer}>
+                    <Box
+                      component='img'
+                      src={
+                        image.file
+                          ? URL.createObjectURL(image.file)
+                          : image.url || ''
+                      }
+                      alt={image.label}
+                      className={styles.image}
+                      sx={{ height: 105 }}
+                    />
+                  </Box>
                 </Grid>
               )
           )}

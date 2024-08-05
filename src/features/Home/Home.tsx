@@ -23,6 +23,7 @@ const Home = () => {
   const { products, isLoading } = useGetProductsByUser()
   const [filteredProducts, setFilteredProducts] = useState(products)
   const userRejected = userData?.verifiedStatus === 'rejected'
+  const isVerified = userData?.verifiedStatus === 'verified'
 
   useEffect(() => {
     let updatedProducts = products
@@ -46,7 +47,7 @@ const Home = () => {
     setFilteredProducts(updatedProducts)
   }, [titleFilter, dateFilter, products])
 
-  if (isLoading) return <Loader />
+  if (isLoading || !products) return <Loader />
 
   return (
     <Box>
@@ -64,7 +65,14 @@ const Home = () => {
             setTitleFilter={setTitleFilter}
             setDateFilter={setDateFilter}
           />
-          <ProductList products={filteredProducts} />
+          <Fade in={true} timeout={1000}>
+            <Box>
+              <ProductList
+                products={filteredProducts}
+                isVerified={isVerified}
+              />
+            </Box>
+          </Fade>
         </Box>
       ) : (
         <EmptyProducts userRejected={userRejected} />
