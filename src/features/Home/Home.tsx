@@ -51,7 +51,7 @@ const Home = () => {
 
   return (
     <Box>
-      {userData?.verifiedStatus !== 'verified' && (
+      {!isVerified && (
         <Fade in={true} timeout={700}>
           <Box>
             <VerifyWarning verifiedStatus={userData?.verifiedStatus} />

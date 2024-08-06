@@ -55,8 +55,6 @@ const Login = () => {
     try {
       const result = await signInWithPopup(auth, provider)
       const user = result.user
-      console.log(result)
-      console.log(user)
       if (user) {
         await signInWithGoogle(result)
         navigation('/')

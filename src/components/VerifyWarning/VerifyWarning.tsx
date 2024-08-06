@@ -1,7 +1,7 @@
 import { Box, Typography, Grid } from '@mui/material'
 import { makeStyles } from 'tss-react/mui'
 import { Theme } from '@mui/material/styles'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 interface VerifyWarningProps {
@@ -35,10 +35,10 @@ const VerifyWarning = ({ verifiedStatus }: VerifyWarningProps) => {
   const { t } = useTranslation()
   const { classes: styles } = useStyles()
 
-  return (
-    <Box className={styles.container}>
-      <Grid container justifyContent='center' alignItems='center' spacing={2}>
-        {verifiedStatus === 'unverified' ? (
+  const renderMessage = () => {
+    switch (verifiedStatus) {
+      case 'unverified':
+        return (
           <>
             <Grid item xs={12} sm='auto'>
               <Typography className={styles.title}>
@@ -53,11 +53,38 @@ const VerifyWarning = ({ verifiedStatus }: VerifyWarningProps) => {
               </Link>
             </Grid>
           </>
-        ) : (
+        )
+      case 'pending':
+        return (
           <Typography className={styles.title}>
             {t('weAreVerifyingYourData')}
           </Typography>
-        )}
+        )
+      case 'rejected':
+        return (
+          <Grid item xs={12}>
+            <Typography className={styles.title}>
+              <Trans
+                i18nKey='yourDataWasRejected'
+                components={[
+                  <a
+                    href='mailto:hola@dominio'
+                    style={{ textDecoration: 'underline' }}
+                  >
+                    hola@dominio
+                  </a>,
+                ]}
+              />
+            </Typography>
+          </Grid>
+        )
+    }
+  }
+
+  return (
+    <Box className={styles.container}>
+      <Grid container justifyContent='center' alignItems='center' spacing={2}>
+        {renderMessage()}
       </Grid>
     </Box>
   )

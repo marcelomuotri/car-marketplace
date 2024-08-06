@@ -21,6 +21,7 @@
   "createPublication": "Crear publicación",
   "youMustVerifyYoutData": "Debes verificar tu identidad para que tus publicaciones se puedan mostrar en la app",
   "weAreVerifyingYourData": "Estamos verificando tu perfil. Pronto tendrás novedades.",
+  "yourDataWasRejected": "Lamentablemente no pudimos verificar tu perfil. Para más información, podés contactarnos a <0>hola@dominio</0>.",
   "next": "Siguiente",
   "back": "Anterior",
   "end": "Finalizar",
