@@ -1,7 +1,8 @@
-import { useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { makeStyles } from 'tss-react/mui'
 import { useDropzone, DropzoneOptions } from 'react-dropzone'
 import { Box, Typography } from '@mui/material'
+import { v4 as uuidv4 } from 'uuid'
 import UploadIcon from '../assets/icons/UploadIcon'
 import InfoIcon from '../assets/icons/InfoIcon'
 
@@ -75,7 +76,12 @@ const UploadImage: React.FC<UploadImageProps> = ({
   const onDrop = useCallback<NonNullable<DropzoneOptions['onDrop']>>(
     (acceptedFiles: File[]) => {
       if (acceptedFiles.length > 0) {
-        setImage(acceptedFiles[0])
+        const file = acceptedFiles[0]
+        const uniqueFileName = `${uuidv4()}-${file.name}`
+        const uniqueFile = new File([file], uniqueFileName, {
+          type: file.type,
+        })
+        setImage(uniqueFile)
       }
     },
     [setImage]

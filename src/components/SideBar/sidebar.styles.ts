@@ -34,7 +34,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     margin: '0px 25px',
     '& .MuiListItemIcon-root': {
       minWidth: '0px',
-      marginRight: '8px',
+      marginRight: '6px',
     },
   },
   itemBottom: {

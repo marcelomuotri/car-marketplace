@@ -201,9 +201,9 @@ const CreatePublication = () => {
   return showSuccess ? (
     <Success
       Image={GirlOk}
-      title='¡Tu producto ha sido publicado correctamente!'
+      title={t('publicationSuccess')}
       maxWidth={500}
-      buttonTitle='Volver a publicaciones'
+      buttonTitle={t('backToPublications')}
       onClickButton={navigateHome}
     />
   ) : (

@@ -41,17 +41,10 @@ const useStyles = makeStyles()((theme: Theme) => ({
   },
 }))
 
-const CreateStep2 = ({
-  control,
-  errors,
-  watch,
-  setValue,
-  selectedCategory,
-}: any) => {
+const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
   const { classes: styles } = useStyles()
   const { t } = useTranslation()
   const { getCategories, data } = useCategoryService()
-  console.log(selectedCategory)
   //TODO poner RTK para categorias
   useEffect(() => {
     getCategories()
@@ -123,9 +116,9 @@ const CreateStep2 = ({
 
   return (
     <FForm
-      title='Clasificación del producto o servicio'
-      formTitle='Categoría y subcategoría'
-      formSubtitle='Selecciona la categoría del producto y la subcategoría a la cual pertenece el producto o servicio'
+      title={t('typeOfProductOrService')}
+      formTitle={t('categoryAndSubcategory')}
+      formSubtitle={t('selectCategoryAndSubcategory')}
     >
       <Grid
         container

@@ -47,9 +47,9 @@ const CreateStep1 = ({
 
   return (
     <FForm
-      title='Detalles y fotos'
-      formTitle='Detalles del producto'
-      formSubtitle='Define un titulo, descripcion, precio y adjunta una o mas imagenes del producto'
+      title={t('detailsAndPhotos')}
+      formTitle={t('productDetails')}
+      formSubtitle={t('defineATitleDescriptionAndPrice')}
     >
       <Grid
         container
@@ -58,7 +58,7 @@ const CreateStep1 = ({
         className={styles.gridContainer}
       >
         <Grid item md={5}>
-          <Typography className={styles.fontTitleSub}>Titulo</Typography>
+          <Typography className={styles.fontTitleSub}>{t('title')}</Typography>
           <FInput
             type='text'
             name='title'
@@ -81,7 +81,7 @@ const CreateStep1 = ({
           />
         </Grid>
         <Grid item md={3}>
-          <Typography className={styles.fontTitleSub}>Precio</Typography>
+          <Typography className={styles.fontTitleSub}>{t('price')}</Typography>
           <FInput
             type='number'
             name='price'
@@ -100,7 +100,9 @@ const CreateStep1 = ({
           />
         </Grid>
         <Grid item md={12}>
-          <Typography className={styles.fontTitleSub}>Descripcion</Typography>
+          <Typography className={styles.fontTitleSub}>
+            {t('description')}
+          </Typography>
           <FInput
             type='text'
             name='description'
@@ -118,11 +120,8 @@ const CreateStep1 = ({
       </Grid>
       <Grid container sx={{ marginTop: 35 }}>
         <Grid item md={12} className={styles.formTitleContainer}>
-          <Typography className={styles.formTitle}>Fotos</Typography>
-          <Typography>
-            Subí hasta 3 fotos de tu producto. La primera será la foto
-            principal. Es requerido subir al menos una foto
-          </Typography>
+          <Typography className={styles.formTitle}>{t('photos')}</Typography>
+          <Typography>{t('uploadProductPhotos')}</Typography>
         </Grid>
         <Grid
           item

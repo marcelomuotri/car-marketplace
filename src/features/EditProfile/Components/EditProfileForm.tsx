@@ -253,6 +253,7 @@ const EditProfileForm = ({
                   }}
                   rules={{ required: t('requiredField') }}
                   error={errors.description}
+                  placeholder={t('placeHolderProfileDescription')}
                 />
               </Grid>
               <Grid item md={12}>

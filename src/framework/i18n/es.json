@@ -97,5 +97,17 @@
   "chooseAnOption": "Elegí una de las opciones",
   "writeYourQuery": "Escribí el detalle de tu consulta",
   "send": "Enviar",
-  "verifyNow": "Verificar ahora"
+  "verifyNow": "Verificar ahora",
+  "publicationSuccess": "¡Tu producto ha sido publicado correctamente!",
+  "backToPublications": "Volver a mis publicaciones",
+  "detailsAndPhotos": "Detalles y fotos",
+  "productDetails": "Detalles del producto",
+  "defineATitleDescriptionAndPrice": "Define un titulo, descripcion, precio y adjunta una o mas imagenes del producto",
+  "title": "Título",
+  "photos": "Fotos",
+  "uploadProductPhotos": "Subí hasta 3 fotos de tu producto. La primera será la foto principal. Es requerido subir al menos una foto",
+  "typeOfProductOrService": "Clasificación del producto o servicio",
+  "categoryAndSubcategory": "Categoría y subcategoría",
+  "selectCategoryAndSubcategory": "Selecciona la categoría del producto y la subcategoría a la cual pertenece el producto o servicio",
+  "placeHolderProfileDescription": "Describí en detalle los productos y servicios que ofrecés. Incluí características, beneficios y toda información relevante para que los usuarios interesados puedan contactarte fácilmente."
 }
