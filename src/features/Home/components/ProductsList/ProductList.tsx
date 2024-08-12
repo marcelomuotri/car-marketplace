@@ -41,6 +41,7 @@ const ProductList = ({ products, isVerified }: ProductsListProps) => {
             justifyContent: 'center',
             overflow: 'hidden', // Asegura que cualquier parte de la imagen que sobresalga se oculte
             padding: 1, // Añade algo de padding si es necesario para la estética
+            paddingLeft: 20,
           }}
         >
           <img
