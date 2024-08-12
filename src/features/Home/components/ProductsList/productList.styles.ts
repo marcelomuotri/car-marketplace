@@ -16,6 +16,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     alignItems: 'center',
   },
   photoBox: {
+    width: '50px',
     height: '50px',
     backgroundColor: 'black',
   },

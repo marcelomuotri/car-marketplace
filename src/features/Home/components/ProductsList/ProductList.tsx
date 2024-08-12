@@ -33,14 +33,27 @@ const ProductList = ({ products, isVerified }: ProductsListProps) => {
       flex: 0.5,
       renderCell: (params: GridRenderCellParams) => (
         <Box
-          component='img'
           sx={{
-            paddingLeft: 36,
-            height: 50,
+            height: 60,
+            width: 80,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden', // Asegura que cualquier parte de la imagen que sobresalga se oculte
+            padding: 1, // Añade algo de padding si es necesario para la estética
           }}
-          src={params.row.photo1Url || 'defaultImagePath.jpg'}
-          alt='Product'
-        />
+        >
+          <img
+            style={{
+              maxHeight: '100%',
+              maxWidth: '100%',
+              objectFit: 'contain', // Ajusta la imagen dentro del contenedor sin recortarla
+              objectPosition: 'center', // Centra la imagen dentro del contenedor
+            }}
+            src={params.row.photo1Url || 'defaultImagePath.jpg'}
+            alt='Product'
+          />
+        </Box>
       ),
     },
     { field: 'title', headerName: t('product'), flex: 1 },
