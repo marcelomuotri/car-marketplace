@@ -62,7 +62,7 @@ const CreatePublication = () => {
 
   const variants = [
     {
-      category: ['autos', 'motos', 'kartings'],
+      category: ['autos', 'motos', 'kartings', 'ATVs'],
       fields: ['condition', 'brand', 'model', 'subCategory', 'year'],
     },
     {
@@ -116,7 +116,11 @@ const CreatePublication = () => {
           })
         }
         const hasEmptyFields = Object.values(secondStepValues).some(
-          (value) => value === '' || value === undefined || value === null
+          (value) =>
+            value === '' ||
+            value === undefined ||
+            value === null ||
+            (Array.isArray(value) && value.length === 0)
         )
         setIsNextDisabled(hasErrors || hasEmptyFields)
       }
@@ -175,6 +179,7 @@ const CreatePublication = () => {
     const photo1Url = photo1 ? await uploadImage(photo1) : null
     const photo2Url = photo2 ? await uploadImage(photo2) : null
     const photo3Url = photo3 ? await uploadImage(photo3) : null
+
     const productToCreate = {
       ...data,
       brand: data.brand ? data.brand : '',
@@ -185,6 +190,17 @@ const CreatePublication = () => {
       uid: userData?.uid || '',
       active: userData?.verifiedStatus === 'verified' ? true : false,
     }
+
+    if (variants[0].category.includes(data.category as string)) {
+      // Convertir a minúsculas y remover la 's' al final si existe
+      const categoryWithoutS = data?.category?.toLowerCase().endsWith('s')
+        ? data?.category?.toLowerCase().slice(0, -1)
+        : data?.category?.toLowerCase()
+
+      // Guardar lo que dice sin la 's' y agregar una 's'
+      productToCreate.competition = [`${categoryWithoutS}`]
+    }
+
     addNewProduct(productToCreate)
 
     setShowSuccess(true)

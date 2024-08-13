@@ -52,7 +52,7 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
 
   // yo tengo 4 layouts distintos, - Los primeros 2 salen siempre, autos motos y kartings
   const selectedBrand = watch('brand')
-  const vehiclesActive = ['autos', 'motos', 'kartings'].includes(
+  const vehiclesActive = ['autos', 'motos', 'kartings', 'ATVs'].includes(
     selectedCategory
   )
   const piecesActive =
