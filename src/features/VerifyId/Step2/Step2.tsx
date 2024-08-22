@@ -1,7 +1,9 @@
-import { Grid } from '@mui/material'
+import { Checkbox, FormControlLabel, Grid, Typography } from '@mui/material'
 import FForm from '../../../components/FForm'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import UploadImage from '../../../components/UploadImage'
+import FInput from '../../../components/FInput'
+import { useState } from 'react'
 
 interface Step2Props {
   control: any
@@ -9,14 +11,22 @@ interface Step2Props {
   setPhotoProfile: (file: File) => void
   setPhotoFrontID: (file: File) => void
   setPhotoBackID: (file: File) => void
+  termsAccepted: boolean
+  setTermsAccepted: (value: boolean) => void
 }
 
 const Step2: React.FC<Step2Props> = ({
   setPhotoProfile,
-  setPhotoFrontID, // Asegúrate de que este nombre coincida con el prop en VerifyId
+  setPhotoFrontID, // Asegúrate de que este nombre coincinpmda con el prop en VerifyId
   setPhotoBackID, // Asegúrate de que este nombre coincida con el prop en VerifyId
+  termsAccepted,
+  setTermsAccepted,
 }) => {
   const { t } = useTranslation()
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTermsAccepted(event.target.checked)
+  }
 
   return (
     <FForm
@@ -38,6 +48,31 @@ const Step2: React.FC<Step2Props> = ({
             setImage={setPhotoProfile}
             subtitleStyles={{ textWrap: 'nowrap' }}
           />
+        </Grid>
+      </Grid>
+      <Grid container alignItems='center' sx={{ marginTop: 40 }}>
+        <Grid item>
+          <Checkbox checked={termsAccepted} onChange={handleChange} />
+        </Grid>
+        <Grid item>
+          <Typography>
+            <Trans
+              i18nKey='acceptTerms'
+              components={[
+                <a
+                  href='/termsAndConditions'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  style={{
+                    color: '#007bff', // Cambia este valor según el color deseado
+                    cursor: 'pointer', // Asegura que se muestre la mano al pasar sobre el enlace
+                  }}
+                >
+                  términos, condiciones y políticas de privacidad
+                </a>,
+              ]}
+            />
+          </Typography>
         </Grid>
       </Grid>
     </FForm>

@@ -48,6 +48,8 @@ const VerifyId = () => {
   const [photoFrontID, setPhotoFrontID] = useState<File | null>(null)
   const [photoBackID, setPhotoBackID] = useState<File | null>(null)
   const [photoToShow, setPhotoToShow] = useState<File | null>(null)
+  const [termsAccepted, setTermsAccepted] = useState(false)
+
   const { userData } = useSelector((state: RootState) => state.auth)
 
   const {
@@ -87,7 +89,7 @@ const VerifyId = () => {
         setIsNextDisabled(hasErrors || hasEmptyFields)
       } else if (activeStep === 1) {
         const hasEmptyPhoto = !photoProfile || !photoFrontID || !photoBackID
-        setIsNextDisabled(hasEmptyPhoto)
+        setIsNextDisabled(hasEmptyPhoto || !termsAccepted)
       }
     }
     checkIsNextDisabled()
@@ -114,6 +116,8 @@ const VerifyId = () => {
       setPhotoProfile={setPhotoProfile}
       setPhotoFrontID={setPhotoFrontID}
       setPhotoBackID={setPhotoBackID}
+      termsAccepted={termsAccepted}
+      setTermsAccepted={setTermsAccepted}
     />,
   ]
 

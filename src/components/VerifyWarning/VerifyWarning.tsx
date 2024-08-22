@@ -68,10 +68,10 @@ const VerifyWarning = ({ verifiedStatus }: VerifyWarningProps) => {
                 i18nKey='yourDataWasRejected'
                 components={[
                   <a
-                    href='mailto:hola@dominio'
+                    href='mailto:contacto@2y4race.com'
                     style={{ textDecoration: 'underline' }}
                   >
-                    hola@dominio
+                    contacto@2y4race.com
                   </a>,
                 ]}
               />
