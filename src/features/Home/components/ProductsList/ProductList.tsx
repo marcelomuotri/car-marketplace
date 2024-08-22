@@ -35,20 +35,18 @@ const ProductList = ({ products, isVerified }: ProductsListProps) => {
         <Box
           sx={{
             height: 60,
-            width: 80,
+            width: 60,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            overflow: 'hidden', // Asegura que cualquier parte de la imagen que sobresalga se oculte
-            padding: 1, // Añade algo de padding si es necesario para la estética
-            paddingLeft: 20,
+            overflow: 'hidden', // Oculta cualquier parte de la imagen que sobresalga
           }}
         >
           <img
             style={{
-              maxHeight: '100%',
-              maxWidth: '100%',
-              objectFit: 'contain', // Ajusta la imagen dentro del contenedor sin recortarla
+              height: '100%', // Ocupa toda la altura del contenedor
+              width: '100%', // Ocupa todo el ancho del contenedor
+              objectFit: 'cover', // Llena el contenedor, recortando si es necesario
               objectPosition: 'center', // Centra la imagen dentro del contenedor
             }}
             src={params.row.photo1Url || 'defaultImagePath.jpg'}
