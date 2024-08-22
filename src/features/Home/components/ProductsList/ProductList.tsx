@@ -34,6 +34,7 @@ const ProductList = ({ products, isVerified }: ProductsListProps) => {
       renderCell: (params: GridRenderCellParams) => (
         <Box
           sx={{
+            marginLeft: 20,
             height: 60,
             width: 60,
             display: 'flex',
