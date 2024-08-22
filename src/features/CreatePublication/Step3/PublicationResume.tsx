@@ -116,7 +116,14 @@ const PublicationResume = ({
     {
       label: 'Competencia',
       value:
-        competition && competition?.length > 0 ? competition?.join(', ') : null,
+        competition && competition.length > 0
+          ? competition
+              .map(
+                (comp) =>
+                  comp.charAt(0).toUpperCase() + comp.slice(1).toLowerCase()
+              )
+              .join(', ')
+          : null,
     },
     { label: 'Moneda', value: currency === '1' ? 'USD' : 'ARS' },
   ]

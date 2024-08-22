@@ -110,7 +110,9 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
   const competitionOptions = showCompetition
     ? data[selectedCategory]?.competition?.map((competition) => ({
         value: competition,
-        label: competition,
+        label:
+          competition.charAt(0).toUpperCase() +
+          competition.slice(1).toLowerCase(),
       }))
     : []
 
