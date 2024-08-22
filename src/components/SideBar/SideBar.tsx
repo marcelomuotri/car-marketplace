@@ -52,7 +52,7 @@ const Sidebar = ({ setMenuOpened, menuOpened }: sideBarProps) => {
     },
     {
       text: t('termsAndConditions'),
-      path: '/privacy-policy',
+      path: '/termsAndConditions',
     },
   ]
 

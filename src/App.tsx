@@ -16,6 +16,7 @@ import 'intl-pluralrules'
 import VerifyId from './features/VerifyId/VerifyId'
 import MyProfile from './features/MyProfile/MyProfile'
 import EditProfile from './features/EditProfile/EditProfile'
+import TermsAndConditions from './features/TermsAndConditions/TermsAndConditions'
 import { SnackbarProvider } from 'notistack'
 import CreatePublication from './features/CreatePublication/CreatePublication'
 import 'rsuite/dist/rsuite-no-reset.min.css'
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
           {
             path: 'verifyId',
             element: <VerifyId />,
+          },
+          {
+            path: 'termsAndConditions',
+            element: <TermsAndConditions />,
           },
         ],
       },
