@@ -10,44 +10,122 @@ import {
   query,
   where,
   getDoc,
+  Timestamp,
+  increment,
 } from 'firebase/firestore'
 
+const convertIsoStringToTimestamp = (data) => {
+  const convertedData = {}
+
+  const isoStringRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?Z$/
+
+  for (const key in data) {
+    if (data.hasOwnProperty(key)) {
+      const value = data[key]
+
+      // Verifica si el valor es un ISOString válido
+      if (typeof value === 'string' && isoStringRegex.test(value)) {
+        // Convierte el ISOString a Firebase Timestamp
+        convertedData[key] = Timestamp.fromDate(new Date(value))
+      } else {
+        convertedData[key] = value
+      }
+    }
+  }
+
+  return convertedData
+}
+
+const convertTimestampToIsoString = (data) => {
+  const convertedData = {}
+
+  for (const key in data) {
+    if (data.hasOwnProperty(key)) {
+      const value = data[key]
+
+      // Verifica si el valor es un Firebase Timestamp
+      if (value instanceof Timestamp) {
+        // Convierte el Firebase Timestamp a ISOString
+        convertedData[key] = value.toDate().toISOString()
+      } else {
+        convertedData[key] = value
+      }
+    }
+  }
+
+  return convertedData
+}
+
 // Crear un baseQuery personalizado para Firebase
-const firebaseBaseQuery = async ({ method, path, data, filters }) => {
+const firebaseBaseQuery = async ({
+  method,
+  path,
+  data,
+  filters,
+  populate = [],
+  incrementField,
+}) => {
   const collectionRef = collection(db, path)
   try {
     switch (method) {
       case 'GET':
         let q
         if (filters && Object.keys(filters).length > 0 && filters.id) {
-          // Specific document fetch
+          // Fetch específico del documento
           const docRef = doc(db, path, filters.id)
           const docSnapshot = await getDoc(docRef)
           if (!docSnapshot.exists()) {
             console.log('No such document!')
-            return { data: [] } // or handle as needed
+            return { data: [] }
           }
-          return { data: [{ id: docSnapshot.id, ...docSnapshot.data() }] }
+          const data = docSnapshot.data()
+          const convertedData = convertTimestampToIsoString(data) // Convertir los timestamps a ISOString
+          if (populate.length > 0) {
+            const populatedData = {}
+            populate.forEach((field) => {
+              if (convertedData.hasOwnProperty(field)) {
+                populatedData[field] = convertedData[field]
+              }
+            })
+            return { data: [{ id: docSnapshot.id, ...populatedData }] }
+          }
+          return { data: [{ id: docSnapshot.id, ...convertedData }] }
         } else {
-          // General query with possible filters
+          // Consulta general con posibles filtros
           q = query(collectionRef)
           if (filters && Object.keys(filters).length > 0) {
-            const filterClauses = Object.entries(filters).map(([key, value]) =>
-              where(key, '==', value)
+            const filterClauses = Object.entries(filters).map(
+              ([key, value]) => {
+                if (Array.isArray(value)) {
+                  return where(key, 'array-contains-any', value)
+                } else {
+                  return where(key, '==', value)
+                }
+              }
             )
             q = query(collectionRef, ...filterClauses)
           }
           const querySnapshot = await getDocs(q)
           return {
-            data: querySnapshot.docs.map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
-            })),
+            data: querySnapshot.docs.map((doc) => {
+              const data = doc.data()
+              const convertedData = convertTimestampToIsoString(data) // Convertir los timestamps a ISOString
+              if (populate.length > 0) {
+                const populatedData = {}
+                populate.forEach((field) => {
+                  if (convertedData.hasOwnProperty(field)) {
+                    populatedData[field] = convertedData[field]
+                  }
+                })
+                return { id: doc.id, ...populatedData }
+              }
+              return { id: doc.id, ...convertedData }
+            }),
           }
         }
-
       case 'POST':
-        const docRef = await addDoc(collectionRef, data)
+        const parsedData = convertIsoStringToTimestamp(data)
+        const docRef = await addDoc(collectionRef, parsedData)
         await updateDoc(docRef, { id: docRef.id }) // Update document to include the id
         return { data: { id: docRef.id, ...data } }
 
@@ -58,10 +136,16 @@ const firebaseBaseQuery = async ({ method, path, data, filters }) => {
 
       case 'PUT':
         const docToUpdateRef = doc(db, path, data.id)
-        console.log(docToUpdateRef)
-        console.log(data)
-        await updateDoc(docToUpdateRef, data)
-        return { data: { id: data.id, ...data } }
+        const parsedUpdateData = convertIsoStringToTimestamp(data)
+
+        if (incrementField) {
+          await updateDoc(docToUpdateRef, {
+            [incrementField]: increment(1), // Incrementa el campo especificado en 1
+          })
+        } else {
+          await updateDoc(docToUpdateRef, parsedUpdateData)
+        }
+        return { data: { id: data.id, ...parsedUpdateData } }
 
       default:
         throw new Error('Method not supported')

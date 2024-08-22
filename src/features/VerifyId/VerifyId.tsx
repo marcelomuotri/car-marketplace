@@ -165,7 +165,7 @@ const VerifyId = () => {
       Image={BoySleeping}
       title={t('verificationRequestSubmitted')}
       subTitle={t('youWillReceiveTheConfirmationSoon')}
-      buttonTitle={'Crear tu primera publicacion'}
+      buttonTitle={'Crear tu primera publicación'}
       onClickButton={navigateHome}
     />
   ) : (

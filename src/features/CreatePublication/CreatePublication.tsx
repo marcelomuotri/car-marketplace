@@ -192,12 +192,10 @@ const CreatePublication = () => {
     }
 
     if (variants[0].category.includes(data.category as string)) {
-      // Convertir a minúsculas y remover la 's' al final si existe
       const categoryWithoutS = data?.category?.toLowerCase().endsWith('s')
         ? data?.category?.toLowerCase().slice(0, -1)
         : data?.category?.toLowerCase()
 
-      // Guardar lo que dice sin la 's' y agregar una 's'
       productToCreate.competition = [`${categoryWithoutS}`]
     }
 

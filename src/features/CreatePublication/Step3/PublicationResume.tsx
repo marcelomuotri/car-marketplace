@@ -144,7 +144,7 @@ const PublicationResume = ({
               </Box>
             )
         )}
-        <Typography className={styles.fieldTitle2}>Clasificacion</Typography>
+        <Typography className={styles.fieldTitle2}>Clasificación</Typography>
         <Typography
           className={styles.fieldTitle}
         >{`${category} > ${subCategory}`}</Typography>

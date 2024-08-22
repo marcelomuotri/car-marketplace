@@ -160,7 +160,7 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
               name='condition'
               error={errors.condition}
               options={conditions}
-              label='Condicion'
+              label='Condición'
               rules={{ required: t('requiredField') }}
             />
           </Grid>
@@ -225,7 +225,7 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
                 control={control}
                 rules={{ required: t('requiredField') }}
                 options={homologationOptions}
-                label='Homologacion'
+                label='Homologación'
                 placeholder='Seleccionar'
               />
             </Grid>
@@ -235,7 +235,7 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
           <Grid item md={12}>
             <Box>
               <Typography className={styles.formTitle}>
-                Tipo de competicion
+                Tipo de competición
               </Typography>
               <Typography>
                 Elegí todas las competiciones a las que apliquen tu producto o
