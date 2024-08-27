@@ -46,6 +46,19 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
   const { classes: styles } = useStyles()
   const { t } = useTranslation()
   const { getCategories, data } = useCategoryService()
+
+  const categoryOrder = [
+    'Autos',
+    'Motos',
+    'Karting',
+    'ATV',
+    'Motores',
+    'Partes',
+    'Indumentaria',
+    'Accesorios',
+    'Herramientas',
+    'Servicios',
+  ]
   //TODO poner RTK para categorias
   useEffect(() => {
     getCategories()
@@ -75,9 +88,9 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
 
-  const categories = Object.keys(data).map((category) => ({
-    value: category,
-    label: capitalizeFirstLetter(category),
+  const categories = categoryOrder.map((cat) => ({
+    value: cat.toLowerCase(),
+    label: cat,
   }))
 
   const subCategoryOptions = selectedCategory
