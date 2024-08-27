@@ -20,7 +20,7 @@ export const createUserPayload: (user: any) => UserData = (user) => ({
   photoFrontIdUrl: null,
   photobackIdUrl: null,
   verifiedAt: null,
-  updatedAt: null,
+  updatedAt: dayjs().toISOString(),
   contactEmail: null,
   photoToShowUrl: null,
   isSeller: true,

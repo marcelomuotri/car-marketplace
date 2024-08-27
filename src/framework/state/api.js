@@ -14,7 +14,7 @@ import {
   increment,
 } from 'firebase/firestore'
 
-const convertIsoStringToTimestamp = (data) => {
+export const convertIsoStringToTimestamp = (data) => {
   const convertedData = {}
 
   const isoStringRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?Z$/
@@ -36,7 +36,7 @@ const convertIsoStringToTimestamp = (data) => {
   return convertedData
 }
 
-const convertTimestampToIsoString = (data) => {
+export const convertTimestampToIsoString = (data) => {
   const convertedData = {}
 
   for (const key in data) {

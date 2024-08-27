@@ -18,6 +18,10 @@ import { auth, db } from '../../../../firebaseConfig'
 import { createUserPayload } from '../../models/authModel'
 import dayjs from 'dayjs'
 import { useSnackbar } from 'notistack'
+import {
+  convertIsoStringToTimestamp,
+  convertTimestampToIsoString,
+} from '../api'
 
 export const useAuthService = () => {
   const dispatch = useDispatch()
@@ -32,8 +36,12 @@ export const useAuthService = () => {
           userData: docSnap.data(),
           user: firebaseUser.email,
         }
+        const parsePayloadData = {
+          userData: convertTimestampToIsoString(payload.userData),
+          user: firebaseUser.email,
+        }
 
-        dispatch(loginSuccess(payload))
+        dispatch(loginSuccess(parsePayloadData))
       } else {
         dispatch(loginFailure())
       }
@@ -84,7 +92,8 @@ export const useAuthService = () => {
 
       if (user) {
         const userPayload = createUserPayload(user)
-        await saveUserToFirestore(userPayload, user.uid)
+        const parsePayloadForFirebase = convertIsoStringToTimestamp(userPayload)
+        await saveUserToFirestore(parsePayloadForFirebase, user.uid)
         dispatch(loginSuccess({ user: user.email, userData: userPayload }))
         return user
       } else {
@@ -102,7 +111,8 @@ export const useAuthService = () => {
     const isNewUser = result._tokenResponse.isNewUser
     if (isNewUser) {
       const userPayload = createUserPayload(result.user)
-      saveUserToFirestore(userPayload, result.user.uid)
+      const userPayloadForFirebase = convertIsoStringToTimestamp(userPayload)
+      saveUserToFirestore(userPayloadForFirebase, result.user.uid)
       //aca si tengo problemas puedo volver a ponerle el uid al userData para ver si se arregla
     }
   }
@@ -154,8 +164,9 @@ export const useAuthService = () => {
         ...userPayload,
         updatedAt: dayjs().toISOString(),
       }
+      const userPayloadForFirebase = convertIsoStringToTimestamp(userPayload)
       dispatch(updateUserData(parsedFields))
-      await updateDoc(userDocRef, parsedFields)
+      await updateDoc(userDocRef, userPayloadForFirebase)
     } catch (e) {
       console.error('Error updating document to Firestore:', e)
     }
