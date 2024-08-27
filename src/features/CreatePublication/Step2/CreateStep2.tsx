@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { makeStyles } from 'tss-react/mui'
 import { useEffect } from 'react'
 import { useCategoryService } from '../../../framework/state/services/categoryService'
+import { reorderOptions } from '../utils/utils'
 
 const conditions = [
   { value: 'Nuevo', label: 'Nuevo' },
@@ -87,18 +88,24 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
     : []
 
   const brandsOptions = showBrandAndModel
-    ? Object.keys(data[selectedCategory]?.brands || {}).map((key) => ({
-        value: key,
-        label: capitalizeFirstLetter(key),
-      }))
+    ? reorderOptions(
+        Object.keys(data[selectedCategory]?.brands || {})
+          .map((key) => ({
+            value: key,
+            label: capitalizeFirstLetter(key),
+          }))
+          .sort((a, b) => a.label.localeCompare(b.label)) // Ordenar alfabéticamente
+      )
     : []
-  console.log(brandsOptions)
 
+  // Ordena las opciones de modelos
   const modelOptions = showBrandAndModel
-    ? data[selectedCategory]?.brands[selectedBrand?.value]?.map((model) => ({
-        value: model,
-        label: capitalizeFirstLetter(model),
-      }))
+    ? data[selectedCategory]?.brands[selectedBrand?.value]
+        ?.map((model) => ({
+          value: model,
+          label: capitalizeFirstLetter(model),
+        }))
+        .sort((a, b) => a.label.localeCompare(b.label)) // Ordenar alfabéticamente
     : []
 
   const equipmentOptions = showEquipment
