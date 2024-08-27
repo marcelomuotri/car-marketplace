@@ -13,7 +13,7 @@ import { RootState } from '../../framework/state/store'
 import { useAuthService } from '../../framework/state/services/authService'
 import { Dayjs } from 'dayjs'
 import { useUploadImage } from '../../framework/state/services/uploadImageService'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../../components/Loader'
 import { useSnackbar } from 'notistack'
@@ -101,6 +101,7 @@ const EditProfile = () => {
     control,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<FormValues>({
     mode: 'onBlur',
     defaultValues: {
@@ -117,6 +118,8 @@ const EditProfile = () => {
       description: userData?.description || '',
     },
   })
+
+  const values = watch()
 
   const onHandleSaveProfile = async (data: FormValues) => {
     let photoToShowUrl = userData?.photoToShowUrl || null
@@ -144,6 +147,7 @@ const EditProfile = () => {
       {uploading && <Loader />}
       <FContainer maxWidth={980}>
         <EditProfileForm
+          values={values}
           control={control}
           errors={errors}
           photoToShowUrl={userData?.photoToShowUrl}

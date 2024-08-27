@@ -6,7 +6,16 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
-import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore'
+import {
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from 'firebase/firestore'
 import { onAuthStateChanged, updatePassword } from 'firebase/auth'
 import {
   loginFailure,
@@ -198,6 +207,29 @@ export const useAuthService = () => {
       console.error(error)
     }
   }
+
+  const searchUserByDNI = async (dni) => {
+    try {
+      // Referencia a la colección de usuarios
+      const usersCollectionRef = collection(db, 'users')
+
+      // Crea una consulta para buscar el DNI en la colección
+      const q = query(usersCollectionRef, where('dni', '==', dni))
+
+      // Ejecuta la consulta
+      const querySnapshot = await getDocs(q)
+
+      // Verifica si hay documentos que coinciden con el DNI
+      if (!querySnapshot.empty) {
+        return true // El DNI ya está registrado
+      } else {
+        return false // El DNI no está registrado
+      }
+    } catch (error) {
+      console.error('Error buscando el DNI:', error)
+      throw new Error('Error buscando el DNI')
+    }
+  }
   return {
     loginUser,
     logoutUser,
@@ -207,5 +239,6 @@ export const useAuthService = () => {
     updateUserToFirestore,
     changePassword,
     resetPassword,
+    searchUserByDNI,
   }
 }

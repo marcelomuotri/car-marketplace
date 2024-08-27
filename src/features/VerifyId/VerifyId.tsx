@@ -109,6 +109,7 @@ const VerifyId = () => {
       errors={errors}
       setPhotoToShow={setPhotoToShow}
       photoToShowUrl={userData?.photoToShowUrl}
+      values={values}
     />,
     <Step2
       control={control}

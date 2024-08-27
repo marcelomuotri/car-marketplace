@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, CircularProgress, Grid, Typography } from '@mui/material'
 import { makeStyles } from 'tss-react/mui'
 import { Theme } from '@mui/material/styles'
 import FForm from '../../../components/FForm'
@@ -8,6 +8,8 @@ import { provinces } from '../../../framework/constants/provinces'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../framework/state/store'
 import { useTranslation } from 'react-i18next'
+import { useAuthService } from '../../../framework/state/services/authService'
+import { useEffect, useState } from 'react'
 
 const useStyles = makeStyles()((theme: Theme) => ({
   container: {
@@ -63,15 +65,50 @@ const useStyles = makeStyles()((theme: Theme) => ({
   },
 }))
 
+interface ErrorState {
+  message: string
+}
+
 const EditProfileForm = ({
   control,
   errors,
   setPhotoToShow,
   photoToShowUrl,
+  values,
 }: any) => {
   const { classes: styles } = useStyles()
   const { userData } = useSelector((state: RootState) => state.auth)
   const { t } = useTranslation()
+  const { searchUserByDNI } = useAuthService()
+  const [dniError, setDniError] = useState<ErrorState | null>(null)
+  const [loadingDni, setLoadingDni] = useState(false)
+
+  useEffect(() => {
+    // Debounce: Espera 5 segundos después del último cambio en el DNI
+    setDniError(null)
+    if (values.dni) setLoadingDni(true)
+
+    const handler = setTimeout(async () => {
+      if (values.dni) {
+        setLoadingDni(true)
+        try {
+          const dniExists = await searchUserByDNI(values.dni)
+          if (dniExists) {
+            setDniError({ message: t('dniAlreadyExists') })
+          } else {
+            setDniError(null)
+          }
+        } catch (error) {
+          setDniError({ message: t('errorCheckingDNI') })
+        }
+      }
+      setLoadingDni(false)
+    }, 3000) //3000
+
+    return () => {
+      clearTimeout(handler) // Limpia el timeout si el DNI cambia antes de los 5 segundos
+    }
+  }, [values.dni])
 
   return (
     <FForm
@@ -106,20 +143,23 @@ const EditProfileForm = ({
                   placeholder='Mario'
                 />
               </Grid>
-              <Grid item md={6}>
+              <Grid item md={6} sx={{ display: 'flex' }}>
                 <FInput
                   name='dni'
                   type='number'
                   control={control}
                   label={t('dni')}
                   rules={{ required: t('requiredField') }}
-                  error={errors.dni}
+                  error={errors.dni || dniError}
                   disabled={
                     userData?.verifiedStatus === 'verified' ||
                     userData?.verifiedStatus === 'pending'
                   }
                   placeholder='34543211'
                 />
+                <Box sx={{ alignSelf: 'end', marginBottom: 7, marginLeft: 10 }}>
+                  {loadingDni && <CircularProgress size={20} />}
+                </Box>
               </Grid>
               <Grid item md={6}>
                 <FInput

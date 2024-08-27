@@ -140,5 +140,6 @@
   "backToLogin": "Volver al inicio de sesión",
   "sendEmail": "Enviar correo",
   "invalidEmail": "El correo electrónico no es válido",
-  "enterEmailForInstructions": "Introduce tu correo electrónico para recibir instrucciones"
+  "enterEmailForInstructions": "Introduce tu correo electrónico para recibir instrucciones",
+  "dniAlreadyExists": "Este DNI ya existe"
 }
