@@ -23,6 +23,7 @@ import 'rsuite/dist/rsuite-no-reset.min.css'
 import EditPublication from './features/CreatePublication/EditPublication'
 import ResumePage from './features/CreatePublication/ResumePage'
 import Support from './features/Support/Support'
+import ResetPassword from './features/ResetPassword/ResetPassword'
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -102,6 +103,10 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <Register />,
+  },
+  {
+    path: 'resetPassword',
+    element: <ResetPassword />,
   },
 ])
 

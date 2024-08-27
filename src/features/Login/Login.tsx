@@ -110,6 +110,18 @@ const Login = () => {
             Regístrate
           </Link>
         </Typography>
+        <Typography>
+          Olvidaste la contraseña?{' '}
+          <Link
+            to='/resetPassword'
+            style={{
+              color: theme.palette.primary.main,
+              textDecoration: 'underline',
+            }}
+          >
+            Recuperala
+          </Link>
+        </Typography>
       </Box>
     </Box>
   )

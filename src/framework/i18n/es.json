@@ -133,5 +133,12 @@
   "term9p": "9. Consentimiento para el Uso de Datos.  <br /> Al registrarse en 2y4 Race, los usuarios consienten el uso de su información personal de acuerdo con esta Política de Privacidad.",
   "term10p": "10. Actualizaciones de la Política de Privacidad. <br /> Nos reservamos el derecho de actualizar esta Política de Privacidad en cualquier momento. Cualquier cambio será notificado a los usuarios a través del correo electrónico registrado en la plataforma.",
   "term11p": "11. Contacto. <br /> Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos en contacto@2y4race.com.",
-  "acceptTerms": "Acepto los <0>términos, condiciones y políticas de privacidad</0>"
+  "acceptTerms": "Acepto los <0>términos, condiciones y políticas de privacidad</0>",
+  "resetPassword": "Restablecer contraseña",
+  "emailSent": "Correo enviado",
+  "checkYourInbox": "Revisa tu bandeja de entrada",
+  "backToLogin": "Volver al inicio de sesión",
+  "sendEmail": "Enviar correo",
+  "invalidEmail": "El correo electrónico no es válido",
+  "enterEmailForInstructions": "Introduce tu correo electrónico para recibir instrucciones"
 }

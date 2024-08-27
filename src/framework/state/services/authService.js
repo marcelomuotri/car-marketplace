@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import {
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
@@ -117,6 +118,22 @@ export const useAuthService = () => {
     }
   }
 
+  const resetPassword = (email) => {
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        enqueueSnackbar('Correo de recuperación enviado', {
+          variant: 'success',
+        })
+        // Mostrar alguna notificación al usuario o redirigir
+      })
+      .catch(() => {
+        enqueueSnackbar('Error al enviar el correo de recuperación', {
+          variant: 'success',
+        })
+        // Manejar errores (como formatos de correo no válidos, problemas de red, etc.)
+      })
+  }
+
   const changePassword = async (oldPassword, newPassword) => {
     const user = auth.currentUser
     const email = user.email
@@ -189,5 +206,6 @@ export const useAuthService = () => {
     saveUserToFirestore,
     updateUserToFirestore,
     changePassword,
+    resetPassword,
   }
 }
