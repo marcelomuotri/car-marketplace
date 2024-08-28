@@ -64,11 +64,11 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
     getCategories()
   }, [getCategories])
 
-  // yo tengo 4 layouts distintos, - Los primeros 2 salen siempre, autos motos y kartings
   const selectedBrand = watch('brand')
-  const vehiclesActive = ['autos', 'motos', 'kartings', 'ATV'].includes(
-    selectedCategory
+  const vehiclesActive = ['autos', 'motos', 'karting', 'atv'].includes(
+    selectedCategory?.toLowerCase()
   )
+
   const piecesActive =
     selectedCategory &&
     [
@@ -77,11 +77,12 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
       'equipamiento',
       'accesorios',
       'herramientas',
-    ].includes(selectedCategory)
-  const serviceActive = selectedCategory && selectedCategory === 'servicios'
+    ].includes(selectedCategory?.toLowerCase())
+  const serviceActive =
+    selectedCategory && selectedCategory?.toLowerCase() === 'servicios'
   const showCondition = selectedCategory!! && !serviceActive // esto se muestra cuando esta activo servicios, y todos los de showpieces
   const showBrandAndModel = selectedCategory!! && vehiclesActive //esto se muestra solo cuando autos, motos y kartings esta activo
-  const showEquipment = selectedCategory === 'equipamiento' //activo solo cuando se pone equipamiento
+  const showEquipment = selectedCategory?.toLowerCase() === 'equipamiento' //activo solo cuando se pone equipamiento
   const showCompetition = piecesActive || showEquipment || serviceActive //activo en estas 3 situaciones
 
   const capitalizeFirstLetter = (string: string) => {
@@ -93,8 +94,13 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
     label: cat,
   }))
 
-  const subCategoryOptions = selectedCategory
-    ? data[selectedCategory]?.subCategories.map((subCat) => ({
+  const normalizedCategory =
+    selectedCategory?.toLowerCase() === 'atv'
+      ? 'ATV'
+      : selectedCategory?.toLowerCase()
+
+  const subCategoryOptions = normalizedCategory
+    ? data[normalizedCategory]?.subCategories.map((subCat) => ({
         value: subCat,
         label: capitalizeFirstLetter(subCat),
       }))
@@ -102,7 +108,7 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
 
   const brandsOptions = showBrandAndModel
     ? reorderOptions(
-        Object.keys(data[selectedCategory]?.brands || {})
+        Object.keys(data[normalizedCategory]?.brands || {})
           .map((key) => ({
             value: key,
             label: capitalizeFirstLetter(key),
@@ -113,7 +119,7 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
 
   // Ordena las opciones de modelos
   const modelOptions = showBrandAndModel
-    ? data[selectedCategory]?.brands[selectedBrand?.value]
+    ? data[normalizedCategory]?.brands[selectedBrand?.value]
         ?.map((model) => ({
           value: model,
           label: capitalizeFirstLetter(model),
