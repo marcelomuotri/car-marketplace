@@ -68,7 +68,7 @@ const Support = () => {
       title={t('querySent')}
       subTitle={t('querySentSubtitle')}
       maxWidth={500}
-      buttonTitle={t('back')}
+      buttonTitle={t('Volver a la home')}
       onClickButton={navigateHome}
     />
   ) : (
