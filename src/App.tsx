@@ -24,6 +24,7 @@ import EditPublication from './features/CreatePublication/EditPublication'
 import ResumePage from './features/CreatePublication/ResumePage'
 import Support from './features/Support/Support'
 import ResetPassword from './features/ResetPassword/ResetPassword'
+import DeleteAccount from './features/DeleteAccount/DeleteAccount'
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -107,6 +108,10 @@ const router = createBrowserRouter([
   {
     path: 'resetPassword',
     element: <ResetPassword />,
+  },
+  {
+    path: 'deleteAccount',
+    element: <DeleteAccount />,
   },
 ])
 
