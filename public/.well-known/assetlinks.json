@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.muotrimarcelo.carmarketplaceapp",
+      "sha256_cert_fingerprints": [
+        "AC:F8:B3:CE:E8:E9:98:CB:88:00:26:7E:83:91:84:52:CB:9C:D0:FA"
+      ]
+    }
+  }
+]
