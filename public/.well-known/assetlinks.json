@@ -5,7 +5,8 @@
       "namespace": "android_app",
       "package_name": "com.muotrimarcelo.carmarketplaceapp",
       "sha256_cert_fingerprints": [
-        "D5:70:F1:8B:59:EB:C9:2E:51:64:82:E0:57:12:DE:4E:B8:72:C1:25:92:A2:51:28:EB:91:0C:55:A3:1F:9B:0C"
+        "D5:70:F1:8B:59:EB:C9:2E:51:64:82:E0:57:12:DE:4E:B8:72:C1:25:92:A2:51:28:EB:91:0C:55:A3:1F:9B:0C",
+        "8C:58:C7:D2:BE:C4:34:C5:06:47:1A:9D:6E:F3:E4:F7:BB:B0:CF:B6:8D:DD:FF:01:BD:1D:FE:CA:B6:CA:49:83"
       ]
     }
   }
