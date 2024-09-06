@@ -72,9 +72,9 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
   const piecesActive =
     selectedCategory &&
     [
-      'piezas de motor',
-      'piezas de unidad',
-      'equipamiento',
+      'motores',
+      'partes',
+      'indumentaria',
       'accesorios',
       'herramientas',
     ].includes(selectedCategory?.toLowerCase())
@@ -82,7 +82,7 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
     selectedCategory && selectedCategory?.toLowerCase() === 'servicios'
   const showCondition = selectedCategory!! && !serviceActive // esto se muestra cuando esta activo servicios, y todos los de showpieces
   const showBrandAndModel = selectedCategory!! && vehiclesActive //esto se muestra solo cuando autos, motos y kartings esta activo
-  const showEquipment = selectedCategory?.toLowerCase() === 'equipamiento' //activo solo cuando se pone equipamiento
+  const showEquipment = selectedCategory?.toLowerCase() === 'indumentaria' //activo solo cuando se pone equipamiento
   const showCompetition = piecesActive || showEquipment || serviceActive //activo en estas 3 situaciones
 
   const capitalizeFirstLetter = (string: string) => {

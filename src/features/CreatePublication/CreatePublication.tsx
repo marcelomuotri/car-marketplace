@@ -66,16 +66,11 @@ const CreatePublication = () => {
       fields: ['condition', 'brand', 'model', 'subCategory', 'year'],
     },
     {
-      category: ['equipamiento'],
+      category: ['indumentaria'],
       fields: ['condition', 'size', 'homologation', 'competition'],
     },
     {
-      category: [
-        'piezas de motor',
-        'piezas de unidad',
-        'accesorios',
-        'herramientas',
-      ],
+      category: ['motores', 'partes', 'accesorios', 'herramientas'],
       fields: ['condition', 'competition'],
     },
     {
