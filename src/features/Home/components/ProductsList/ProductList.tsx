@@ -12,6 +12,7 @@ import ConfirmModal from '../../../../components/ConfirmModal/ConfirmModal'
 import { useNavigate } from 'react-router-dom'
 import { getCurrencyLabel } from '../../../../framework/utils/currencyConverter'
 import { useTranslation } from 'react-i18next'
+import { formatNumber } from '../../utils/formatter'
 
 interface ProductsListProps {
   products: Product[]
@@ -76,7 +77,7 @@ const ProductList = ({ products, isVerified }: ProductsListProps) => {
       valueGetter: (value, row) => {
         if (!value) return 'N/A'
         const currencyLabel = getCurrencyLabel(row.currency)
-        return currencyLabel + ' ' + value
+        return currencyLabel + ' ' + formatNumber(value)
       },
     },
 

@@ -177,6 +177,7 @@ const CreatePublication = () => {
 
     const productToCreate = {
       ...data,
+      title: data.title.toLowerCase(),
       brand: data.brand ? data.brand : '',
       model: data.model ? data.model : '',
       photo1Url,

@@ -23,7 +23,6 @@ const TopBar = ({
   setDateFilter,
   userRejected,
 }: TopBarProps) => {
-  console.log(userRejected)
   const { classes: styles } = useStyles()
   const navigate = useNavigate()
   const { t } = useTranslation()

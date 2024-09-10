@@ -8,6 +8,7 @@ import { useTheme } from '@mui/material'
 import HamburguerIcon from '../../assets/icons/HamburguerIcon'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../framework/state/store'
+import logo from '../../assets/images/logo.jpeg'
 
 interface NavbarProps {
   setMenuOpened: (value: boolean) => void
@@ -32,9 +33,11 @@ const NavBar = ({ setMenuOpened }: NavbarProps) => {
             <HamburguerIcon />
           </IconButton>
         ) : (
-          <Typography noWrap component='a' color={'violet'}>
-            LOGO
-          </Typography>
+          <img
+            src={logo}
+            alt='Logo'
+            style={{ height: '40px', borderRadius: 8 }}
+          />
         )}
         <Box>
           <Avatar
