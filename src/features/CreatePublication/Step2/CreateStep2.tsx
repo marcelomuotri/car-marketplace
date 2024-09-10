@@ -226,7 +226,11 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
                 name='year'
                 error={errors.year}
                 control={control}
-                rules={{ required: t('requiredField') }}
+                rules={{
+                  required: t('requiredField'),
+                  minLength: { value: 4, message: t('fourDigits') },
+                  maxLength: { value: 4, message: t('fourDigits') },
+                }}
                 label='Año'
               />
             </Grid>

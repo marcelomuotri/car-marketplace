@@ -141,5 +141,6 @@
   "sendEmail": "Enviar correo",
   "invalidEmail": "El correo electrónico no es válido",
   "enterEmailForInstructions": "Introduce tu correo electrónico para recibir instrucciones",
-  "dniAlreadyExists": "Este DNI ya existe"
+  "dniAlreadyExists": "Este DNI ya existe",
+  "fourDigits": "El año debe ser de 4 dígitos"
 }

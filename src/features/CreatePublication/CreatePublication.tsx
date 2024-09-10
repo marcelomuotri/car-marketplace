@@ -178,8 +178,17 @@ const CreatePublication = () => {
     const productToCreate = {
       ...data,
       title: data.title.toLowerCase(),
-      brand: data.brand ? data.brand : '',
-      model: data.model ? data.model : '',
+      brand: !data.brand
+        ? '' // Si no existe, lo dejamos como una cadena vacía
+        : typeof data.brand === 'string'
+          ? { label: data.brand, value: data.brand } // Si es un string, lo convertimos en un objeto
+          : data.brand, // Si ya es un objeto, lo dejamos como está
+      // Para model, hacemos lo mismo
+      model: !data.model
+        ? '' // Si no existe, lo dejamos como una cadena vacía
+        : typeof data.model === 'string'
+          ? { label: data.model, value: data.model } // Si es un string, lo convertimos en un objeto
+          : data.model, // Si ya es un objeto, lo dejamos como está
       photo1Url,
       photo2Url,
       photo3Url,
