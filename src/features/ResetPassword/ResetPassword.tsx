@@ -1,6 +1,12 @@
 import { useSelector } from 'react-redux'
 import { RootState } from '../../framework/state/store'
-import { Box, TextField, Typography } from '@mui/material'
+import {
+  Box,
+  TextField,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { useStyles } from './resetPassword.styles'
 import FButton from '../../components/FButton/FButton'
 import { useAuthService } from '../../framework/state/services/authService'
@@ -10,6 +16,7 @@ import Loader from '../../components/Loader'
 import { useState } from 'react'
 import Success from '../../components/Success/Success'
 import GirlOk from '../../assets/images/GirlOk'
+import logo from '../../assets/images/icon1.png'
 
 const ResetPassword = () => {
   const { user, loading } = useSelector((state: RootState) => state.auth)
@@ -24,6 +31,10 @@ const ResetPassword = () => {
   if (user) {
     navigate('/home')
   }
+
+  const theme = useTheme()
+
+  const matchesDownSm = useMediaQuery(theme.breakpoints.down('sm'))
 
   const validateEmail = (email) => {
     return /\S+@\S+\.\S+/.test(email)
@@ -50,6 +61,15 @@ const ResetPassword = () => {
   return (
     <Box className={styles.loginContainer}>
       {loading && <Loader />}
+      {!matchesDownSm ? (
+        <Box sx={{ width: '50%' }}>
+          <img src={logo} className={styles.image} />
+        </Box>
+      ) : (
+        <Box sx={{ width: '50%' }}>
+          <img src={logo} className={styles.image} />
+        </Box>
+      )}
       {success ? (
         <Success
           Image={GirlOk}

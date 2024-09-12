@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { RootState } from '../../framework/state/store'
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, useMediaQuery } from '@mui/material'
 import { useStyles } from './register.styles'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import FTextInput from '../../components/FTextInput/FTextInput'
@@ -10,6 +10,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useTheme } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import Loader from '../../components/Loader'
+import logo from '../../assets/images/icon1.png'
 
 interface RegisterFormFieldsProps {
   email: string
@@ -24,6 +25,7 @@ const Register = () => {
   const { classes: styles } = useStyles()
   const { createUser } = useAuthService()
   const theme = useTheme()
+  const matchesDownSm = useMediaQuery(theme.breakpoints.down('sm'))
 
   const {
     handleSubmit,
@@ -49,6 +51,15 @@ const Register = () => {
   return (
     <Box className={styles.registerContainer}>
       {loading && <Loader />}
+      {!matchesDownSm ? (
+        <Box sx={{ width: '50%' }}>
+          <img src={logo} className={styles.image} />
+        </Box>
+      ) : (
+        <Box sx={{ width: '50%' }}>
+          <img src={logo} className={styles.image} />
+        </Box>
+      )}
       <Box
         className={styles.registerBox}
         style={{ opacity: loading ? 0.5 : 1 }}

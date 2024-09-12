@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { RootState } from '../../framework/state/store'
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, useMediaQuery } from '@mui/material'
 import { useStyles } from './login.styles'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import FTextInput from '../../components/FTextInput/FTextInput'
@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next'
 import Loader from '../../components/Loader'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth } from '../../../firebaseConfig'
+import logo from '../../assets/images/icon1.png'
 
 interface LoginFormFieldsProps {
   email: string
@@ -35,6 +36,8 @@ const Login = () => {
     },
   })
   const theme = useTheme()
+  const matchesDownSm = useMediaQuery(theme.breakpoints.down('sm'))
+
   if (user) {
     navigation('/home')
   }
@@ -68,6 +71,15 @@ const Login = () => {
   return (
     <Box className={styles.loginContainer}>
       {loading && <Loader />}
+      {!matchesDownSm ? (
+        <Box sx={{ width: '50%' }}>
+          <img src={logo} className={styles.image} />
+        </Box>
+      ) : (
+        <Box sx={{ width: '50%' }}>
+          <img src={logo} className={styles.image} />
+        </Box>
+      )}
       <Box className={styles.loginBox} style={{ opacity: loading ? 0.5 : 1 }}>
         <Typography>{t('login')}</Typography>
         <FTextInput
