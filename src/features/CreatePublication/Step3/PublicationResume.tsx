@@ -110,8 +110,7 @@ const PublicationResume = ({
     { label: 'Talle', value: size },
     {
       label: 'Homologación',
-      value:
-        typeof homologation === 'boolean' ? (homologation ? 'Sí' : 'No') : null,
+      value: homologation,
     },
     {
       label: 'Competencia',

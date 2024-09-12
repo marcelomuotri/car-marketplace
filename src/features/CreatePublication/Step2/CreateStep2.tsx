@@ -13,8 +13,8 @@ const conditions = [
 ]
 
 const homologationOptions = [
-  { value: true, label: 'SI' },
-  { value: false, label: 'NO' },
+  { value: 'SI', label: 'SI' },
+  { value: 'NO', label: 'NO' },
 ]
 
 const useStyles = makeStyles()((theme: Theme) => ({
