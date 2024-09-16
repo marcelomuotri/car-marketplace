@@ -12,6 +12,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       paddingBottom: 40,
+      justifyContent: 'start',
     },
   },
   loginBox: {

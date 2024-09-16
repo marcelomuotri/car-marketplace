@@ -55,7 +55,6 @@ export const useAuthService = () => {
 
         dispatch(loginSuccess(parsePayloadData))
       } else {
-        console.log('holis')
         dispatch(loginFailure())
       }
     })

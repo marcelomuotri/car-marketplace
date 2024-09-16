@@ -63,7 +63,7 @@ const Register = () => {
         alignItems='center'
         justifyContent='center'
       >
-        <Box sx={{ width: matchesDownSm ? '100%' : '50%' }}>
+        <Box sx={{ width: '50%' }}>
           <img src={logo} alt='logo' className={styles.image} />
         </Box>
         {sendEmailScreen ? (
