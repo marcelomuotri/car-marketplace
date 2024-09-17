@@ -3,7 +3,7 @@ import FInput from '../../../components/FInput'
 import { Box, Grid, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { makeStyles } from 'tss-react/mui'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useCategoryService } from '../../../framework/state/services/categoryService'
 import { reorderOptions } from '../utils/utils'
 
@@ -42,10 +42,18 @@ const useStyles = makeStyles()((theme: Theme) => ({
   },
 }))
 
-const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
+const CreateStep2 = ({
+  control,
+  errors,
+  watch,
+  selectedCategory,
+  reset,
+  setValue,
+}: any) => {
   const { classes: styles } = useStyles()
   const { t } = useTranslation()
   const { getCategories, data } = useCategoryService()
+  const [prevCategory, setPrevCategory] = useState<string | null>(null)
 
   const categoryOrder = [
     'Autos',
@@ -100,10 +108,14 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
       : selectedCategory?.toLowerCase()
 
   const subCategoryOptions = normalizedCategory
-    ? data[normalizedCategory]?.subCategories.map((subCat) => ({
-        value: subCat,
-        label: capitalizeFirstLetter(subCat),
-      }))
+    ? reorderOptions(
+        data[normalizedCategory]?.subCategories
+          .map((subCat) => ({
+            value: subCat,
+            label: capitalizeFirstLetter(subCat),
+          }))
+          .sort((a, b) => a.label.localeCompare(b.label)) // Ordenar alfabéticamente
+      )
     : []
 
   const brandsOptions = showBrandAndModel
@@ -142,6 +154,21 @@ const CreateStep2 = ({ control, errors, watch, selectedCategory }: any) => {
           competition.slice(1).toLowerCase(),
       }))
     : []
+
+  useEffect(() => {
+    if (prevCategory && prevCategory !== selectedCategory) {
+      setValue('subCategory', '')
+      setValue('condition', '')
+      setValue('brand', '')
+      setValue('model', '')
+      setValue('year', '')
+      setValue('size', '')
+      setValue('homologation', null)
+      setValue('competition', [])
+    }
+
+    setPrevCategory(selectedCategory)
+  }, [selectedCategory, prevCategory, reset])
 
   return (
     <FForm

@@ -70,6 +70,7 @@ const EditPublication = () => {
     watch,
     setValue,
     reset,
+    clearErrors,
   } = useForm<Product>({
     mode: 'onBlur',
     defaultValues: publicationsDefaultValues,
@@ -139,6 +140,8 @@ const EditPublication = () => {
     if (values.applyPrice) {
       setValue('currency', '')
       setValue('price', '')
+      clearErrors('price')
+      clearErrors('currency')
     }
   }, [values.applyPrice, setValue])
 

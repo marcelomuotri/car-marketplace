@@ -82,8 +82,10 @@ const EditProfileForm = ({
   const { searchUserByDNI } = useAuthService()
   const [dniError, setDniError] = useState<ErrorState | null>(null)
   const [loadingDni, setLoadingDni] = useState(false)
+  const [hasDniChanged, setHasDniChanged] = useState(false)
 
   useEffect(() => {
+    if (values.dni === userData.dni) return
     // Debounce: Espera 5 segundos después del último cambio en el DNI
     setDniError(null)
     if (values.dni) setLoadingDni(true)

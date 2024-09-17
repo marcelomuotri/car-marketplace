@@ -52,6 +52,7 @@ const CreatePublication = () => {
     formState: { errors },
     watch,
     setValue,
+    clearErrors,
   } = useForm<ProductUpload>({
     mode: 'onBlur',
     defaultValues: publicationsDefaultValues,
@@ -127,6 +128,8 @@ const CreatePublication = () => {
     if (values.applyPrice) {
       setValue('currency', '')
       setValue('price', '')
+      clearErrors('price')
+      clearErrors('currency')
     }
   }, [values.applyPrice, setValue])
 

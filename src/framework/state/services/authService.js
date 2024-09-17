@@ -40,6 +40,7 @@ export const useAuthService = () => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      console.log(firebaseUser)
       if (firebaseUser?.emailVerified) {
         //aca tengo que ver si el email esta verificado antes de loguearlo
         const docRef = doc(db, 'users', firebaseUser.uid)
