@@ -4,7 +4,9 @@ export const reorderOptions = (
   targetValue = 'otros'
 ) => {
   // Primero, encontrar el índice de la opción que queremos mover al final
-  const targetIndex = options.findIndex((option) => option[key] === targetValue)
+  const targetIndex = options?.findIndex(
+    (option) => option[key] === targetValue
+  )
 
   // Si la opción existe y no está ya al final, moverla al final
   if (targetIndex >= 0 && targetIndex !== options.length - 1) {

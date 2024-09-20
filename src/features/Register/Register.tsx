@@ -28,6 +28,7 @@ const Register = () => {
   const theme = useTheme()
   const matchesDownSm = useMediaQuery(theme.breakpoints.down('sm'))
   const [sendEmailScreen, setSendEmailScreen] = useState(false)
+  console.log(error)
 
   const {
     handleSubmit,
@@ -125,7 +126,7 @@ const Register = () => {
               onClick={handleSubmit(onHandleRegister)}
               title={t('register')}
             />
-            {error && <Typography color='red'>{t('usedEmail')}</Typography>}
+            {error && <Typography color='red'>{error}</Typography>}
             <Typography>
               {t('alreadyHaveAccount')}{' '}
               <Link

@@ -50,9 +50,6 @@ const FButton = (props: SharedBtnProps) => {
         <Typography
           color={props.variant !== 'outlined' ? 'common.white' : 'primary.main'}
           variant={'bodyRegular'}
-          textTransform={
-            props.textTransform ? props.textTransform : 'capitalize'
-          }
           className={styles.title}
         >
           {props.title}

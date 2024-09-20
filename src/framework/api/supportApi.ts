@@ -19,6 +19,7 @@ export const useAddSupport = () => {
       email: userData?.userEmail,
       name: userData?.name || null,
       uid: userData.uid,
+      type: 'web',
     }
     try {
       const result = await addSupport({

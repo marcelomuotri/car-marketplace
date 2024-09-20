@@ -91,4 +91,5 @@ export interface SupportQuery extends SupportQueryUpload {
   uid: string
   name: string | null
   createdAt: string
+  type: 'web'
 }

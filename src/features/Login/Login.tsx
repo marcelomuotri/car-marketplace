@@ -146,10 +146,10 @@ const Login = () => {
               }}
               type='password'
             />
-            <FButton onClick={handleSubmit(onHandleLogin)} title={'login'} />
+            <FButton onClick={handleSubmit(onHandleLogin)} title={'Login'} />
             <FButton
               onClick={handleSignInWithGoogle}
-              title={'Sign in with google'}
+              title={'Continuar con Google'}
             />
             {error === 'incorrectPassword' && (
               <Typography color='red'>
@@ -157,7 +157,7 @@ const Login = () => {
               </Typography>
             )}
             <Typography>
-              Ya tienes cuenta?{' '}
+              ¿Aún no tenés cuenta?{' '}
               <Link
                 to='/register'
                 style={{
@@ -165,11 +165,11 @@ const Login = () => {
                   textDecoration: 'underline',
                 }}
               >
-                Regístrate
+                Registrate
               </Link>
             </Typography>
             <Typography>
-              Olvidaste la contraseña?{' '}
+              ¿Olvidaste la contraseña?{' '}
               <Link
                 to='/resetPassword'
                 style={{

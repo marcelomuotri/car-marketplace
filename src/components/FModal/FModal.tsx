@@ -45,7 +45,7 @@ const FModal = ({
             <FButton
               variant='outlined'
               size='small'
-              title='cancelar'
+              title='Cancelar'
               onClick={onClose}
               fullWidth={saveFullWidth}
             />

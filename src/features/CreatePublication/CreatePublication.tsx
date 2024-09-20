@@ -63,7 +63,7 @@ const CreatePublication = () => {
 
   const variants = [
     {
-      category: ['autos', 'motos', 'kartings', 'ATVs'],
+      category: ['autos', 'motos', 'karting', 'ATVs'],
       fields: ['condition', 'brand', 'model', 'subCategory', 'year'],
     },
     {

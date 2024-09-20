@@ -40,7 +40,6 @@ export const useAuthService = () => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      console.log(firebaseUser)
       if (firebaseUser?.emailVerified) {
         //aca tengo que ver si el email esta verificado antes de loguearlo
         const docRef = doc(db, 'users', firebaseUser.uid)
@@ -93,10 +92,16 @@ export const useAuthService = () => {
       dispatch(loginFailure('incorrectPassword'))
     }
   }
-  const createUser = async ({ email, password }) => {
+  const createUser = async ({ email, password, repeatPassword }) => {
     // Validación de parámetros
     if (!email || !password) {
       throw new Error('Email and password are required')
+      return
+    }
+    if (password !== repeatPassword) {
+      dispatch(loginFailure('El password no coincide'))
+      throw new Error('El password no coincide')
+      return
     }
 
     dispatch(loginLoading())
@@ -119,8 +124,11 @@ export const useAuthService = () => {
         return user
       }
     } catch (error) {
-      console.error('Error creating user:', error)
-      dispatch(loginFailure(error.message))
+      let errorMessage
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = 'Este email ya esta en uso'
+      }
+      dispatch(loginFailure(errorMessage))
       throw error
     }
   }
@@ -184,6 +192,7 @@ export const useAuthService = () => {
   }
 
   const saveUserToFirestore = async (userPayload, uid) => {
+    userPayload.favoriteCompetition = 'auto'
     try {
       const userDocRef = doc(db, 'users', uid)
       await setDoc(userDocRef, userPayload)
