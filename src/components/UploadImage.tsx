@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { makeStyles } from 'tss-react/mui'
 import { useDropzone, DropzoneOptions } from 'react-dropzone'
 import { Box, Typography } from '@mui/material'
@@ -60,7 +60,7 @@ interface UploadImageProps {
   title?: string
   subTitle?: string
   setImage: (file: File) => void
-  image?: string
+  image?: string // Esta propiedad ahora acepta tanto la URL de una imagen como un objeto `File`
   subtitleStyles?: any
 }
 
@@ -68,10 +68,29 @@ const UploadImage: React.FC<UploadImageProps> = ({
   title,
   subTitle,
   setImage,
-  image,
+  image, // URL de la imagen o el objeto `File`
   subtitleStyles,
 }) => {
   const { classes } = useStyles()
+
+  const [previewImage, setPreviewImage] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (image instanceof File) {
+      // Si `image` es un `File`, crear la URL del blob
+      const url = URL.createObjectURL(image)
+      setPreviewImage(url)
+      // Limpiar la URL del blob cuando el componente se desmonte
+      return () => {
+        URL.revokeObjectURL(url)
+      }
+    } else if (typeof image === 'string') {
+      // Si `image` es una URL, usar esa URL
+      setPreviewImage(image)
+    } else {
+      setPreviewImage(null)
+    }
+  }, [image])
 
   const onDrop = useCallback<NonNullable<DropzoneOptions['onDrop']>>(
     (acceptedFiles: File[]) => {
@@ -82,17 +101,15 @@ const UploadImage: React.FC<UploadImageProps> = ({
           type: file.type,
         })
         setImage(uniqueFile)
+        // Generar la URL del blob inmediatamente después de agregar la imagen
+        const url = URL.createObjectURL(uniqueFile)
+        setPreviewImage(url)
       }
     },
     [setImage]
   )
 
-  const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
-    useDropzone({ onDrop })
-
-  const previewImage = acceptedFiles[0]
-    ? URL.createObjectURL(acceptedFiles[0])
-    : image
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
     <>

@@ -2,8 +2,6 @@ import { Checkbox, FormControlLabel, Grid, Typography } from '@mui/material'
 import FForm from '../../../components/FForm'
 import { Trans, useTranslation } from 'react-i18next'
 import UploadImage from '../../../components/UploadImage'
-import FInput from '../../../components/FInput'
-import { useState } from 'react'
 
 interface Step2Props {
   control: any
@@ -13,12 +11,18 @@ interface Step2Props {
   setPhotoBackID: (file: File) => void
   termsAccepted: boolean
   setTermsAccepted: (value: boolean) => void
+  photoProfile: any
+  photoFrontID: any
+  photoBackID: any
 }
 
 const Step2: React.FC<Step2Props> = ({
   setPhotoProfile,
   setPhotoFrontID, // Asegúrate de que este nombre coincinpmda con el prop en VerifyId
   setPhotoBackID, // Asegúrate de que este nombre coincida con el prop en VerifyId
+  photoProfile,
+  photoFrontID,
+  photoBackID,
   termsAccepted,
   setTermsAccepted,
 }) => {
@@ -36,10 +40,18 @@ const Step2: React.FC<Step2Props> = ({
     >
       <Grid container columnSpacing={118} rowSpacing={56}>
         <Grid item xs={12} sm={6}>
-          <UploadImage title={t('DNIFront')} setImage={setPhotoFrontID} />
+          <UploadImage
+            title={t('DNIFront')}
+            setImage={setPhotoFrontID}
+            image={photoFrontID}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <UploadImage title={t('DNIPhotoBack')} setImage={setPhotoBackID} />
+          <UploadImage
+            title={t('DNIPhotoBack')}
+            setImage={setPhotoBackID}
+            image={photoBackID}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <UploadImage
@@ -47,6 +59,7 @@ const Step2: React.FC<Step2Props> = ({
             subTitle={t('makeSureYourFace')}
             setImage={setPhotoProfile}
             subtitleStyles={{ textWrap: 'nowrap' }}
+            image={photoProfile}
           />
         </Grid>
       </Grid>

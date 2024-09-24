@@ -137,6 +137,9 @@ const CreatePublication = () => {
     <CreateStep1
       control={control}
       errors={errors}
+      photo1={photo1}
+      photo2={photo2}
+      photo3={photo3}
       setPhoto1={setPhoto1}
       setPhoto2={setPhoto2}
       setPhoto3={setPhoto3}

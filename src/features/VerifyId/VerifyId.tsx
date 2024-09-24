@@ -107,6 +107,7 @@ const VerifyId = () => {
     <EditProfileForm
       control={control}
       errors={errors}
+      photoToShow={photoToShow}
       setPhotoToShow={setPhotoToShow}
       photoToShowUrl={userData?.photoToShowUrl}
       values={values}
@@ -114,6 +115,9 @@ const VerifyId = () => {
     <Step2
       control={control}
       errors={errors}
+      photoProfile={photoProfile}
+      photoFrontID={photoFrontID}
+      photoBackID={photoBackID}
       setPhotoProfile={setPhotoProfile}
       setPhotoFrontID={setPhotoFrontID}
       setPhotoBackID={setPhotoBackID}

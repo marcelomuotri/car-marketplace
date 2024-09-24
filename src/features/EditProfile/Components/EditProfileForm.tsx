@@ -74,6 +74,7 @@ const EditProfileForm = ({
   errors,
   setPhotoToShow,
   photoToShowUrl,
+  photoToShow,
   values,
 }: any) => {
   const { classes: styles } = useStyles()
@@ -300,7 +301,7 @@ const EditProfileForm = ({
               </Grid>
               <Grid item md={12}>
                 <UploadImage
-                  image={photoToShowUrl}
+                  image={photoToShow}
                   setImage={setPhotoToShow}
                   title={t('displayPhoto')}
                   subTitle={t('uploadPhotoSubTitle')}
