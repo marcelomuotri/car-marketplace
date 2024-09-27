@@ -181,6 +181,20 @@ const CreatePublication = () => {
     const photo2Url = photo2 ? await uploadImage(photo2) : null
     const photo3Url = photo3 ? await uploadImage(photo3) : null
 
+    // Normalizar el valor de brand y model para almacenar brandName y modelName en minúsculas
+    const normalizedBrand = !data.brand
+      ? '' // Si no existe, lo dejamos como una cadena vacía
+      : typeof data.brand === 'string'
+        ? data.brand.toLowerCase() // Si es un string, lo convertimos a minúsculas
+        : data.brand.value.toLowerCase() // Si es un objeto, tomamos el valor en minúsculas
+
+    const normalizedModel = !data.model
+      ? '' // Si no existe, lo dejamos como una cadena vacía
+      : typeof data.model === 'string'
+        ? data.model.toLowerCase() // Si es un string, lo convertimos a minúsculas
+        : data.model.value.toLowerCase() // Si es un objeto, tomamos el valor en minúsculas
+
+    // Crear el producto con los nuevos campos normalizados
     const productToCreate = {
       ...data,
       title: data.title.toLowerCase(),
@@ -189,12 +203,16 @@ const CreatePublication = () => {
         : typeof data.brand === 'string'
           ? { label: data.brand, value: data.brand } // Si es un string, lo convertimos en un objeto
           : data.brand, // Si ya es un objeto, lo dejamos como está
-      // Para model, hacemos lo mismo
       model: !data.model
         ? '' // Si no existe, lo dejamos como una cadena vacía
         : typeof data.model === 'string'
           ? { label: data.model, value: data.model } // Si es un string, lo convertimos en un objeto
           : data.model, // Si ya es un objeto, lo dejamos como está
+
+      // Nuevos campos normalizados
+      brandName: normalizedBrand, // Guardar el nombre de la marca en minúsculas
+      modelName: normalizedModel, // Guardar el nombre del modelo en minúsculas
+
       photo1Url,
       photo2Url,
       photo3Url,
@@ -210,6 +228,7 @@ const CreatePublication = () => {
       productToCreate.competition = [`${categoryWithoutS}`]
     }
 
+    // Agregar el nuevo producto con los campos normalizados
     addNewProduct(productToCreate)
 
     setShowSuccess(true)
