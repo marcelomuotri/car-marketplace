@@ -218,6 +218,7 @@ const CreatePublication = () => {
       photo3Url,
       uid: userData?.uid || '',
       active: userData?.verifiedStatus === 'verified' ? true : false,
+      province: userData?.state,
     }
 
     if (variants[0].category.includes(data.category as string)) {

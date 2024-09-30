@@ -63,6 +63,7 @@ export interface ProductUpload {
   active: boolean
   visitors: number
   contacts: number
+  province: string
 }
 
 export interface Product extends ProductUpload {
