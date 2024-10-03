@@ -1,5 +1,12 @@
 import React, { useState } from 'react'
-import { Box, IconButton, Menu, MenuItem } from '@mui/material'
+import {
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import { Product } from '../../../../framework/types'
@@ -22,6 +29,9 @@ interface ProductsListProps {
 const ProductList = ({ products, isVerified }: ProductsListProps) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const theme = useTheme()
+  const matchesDownSm = useMediaQuery(theme.breakpoints.down('sm'))
+
   const { removeProduct, isDeleting } = useDeleteProduct()
   const { updateProductData, isUpdating } = useUpdateProduct()
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
@@ -31,7 +41,7 @@ const ProductList = ({ products, isVerified }: ProductsListProps) => {
     {
       field: 'photo',
       headerName: '',
-      flex: 0.5,
+      flex: matchesDownSm ? undefined : 0.5,
       renderCell: (params: GridRenderCellParams) => (
         <Box
           sx={{
@@ -57,23 +67,28 @@ const ProductList = ({ products, isVerified }: ProductsListProps) => {
         </Box>
       ),
     },
-    { field: 'title', headerName: t('product'), flex: 1 },
+    {
+      field: 'title',
+      headerName: t('product'),
+      flex: matchesDownSm ? undefined : 1,
+      width: matchesDownSm ? 120 : 0,
+    },
     {
       field: 'createdAt',
       headerName: t('date'),
-      flex: 0.5,
+      flex: matchesDownSm ? undefined : 0.5,
       valueGetter: (value) => new Date(value).toLocaleDateString(),
     },
     {
       field: 'active',
       headerName: t('status'),
-      flex: 0.5,
+      flex: matchesDownSm ? undefined : 0.5,
       valueGetter: (value) => (value ? 'Activa' : 'Pausada'),
     },
     {
       field: 'price',
       headerName: t('price'),
-      flex: 0.5,
+      flex: matchesDownSm ? undefined : 0.5,
       valueGetter: (value, row) => {
         if (!value) return 'N/A'
         const currencyLabel = getCurrencyLabel(row.currency)
@@ -81,12 +96,20 @@ const ProductList = ({ products, isVerified }: ProductsListProps) => {
       },
     },
 
-    { field: 'visitors', headerName: t('visitors'), flex: 0.5 },
-    { field: 'contacts', headerName: t('contacts'), flex: 0.5 },
+    {
+      field: 'visitors',
+      headerName: t('visitors'),
+      flex: matchesDownSm ? undefined : 0.5,
+    },
+    {
+      field: 'contacts',
+      headerName: t('contacts'),
+      flex: matchesDownSm ? undefined : 0.5,
+    },
     {
       field: 'options',
       headerName: '',
-      flex: 0.2,
+      flex: matchesDownSm ? undefined : 0.2,
       renderCell: (params: GridRenderCellParams) => (
         <IconButton
           edge='end'
