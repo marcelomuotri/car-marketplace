@@ -192,6 +192,7 @@ const EditPublication = () => {
     const photo3Url = photo3 ? await uploadImage(photo3) : data.photo3Url
     const productToUpdate = {
       ...data,
+      price: parseInt(data.price),
       brand: data.brand ? data.brand : '',
       model: data.model ? data.model : '',
       photo1Url,

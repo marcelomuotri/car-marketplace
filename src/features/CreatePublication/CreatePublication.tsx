@@ -197,6 +197,7 @@ const CreatePublication = () => {
     // Crear el producto con los nuevos campos normalizados
     const productToCreate = {
       ...data,
+      price: parseInt(data.price),
       title: data.title.toLowerCase(),
       brand: !data.brand
         ? '' // Si no existe, lo dejamos como una cadena vacía
