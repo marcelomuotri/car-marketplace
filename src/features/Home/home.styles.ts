@@ -7,6 +7,11 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     flexDirection: 'column',
     padding: '20px',
     gap: '20px',
+    [theme.breakpoints.down('sm')]: {
+      // Cambia el padding en pantallas móviles
+      paddingLeft: 0,
+      paddingRight: 0,
+    },
   },
   loadingOverlay: {
     position: 'fixed',
