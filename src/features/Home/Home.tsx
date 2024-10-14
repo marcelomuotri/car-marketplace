@@ -1,4 +1,4 @@
-import { Box, Fade } from '@mui/material'
+import { Box, Fade, useMediaQuery } from '@mui/material'
 import { useStyles } from './home.styles'
 import Loader from '../../components/Loader'
 import EmptyProducts from './components/EmptyProducts/EmptyProducts'
@@ -12,11 +12,14 @@ import { useEffect, useState } from 'react'
 import { Product } from '../../framework/types'
 import dayjs from 'dayjs'
 import isBetween from 'dayjs/plugin/isBetween'
+import { useTheme } from '@mui/material'
+import ProductListMobile from './components/ProductListMobile/ProductListMobile'
 
 dayjs.extend(isBetween)
 
 const Home = () => {
   const { classes: styles } = useStyles()
+  const theme = useTheme()
   const { userData } = useSelector((state: RootState) => state.auth)
   const [titleFilter, setTitleFilter] = useState<string | null>(null)
   const [dateFilter, setDateFilter] = useState<string | null>(null)
@@ -24,6 +27,7 @@ const Home = () => {
   const [filteredProducts, setFilteredProducts] = useState(products)
   const userRejected = userData?.verifiedStatus === 'rejected'
   const isVerified = userData?.verifiedStatus === 'verified'
+  const matchesDownSm = useMediaQuery(theme.breakpoints.down('sm'))
 
   useEffect(() => {
     let updatedProducts = products
@@ -67,10 +71,17 @@ const Home = () => {
           />
           <Fade in={true} timeout={1000}>
             <Box>
-              <ProductList
-                products={filteredProducts}
-                isVerified={isVerified}
-              />
+              {matchesDownSm ? (
+                <ProductListMobile
+                  products={filteredProducts}
+                  isVerified={isVerified}
+                />
+              ) : (
+                <ProductList
+                  products={filteredProducts}
+                  isVerified={isVerified}
+                />
+              )}
             </Box>
           </Fade>
         </Box>
